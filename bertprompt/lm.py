@@ -269,8 +269,8 @@ class Prompter:
             seed_sentences = list(map(lambda x: seed_sentences[x], index_unfixed))
             ppl = list(map(lambda x: ppl[x], index_unfixed))
             data_index = list(map(lambda x: data_index[x], index_unfixed))
-            if word_pairs:
-                word_pairs = list(map(lambda x: word_pairs[x], index_unfixed))
+            if vocab_to_keep:
+                vocab_to_keep = list(map(lambda x: vocab_to_keep[x], index_unfixed))
 
             if len(seed_sentences) == 0:
                 logging.info('ITERATIVE REVISION: all sentences reached the best perplexity')
