@@ -6,7 +6,7 @@ with open('README.md', 'r') as f:
 VERSION = '0.0.0'
 setup(
     name='bertprompt',
-    packages=find_packages(exclude=['examples', 'tests', 'asset', 'benchmark']),
+    packages=find_packages(exclude=['tests']),
     version=VERSION,
     # license='MIT',
     description='BERT based conditional text generation/revision with pseudo perplexity objectives.',
@@ -33,7 +33,12 @@ setup(
         "torch",
         "tqdm",
         "pandas",
-        "gensim"
+        "requests"
     ],
     python_requires='>=3.6',
+    entry_points={
+        'console_scripts': [
+            'bertprompt-lama = bertprompt_cl.generate_prompt_lama:main'
+        ]
+    }
 )
