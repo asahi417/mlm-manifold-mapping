@@ -6,6 +6,7 @@ from itertools import chain
 from typing import List
 from tqdm import tqdm
 from copy import deepcopy
+from multiprocessing import Pool
 import transformers
 import torch
 from torch import nn
@@ -14,9 +15,27 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"  # to turn off warning message
 PAD_TOKEN_LABEL_ID = nn.CrossEntropyLoss().ignore_index
 
 
+def pool_map(f, arg):
+    _pool = Pool()
+    out = _pool.map(f, arg)
+    _pool.close()
+    return out
+
+
 def get_partition(_list):
-    length = list(map(lambda x: len(x), _list))
-    return list(map(lambda x: [sum(length[:x]), sum(length[:x + 1])], range(len(length))))
+    """ Get partition in multiprocess """
+    p = Partition(_list)
+    return pool_map(p, range(len(_list)))
+
+
+class Partition:
+    """ Get the partition information of a nested list for restoring the original structure """
+
+    def __init__(self, _list):
+        self.length = pool_map(len, _list)
+
+    def __call__(self, x):
+        return [sum(self.length[:x]), sum(self.length[:x + 1])]
 
 
 class Dataset(torch.utils.data.Dataset):
@@ -284,8 +303,8 @@ class Prompter:
             seed_sentences = [seed_sentences]
 
         # if mask is in sentence, it is first replaced, otherwise all tokens are considered
-        data = map(lambda x: self.encode_plus(x, token_wise_mask=self.tokenizer.mask_token not in x), seed_sentences)
-        data = list(data)
+        data = list(map(
+            lambda x: self.encode_plus(x, token_wise_mask=self.tokenizer.mask_token not in x), seed_sentences))
         partition = get_partition(data)
         data_loader = torch.utils.data.DataLoader(
             Dataset(list(chain(*data))),
