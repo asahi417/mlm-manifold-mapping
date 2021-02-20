@@ -48,7 +48,7 @@ def wget(url, cache_dir):
 def get_analogy_data(data_name: str, cache_dir: str = default_cache_dir_analogy):
     """ Get SAT-type dataset: a list of (answer: int, prompts: list, stem: list, choice: list)"""
     assert data_name in ['sat', 'u2', 'u4', 'google', 'bats'], 'unknown data: {}'.format(data_name)
-    if not os.path.exists(cache_dir):
+    if not os.path.exists('{}/{}'.format(cache_dir, data_name)):
         url = '{}/{}.zip'.format(root_url_analogy, data_name)
         wget(url, cache_dir)
 
