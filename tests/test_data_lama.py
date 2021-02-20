@@ -1,10 +1,10 @@
 """ UnitTest """
 import unittest
 import logging
-logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=logging.DEBUG, datefmt='%Y-%m-%d %H:%M:%S')
-
 import transformers
 from bertprompt import get_lama_data
+
+logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=logging.DEBUG, datefmt='%Y-%m-%d %H:%M:%S')
 
 
 class Test(unittest.TestCase):

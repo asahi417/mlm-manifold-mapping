@@ -1,3 +1,4 @@
+""" Dataset downloader """
 import os
 import logging
 import requests
@@ -5,8 +6,7 @@ import zipfile
 import json
 from typing import Dict, List
 import transformers
-
-url = 'https://dl.fbaipublicfiles.com/LAMA/data.zip'
+__all__ = ('get_analogy_data', 'get_lama_data')
 relations_google = [
     {
         "relation": "place_of_birth",
@@ -25,14 +25,45 @@ relations_google = [
     },
 ]
 relations_concept_squad = [{"relation": "test", "template": None}]
-default_cache_dir = '{}/.cache/bertprompt/data'.format(os.path.expanduser('~'))
+default_cache_dir_lama = '{}/.cache/bertprompt/data/lama'.format(os.path.expanduser('~'))
+root_url_lama = 'https://dl.fbaipublicfiles.com/LAMA/data.zip'
+
+default_cache_dir_analogy = '{}/.cache/bertprompt/data/analogy'.format(os.path.expanduser('~'))
+root_url_analogy = 'https://github.com/asahi417/AnalogyDataset/raw/master'
+
+
+def wget(url, cache_dir):
+    logging.debug('downloading zip file from {}'.format(url))
+    os.makedirs(cache_dir, exist_ok=True)
+    filename = os.path.basename(url)
+    with open('{}/{}'.format(cache_dir, filename), "wb") as f:
+        r = requests.get(url)
+        f.write(r.content)
+
+    with zipfile.ZipFile('{}/{}'.format(cache_dir, filename), 'r') as zip_ref:
+        zip_ref.extractall(cache_dir)
+    os.remove('{}/{}'.format(cache_dir, filename))
+
+
+def get_analogy_data(data_name: str, cache_dir: str = default_cache_dir_analogy):
+    """ Get SAT-type dataset: a list of (answer: int, prompts: list, stem: list, choice: list)"""
+    assert data_name in ['sat', 'u2', 'u4', 'google', 'bats'], 'unknown data: {}'.format(data_name)
+    if not os.path.exists(cache_dir):
+        url = '{}/{}.zip'.format(root_url_analogy, data_name)
+        wget(url, cache_dir)
+
+    with open('{}/{}/test.jsonl'.format(cache_dir, data_name), 'r') as f:
+        test = list(filter(None, map(lambda x: json.loads(x) if len(x) > 0 else None, f.read().split('\n'))))
+    with open('{}/{}/valid.jsonl'.format(cache_dir, data_name), 'r') as f:
+        val = list(filter(None, map(lambda x: json.loads(x) if len(x) > 0 else None, f.read().split('\n'))))
+    return val, test
 
 
 def parse_template(template, subject_label, object_label):
     return template.replace("[X]", subject_label).replace("[Y]", object_label)
 
 
-def get_lama_data(cache_dir: str = default_cache_dir, vocab: Dict = None, transformers_model: List = None):
+def get_lama_data(cache_dir: str = default_cache_dir_lama, vocab: Dict = None, transformers_model: List = None):
     vocab_list = []
     if transformers_model:
         if type(transformers_model) is str:
@@ -42,16 +73,7 @@ def get_lama_data(cache_dir: str = default_cache_dir, vocab: Dict = None, transf
         vocab_list += [vocab]
 
     if not os.path.exists(cache_dir):
-        logging.debug('downloading zip file from {}'.format(url))
-        os.makedirs(cache_dir, exist_ok=True)
-        filename = os.path.basename(url)
-        with open('{}/{}'.format(cache_dir, filename), "wb") as f:
-            r = requests.get(url)
-            f.write(r.content)
-
-        with zipfile.ZipFile('{}/{}'.format(cache_dir, filename), 'r') as zip_ref:
-            zip_ref.extractall(os.path.dirname(cache_dir))
-        os.remove('{}/{}'.format(cache_dir, filename))
+        wget(root_url_lama, cache_dir)
 
     full_set = {}
 
@@ -77,7 +99,7 @@ def get_lama_data(cache_dir: str = default_cache_dir, vocab: Dict = None, transf
 
     for i in ['ConceptNet', 'Google_RE', 'Squad', 'TREx']:
         if i == 'TREx':
-            relation = load_jsonl('{}/relations.jsonl'.format(cache_dir))
+            relation = load_jsonl('{}/data/relations.jsonl'.format(cache_dir))
         elif i == 'Google_RE':
             relation = relations_google
         else:
@@ -86,9 +108,9 @@ def get_lama_data(cache_dir: str = default_cache_dir, vocab: Dict = None, transf
         full_set[i] = {}
         for r in relation:
             if i == 'Google_RE':
-                _file = '{}/{}/{}_test.jsonl'.format(cache_dir, i, r['relation'])
+                _file = '{}/data/{}/{}_test.jsonl'.format(cache_dir, i, r['relation'])
             else:
-                _file = '{}/{}/{}.jsonl'.format(cache_dir, i, r['relation'])
+                _file = '{}/data/{}/{}.jsonl'.format(cache_dir, i, r['relation'])
 
             if not os.path.exists(_file):
                 logging.debug('\t FILE SKIPPED: file not found {}'.format(_file))

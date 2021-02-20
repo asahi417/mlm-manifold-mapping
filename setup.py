@@ -38,7 +38,8 @@ setup(
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
-            'bertprompt-lama = bertprompt_cl.generate_prompt_lama:main'
+            'bertprompt-lama = bertprompt_cl.generate_prompt_lama:main',
+            'bertprompt-analogy = bertprompt_cl.generate_prompt_analogy:main',
         ]
     }
 )
