@@ -356,17 +356,20 @@ class Prompter:
                         decoded = self.tokenizer.decode(tokens, skip_special_tokens=False)
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
-                        print(decoded, decoded_no_mask)
+                        print(decoded, decoded_no_mask, allow_subword)
                         if vocab_to_keep:
                             # check if all tokens from keep_vocab in the decoded sentence
                             v = vocab_to_keep[partition_n]
                             if allow_subword and not all(map(lambda x: len(re.findall(x, decoded_no_mask)), v)):
+                                print(' * fuck (allow_subword)')
                                 return None
                             elif not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)), v)):
+                                print(' * fuck')
                                 return None
 
                             # check if all tokens from keep_vocab just appeared once
                             if not check_vocab(decoded_no_mask, v):
+                                print(' * fuck (dup)')
                                 return None
 
                         return decoded, token_likelihood[k]
