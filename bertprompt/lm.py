@@ -13,6 +13,7 @@ import transformers
 import torch
 from torch import nn
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"  # to turn off warning message
 PAD_TOKEN_LABEL_ID = nn.CrossEntropyLoss().ignore_index
 __all__ = ('get_partition', 'Prompter')
 
