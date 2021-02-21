@@ -55,7 +55,7 @@ def main():
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
             continue
-        word_pairs = [['jeer', 'mock']]
+        # word_pairs = [['jeer', 'mock']]
         output_dict = prompter.generate(
             word_pairs,
             n_blank=n_blank,
