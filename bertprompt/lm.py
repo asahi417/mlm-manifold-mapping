@@ -1,3 +1,4 @@
+""" Masked Language Model based Prompting """
 import re
 import os
 import logging
@@ -7,21 +8,13 @@ from typing import List
 from tqdm import tqdm
 from copy import deepcopy
 from multiprocessing import Pool
+
 import transformers
 import torch
 from torch import nn
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"  # to turn off warning message
 PAD_TOKEN_LABEL_ID = nn.CrossEntropyLoss().ignore_index
 __all__ = ('get_partition', 'Prompter')
-
-
-def check_vocab(sentence, vocab):
-    vocab_in = re.findall(r'|'.join(vocab), sentence)
-    vocab_in_unique = list(set(vocab_in))
-    if len(vocab_in_unique) == len(vocab_in) == len(vocab):
-        return True
-    return False
 
 
 def pool_map(f, arg):
@@ -324,6 +317,14 @@ class Prompter:
         :param topk: keep topk prediction on masked token for perplexity filtering
         :return:
         """
+
+        def check_vocab(sentence, vocab):
+            vocab_in = re.findall(r'|'.join(vocab), sentence)
+            vocab_in_unique = list(set(vocab_in))
+            if len(vocab_in_unique) == len(vocab_in) == len(vocab):
+                return True
+            return False
+
         if vocab_to_keep:
             assert len(seed_sentences) == len(vocab_to_keep), '{} != {}'.format(len(seed_sentences), len(vocab_to_keep))
         topk_per_position = 100
@@ -380,6 +381,7 @@ class Prompter:
                                     return None
 
                             # check if all tokens from keep_vocab just appeared once
+
                             if not check_vocab(decoded_no_mask, v):
                                 return None
 

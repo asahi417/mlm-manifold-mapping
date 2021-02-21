@@ -20,6 +20,8 @@ def get_options():
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
+    parser.add_argument('--max-data-size', help='Max data size in single run', default=2000, type=int)
+    parser.add_argument('--reverse', help='Get reversed pair', action='store_true')
     parser.add_argument('--debug', help='Show debug log', action='store_true')
     return parser.parse_args()
 
@@ -36,8 +38,8 @@ def main():
     val, test = bertprompt.get_analogy_data(opt.data)
     word_pairs = list(chain(*[[i['stem']] + i['choice'] for i in val]))
     word_pairs += list(chain(*[[i['stem']] + i['choice'] for i in test]))
-    word_pairs_reverse = [[p[1], p[0]] for p in word_pairs]
-    word_pairs += word_pairs_reverse
+    if opt.reverse:
+        word_pairs = [[p[1], p[0]] for p in word_pairs]
     all_config = list(product(n_blank_list, n_blank_b_list, n_blank_e_list))
 
     logging.info('GENERATE PROMPT FOR ANALOGY')
@@ -55,15 +57,20 @@ def main():
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
             continue
-        # word_pairs = [['jeer', 'mock']]
-        output_dict = prompter.generate(
-            word_pairs,
-            n_blank=n_blank,
-            n_blank_b=n_blank_b,
-            n_blank_e=n_blank_e,
-            batch_size=opt.batch,
-            topk=opt.topk,
-            n_revision=opt.revision)
+
+        output_dict = {}
+        for n in range(0, len(word_pairs), opt.max_data_size):
+            logging.info('subset: {}:{}'.format(n, max(n+opt.max_data_size, len(word_pairs))))
+            word_pairs_sub = word_pairs[n:max(n+opt.max_data_size,len(word_pairs))]
+            output_dict_tmp = prompter.generate(
+                word_pairs_sub,
+                n_blank=n_blank,
+                n_blank_b=n_blank_b,
+                n_blank_e=n_blank_e,
+                batch_size=opt.batch,
+                topk=opt.topk,
+                n_revision=opt.revision)
+            output_dict.update(output_dict_tmp)
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         logging.info('exporting output to {}'.format(filename))
         with open(filename, 'w') as f:
