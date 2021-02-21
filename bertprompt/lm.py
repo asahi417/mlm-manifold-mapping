@@ -199,7 +199,7 @@ class Prompter:
                  word_pairs: List = None,
                  seed_sentences: List = None,
                  vocab_to_keep: List = None,
-                 n_revision: int = 10,
+                 n_revision: int = 100,
                  topk: int = 10,
                  batch_size: int = 4,
                  n_blank: int = 4,
@@ -240,7 +240,7 @@ class Prompter:
                     # mask should be removed one by one, but some has skipped if this raises error
                     assert all(self.tokenizer.mask_token not in i for i in seed_sentences), 'some masks got lost'
                     break
-                logging.info('REPLACE MASK: step {}'.format(len(edit_ppl)))
+                logging.info('REPLACE MASK: step {}'.format(1 + len(edit_ppl)))
                 seed_sentences, ppl = self.replace_single_token(
                     seed_sentences, vocab_to_keep=word_pairs, topk=topk, batch_size=batch_size)
                 edit.append(seed_sentences)
@@ -253,8 +253,9 @@ class Prompter:
         logging.info('### ITERATIVE REVISION ###')
         output_dict = {}
         data_index = list(data_key.keys())
-        for i in range(n_revision):
-            logging.info('ITERATIVE REVISION: step {}/{}'.format(i, n_revision))
+        i = 0
+        while True:
+            logging.info('ITERATIVE REVISION: step {} (max {} steps)'.format(i + 1, n_revision))
             seed_sentences, ppl = self.replace_single_token(
                 seed_sentences, vocab_to_keep=vocab_to_keep, topk=topk, batch_size=batch_size)
 
@@ -276,8 +277,11 @@ class Prompter:
             if len(seed_sentences) == 0:
                 logging.info('ITERATIVE REVISION: all sentences reached the best perplexity')
                 break
+            if i > n_revision:
+                break
+            i += 1
 
-        output_dict.update({data_key[i]: [edit[i], edit_ppl[i]] for n, i in enumerate(data_index)})
+        output_dict.update({data_key[data_index[i]]: [edit[i], edit_ppl[i]] for i in range(len(data_index))})
         return output_dict
 
     def replace_single_token(self,
@@ -341,20 +345,21 @@ class Prompter:
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
                         # check if all tokens from keep_vocab in the decoded sentence
-                        if vocab_to_keep is None:
-                            count = [1]
-                        elif allow_subword:
-                            count = list(map(lambda x: len(re.findall(x, decoded_no_mask)), vocab_to_keep[partition_n]))
-                        else:
-                            count = list(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)),
-                                             vocab_to_keep[partition_n]))
-                        if not all(count):
-                            return None
+                        if vocab_to_keep:
+                            # count of word in vocab (including subword)
+                            f_sub = list(map(lambda x: len(re.findall(x, decoded_no_mask)), vocab_to_keep[partition_n]))
+                            # count of word in vocab
+                            f = list(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)),
+                                         vocab_to_keep[partition_n]))
 
-                        # check if all tokens from keep_vocab just appeared once
-                        # if vocab_to_keep_unique:
-                        if not all(map(lambda x: x == 1, count)):
-                            return None
+                            if allow_subword and not all(f_sub):
+                                return None
+                            elif not all(f):
+                                return None
+
+                            # check if all tokens from keep_vocab just appeared once
+                            if not all(map(lambda x: x == 1, f)):
+                                return None
                         return decoded, token_likelihood[k]
 
                     for _replace_pos, (_val, _ind) in filtered:
