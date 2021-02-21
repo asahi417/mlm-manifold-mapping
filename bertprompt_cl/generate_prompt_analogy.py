@@ -9,7 +9,8 @@ import bertprompt
 
 def get_options():
     parser = argparse.ArgumentParser(description='Generate prompt for SAT type analogy dataset')
-    parser.add_argument('-t', '--transformers-model', help='language model alias from transformers model hub',
+    parser.add_argument('-t', '--transformers-model',
+                        help='Language model alias from transformers model hub (single model only)',
                         required=True, type=str)
     parser.add_argument('--n-blank', help='The number of intermediate blank', default='2,3,4', type=str)
     parser.add_argument('--n-blank-b', help='The number of beginning blank', default='0,1,2', type=str)
