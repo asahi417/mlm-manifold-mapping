@@ -40,6 +40,7 @@ setup(
         'console_scripts': [
             'bertprompt-lama = bertprompt_cl.generate_prompt_lama:main',
             'bertprompt-analogy = bertprompt_cl.generate_prompt_analogy:main',
+            'bertprompt-analogy-run = bertprompt_cl.run_analogy:main'
         ]
     }
 )
