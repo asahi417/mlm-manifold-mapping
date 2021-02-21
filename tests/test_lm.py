@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
         lm = Prompter('roberta-base', max_length=16)
 
         # test word pair infilling
-        test_candidates = [["pleasure", "hedonist"], ["emotion", "demagogue"], ["dog", "cat"]]
+        test_candidates = [["pleasure", "hedonist"], ["emotion", "demagogue"], ["dog", "cat"], ['vapor', 'evaporate']]
         pprint(lm.generate(word_pairs=test_candidates, n_blank=2, n_blank_b=0, n_blank_e=0, n_revision=1))
 
         # test sentence revision
