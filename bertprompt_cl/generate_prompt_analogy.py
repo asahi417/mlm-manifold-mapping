@@ -19,7 +19,7 @@ def get_options():
     parser.add_argument('-l', '--length', help='Max length of language model', default=32, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
-    parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/sat', type=str)
+    parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
     parser.add_argument('--debug', help='Show debug log', action='store_true')
     return parser.parse_args()
 
