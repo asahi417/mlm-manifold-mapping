@@ -50,6 +50,10 @@ def main():
     for i, (n_blank, n_blank_b, n_blank_e) in enumerate(all_config):
         logging.info('CONFIG {}/{}: blank: {}, blank_b: {}, blank_e: {}'.format(
             i + 1, len(all_config), n_blank, n_blank_b, n_blank_e))
+        filename = '{}/prompt_dict.{}.{}.{}.{}.{}.json'.format(
+            opt.output_dir, opt.data, opt.transformers_model, n_blank, n_blank_b, n_blank_e)
+        if os.path.exists(filename):
+            logging.info('skip as the output found at: {}'.format(filename))
         output_dict = prompter.generate(
             word_pairs,
             n_blank=n_blank,
@@ -58,8 +62,6 @@ def main():
             batch_size=opt.batch,
             topk=opt.topk,
             n_revision=opt.revision)
-        filename = '{}/prompt_dict.{}.{}.{}.{}.{}.json'.format(
-            opt.output_dir, opt.data, opt.transformers_model, n_blank, n_blank_b, n_blank_e)
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         logging.info('exporting output to {}'.format(filename))
         with open(filename, 'w') as f:
