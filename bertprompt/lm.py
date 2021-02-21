@@ -345,21 +345,18 @@ class Prompter:
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
                         # check if all tokens from keep_vocab in the decoded sentence
-                        if vocab_to_keep:
-                            # count of word in vocab (including subword)
-                            f_sub = list(map(lambda x: len(re.findall(x, decoded_no_mask)), vocab_to_keep[partition_n]))
-                            # count of word in vocab
-                            f = list(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)),
+                        if not vocab_to_keep:
+                            count = [1]
+                        elif allow_subword:
+                            count = list(map(lambda x: len(re.findall(x, decoded_no_mask)), vocab_to_keep[partition_n]))
+                        else:
+                            count = list(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)),
                                          vocab_to_keep[partition_n]))
-
-                            if allow_subword and not all(f_sub):
-                                return None
-                            elif not all(f):
-                                return None
-
-                            # check if all tokens from keep_vocab just appeared once
-                            if not all(map(lambda x: x == 1, f)):
-                                return None
+                        if not all(count):
+                            return None
+                        # check if all tokens from keep_vocab just appeared once
+                        if not all(map(lambda x: x == 1, count)):
+                            return None
                         return decoded, token_likelihood[k]
 
                     for _replace_pos, (_val, _ind) in filtered:
