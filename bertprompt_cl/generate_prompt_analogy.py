@@ -60,8 +60,8 @@ def main():
 
         output_dict = {}
         for n in range(0, len(word_pairs), opt.max_data_size):
-            logging.info('subset: {}:{}'.format(n, max(n+opt.max_data_size, len(word_pairs))))
-            word_pairs_sub = word_pairs[n:max(n+opt.max_data_size,len(word_pairs))]
+            logging.info('subset: {}:{}'.format(n, min(n+opt.max_data_size, len(word_pairs))))
+            word_pairs_sub = word_pairs[n:min(n+opt.max_data_size, len(word_pairs))]
             output_dict_tmp = prompter.generate(
                 word_pairs_sub,
                 n_blank=n_blank,
