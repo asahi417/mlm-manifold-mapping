@@ -37,6 +37,12 @@ def get_partition(_list):
     return pool_map(p, range(len(_list)))
 
 
+def get_encoding(sentences, tokenizer, max_length, token_wise_mask: bool = None):
+    """ Get encode_plus in multiprocess """
+    p = EncodePlus(tokenizer, max_length, token_wise_mask=token_wise_mask)
+    return pool_map(p, sentences)
+
+
 class Partition:
     """ Get the partition information of a nested list for restoring the original structure """
 
@@ -47,29 +53,12 @@ class Partition:
         return [sum(self.length[:x]), sum(self.length[:x + 1])]
 
 
-class Dataset(torch.utils.data.Dataset):
-    """ `torch.utils.data.Dataset` """
-    float_tensors = ['attention_mask']
-
-    def __init__(self, data: List):
-        self.data = data  # a list of dictionaries
-
-    def __len__(self):
-        return len(self.data)
-
-    def to_tensor(self, name, data):
-        if name in self.float_tensors:
-            return torch.tensor(data, dtype=torch.float32)
-        return torch.tensor(data, dtype=torch.long)
-
-    def __getitem__(self, idx):
-        return {k: self.to_tensor(k, v) for k, v in self.data[idx].items()}
-
-
 class EncodePlus:
+    """ Get encode_plus """
 
-    def __init__(self, tokenizer, max_length):
+    def __init__(self, tokenizer, max_length, token_wise_mask: bool = None):
         self.tokenizer = tokenizer
+        self.token_wise_mask = token_wise_mask
         self.max_length = self.tokenizer.model_max_length
         if max_length:
             assert self.max_length >= max_length, '{} < {}'.format(self.max_length, max_length)
@@ -110,6 +99,10 @@ class EncodePlus:
         :param token_wise_mask: (optional) to encode the sentence with a mask on each position
         :return: a list of the output from tokenizer.encode_plus
         """
+        if self.token_wise_mask is not None:
+            token_wise_mask = self.token_wise_mask
+        else:
+            token_wise_mask = self.tokenizer.mask_token not in sentence
         param = {'max_length': self.max_length, 'truncation': True, 'padding': 'max_length'}
         if not token_wise_mask:
             assert self.tokenizer.mask_token in sentence, 'sentence has no masks: {}'.format(sentence)
@@ -138,6 +131,25 @@ class EncodePlus:
             return list(filter(None, map(encode_with_single_mask_id, range(length))))
 
 
+class Dataset(torch.utils.data.Dataset):
+    """ `torch.utils.data.Dataset` """
+    float_tensors = ['attention_mask']
+
+    def __init__(self, data: List):
+        self.data = data  # a list of dictionaries
+
+    def __len__(self):
+        return len(self.data)
+
+    def to_tensor(self, name, data):
+        if name in self.float_tensors:
+            return torch.tensor(data, dtype=torch.float32)
+        return torch.tensor(data, dtype=torch.long)
+
+    def __getitem__(self, idx):
+        return {k: self.to_tensor(k, v) for k, v in self.data[idx].items()}
+
+
 class Prompter:
     """ Prompt generator based on pretrained language models """
 
@@ -158,8 +170,8 @@ class Prompter:
         self.cache_dir = cache_dir
         self.device = None
         self.model = None
+        self.max_length = max_length
         self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir)
-        self.encode_plus = EncodePlus(tokenizer=self.tokenizer, max_length=max_length)
         self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir)
 
     def __load_model(self):
@@ -320,8 +332,9 @@ class Prompter:
             seed_sentences = [seed_sentences]
 
         # if mask is in sentence, it is first replaced, otherwise all tokens are considered
-        data = list(map(
-            lambda x: self.encode_plus(x, token_wise_mask=self.tokenizer.mask_token not in x), seed_sentences))
+        # data = list(map(
+        #     lambda x: self.encode_plus(x, token_wise_mask=self.tokenizer.mask_token not in x), seed_sentences))
+        data = get_encoding(seed_sentences, self.tokenizer, self.max_length)
         partition = get_partition(data)
         data_loader = torch.utils.data.DataLoader(
             Dataset(list(chain(*data))),
@@ -426,7 +439,8 @@ class Prompter:
         self.__load_model()
         if type(sentences) is str:
             sentences = [sentences]
-        data = list(map(lambda x: self.encode_plus(x, token_wise_mask=True), sentences))
+        # data = list(map(lambda x: self.encode_plus(x, token_wise_mask=True), sentences))
+        data = get_encoding(sentences, self.tokenizer, self.max_length, token_wise_mask=True)
         partition = get_partition(data)
         data_loader = torch.utils.data.DataLoader(
             Dataset(list(chain(*data))),
