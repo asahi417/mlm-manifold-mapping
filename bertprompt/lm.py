@@ -363,7 +363,7 @@ class Prompter:
                             if allow_subword and not all(map(lambda x: len(re.findall(x, decoded_no_mask)), v)):
                                 print(' * fuck (allow_subword)')
                                 return None
-                            elif not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)), v)):
+                            elif not allow_subword and not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)), v)):
                                 print(' * fuck')
                                 return None
 
