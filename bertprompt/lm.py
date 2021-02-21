@@ -359,7 +359,7 @@ class Prompter:
                                 return None
                             elif not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)), v)):
                                 return None
-                            
+
                             # check if all tokens from keep_vocab just appeared once
                             if not check_vocab(decoded_no_mask, v):
                                 return None
