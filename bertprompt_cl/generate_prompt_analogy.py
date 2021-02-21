@@ -21,7 +21,7 @@ def get_options():
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
     parser.add_argument('--max-data-size', help='Max data size in single run', default=2000, type=int)
-    parser.add_argument('--reverse', help='Get reversed pair', action='store_true')
+    # parser.add_argument('--reverse', help='Get reversed pair', action='store_true')
     parser.add_argument('--debug', help='Show debug log', action='store_true')
     return parser.parse_args()
 
@@ -38,8 +38,8 @@ def main():
     val, test = bertprompt.get_analogy_data(opt.data)
     word_pairs = list(chain(*[[i['stem']] + i['choice'] for i in val]))
     word_pairs += list(chain(*[[i['stem']] + i['choice'] for i in test]))
-    if opt.reverse:
-        word_pairs = [[p[1], p[0]] for p in word_pairs]
+    # if opt.reverse:
+    word_pairs += [[p[1], p[0]] for p in word_pairs]
     all_config = list(product(n_blank_list, n_blank_b_list, n_blank_e_list))
 
     logging.info('GENERATE PROMPT FOR ANALOGY')
