@@ -15,7 +15,7 @@ def get_options():
     parser.add_argument('--n-blank-b', help='The number of beginning blank', default='0,1,2', type=str)
     parser.add_argument('--n-blank-e', help='The number of last blank', default='0,1,2', type=str)
     parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='bats', type=str)
-    parser.add_argument('-r', '--revision', help='The number of revision by language model', default=10, type=int)
+    parser.add_argument('-r', '--revision', help='The number of revision by language model', default=100, type=int)
     parser.add_argument('-l', '--length', help='Max length of language model', default=32, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
