@@ -263,6 +263,7 @@ class Prompter:
                     seed_sentences, vocab_to_keep=word_pairs, topk=topk, batch_size=batch_size)
                 edit.append(seed_sentences)
                 edit_ppl.append(ppl)
+
             edit = list(zip(*edit))
             edit_ppl = list(zip(*edit_ppl))
             if vocab_to_keep is None:
@@ -333,9 +334,6 @@ class Prompter:
         if type(seed_sentences) is str:
             seed_sentences = [seed_sentences]
 
-        # if mask is in sentence, it is first replaced, otherwise all tokens are considered
-        # data = list(map(
-        #     lambda x: self.encode_plus(x, token_wise_mask=self.tokenizer.mask_token not in x), seed_sentences))
         data = get_encoding(seed_sentences, self.tokenizer, self.max_length)
         partition = get_partition(data)
         data_loader = torch.utils.data.DataLoader(
@@ -442,7 +440,6 @@ class Prompter:
         self.__load_model()
         if type(sentences) is str:
             sentences = [sentences]
-        # data = list(map(lambda x: self.encode_plus(x, token_wise_mask=True), sentences))
         data = get_encoding(sentences, self.tokenizer, self.max_length, token_wise_mask=True)
         partition = get_partition(data)
         data_loader = torch.utils.data.DataLoader(
@@ -464,3 +461,7 @@ class Prompter:
                     zip(loss.cpu().tolist(), labels.cpu().tolist())
                 ))
         return list(map(lambda x: math.exp(sum(nll[x[0]:x[1]]) / (x[1] - x[0])), partition))
+
+    def release_cache(self):
+        if self.device == "cuda":
+            torch.cuda.empty_cache()
