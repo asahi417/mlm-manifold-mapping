@@ -66,50 +66,18 @@ class Dataset(torch.utils.data.Dataset):
         return {k: self.to_tensor(k, v) for k, v in self.data[idx].items()}
 
 
-class Prompter:
-    """ Prompt generator based on pretrained language models """
+class EncodePlus:
 
-    def __init__(self,
-                 model: str,
-                 max_length: int = 32,
-                 cache_dir: str = None,
-                 num_worker: int = 0):
-        """ Prompt generator based on pretrained language models
-
-        :param model: a model name corresponding to a model card in `transformers`
-        :param max_length: a model max length if specified, else use model_max_length
-        """
-        logging.debug('Initialize `Prompter`')
-        assert 'bert' in model, '{} is not BERT'.format(model)
-        self.num_worker = num_worker
-        self.model_name = model
-        self.cache_dir = cache_dir
-        self.device = None
-        self.model = None
-        self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir)
-        self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir)
+    def __init__(self, tokenizer, max_length):
+        self.tokenizer = tokenizer
         self.max_length = self.tokenizer.model_max_length
         if max_length:
             assert self.max_length >= max_length, '{} < {}'.format(self.max_length, max_length)
             self.max_length = max_length
-
         # sentence prefix tokens to fix offset when encoding sentence
         tokens = self.tokenizer.tokenize('get tokenizer specific prefix')
         tokens_encode = self.tokenizer.convert_ids_to_tokens(self.tokenizer.encode('get tokenizer specific prefix'))
         self.sp_token_prefix = tokens_encode[:tokens_encode.index(tokens[0])]
-
-    def __load_model(self):
-        """ Load pretrained language model """
-        if self.model:
-            return
-        logging.debug('loading language model')
-        self.model = transformers.AutoModelForMaskedLM.from_pretrained(
-            self.model_name, config=self.config, cache_dir=self.cache_dir)
-        self.model.eval()
-        # GPU setup
-        self.device = 'cuda' if torch.cuda.device_count() > 0 else 'cpu'
-        self.model.to(self.device)
-        logging.debug('running on {} GPU'.format(torch.cuda.device_count()))
 
     def input_ids_to_labels(self,
                             input_ids,
@@ -133,9 +101,7 @@ class Prompter:
                 label[p] = i
         return label
 
-    def encode_plus(self,
-                    sentence: str,
-                    token_wise_mask: bool = False):
+    def __call__(self, sentence, token_wise_mask: bool = False):
         """ Encoding sentence with label that is
         - masked token if `token_wise_mask` is False (mainly for token prediction)
         - otherwise every token that is not mask token (mainly for perplexity computation)
@@ -170,6 +136,44 @@ class Prompter:
 
             length = min(self.max_length - len(self.sp_token_prefix), len(token_list))
             return list(filter(None, map(encode_with_single_mask_id, range(length))))
+
+
+class Prompter:
+    """ Prompt generator based on pretrained language models """
+
+    def __init__(self,
+                 model: str,
+                 max_length: int = 32,
+                 cache_dir: str = None,
+                 num_worker: int = 0):
+        """ Prompt generator based on pretrained language models
+
+        :param model: a model name corresponding to a model card in `transformers`
+        :param max_length: a model max length if specified, else use model_max_length
+        """
+        logging.debug('Initialize `Prompter`')
+        assert 'bert' in model, '{} is not BERT'.format(model)
+        self.num_worker = num_worker
+        self.model_name = model
+        self.cache_dir = cache_dir
+        self.device = None
+        self.model = None
+        self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir)
+        self.encode_plus = EncodePlus(tokenizer=self.tokenizer, max_length=max_length)
+        self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir)
+
+    def __load_model(self):
+        """ Load pretrained language model """
+        if self.model:
+            return
+        logging.debug('loading language model')
+        self.model = transformers.AutoModelForMaskedLM.from_pretrained(
+            self.model_name, config=self.config, cache_dir=self.cache_dir)
+        self.model.eval()
+        # GPU setup
+        self.device = 'cuda' if torch.cuda.device_count() > 0 else 'cpu'
+        self.model.to(self.device)
+        logging.debug('running on {} GPU'.format(torch.cuda.device_count()))
 
     def cleanup_decode(self, sentence):
         """ Clean up sentence with toknizers special tokens """
