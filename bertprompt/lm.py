@@ -355,6 +355,7 @@ class Prompter:
                         if not all(count):
                             return None
                         # check if all tokens from keep_vocab just appeared once
+                        count = list(map(lambda x: len(re.findall(x, decoded_no_mask)), vocab_to_keep[partition_n]))
                         if not all(map(lambda x: x == 1, count)):
                             return None
                         return decoded, token_likelihood[k]
