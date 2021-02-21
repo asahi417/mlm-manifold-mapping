@@ -356,6 +356,7 @@ class Prompter:
                         decoded = self.tokenizer.decode(tokens, skip_special_tokens=False)
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
+                        print(decoded, decoded_no_mask)
                         if vocab_to_keep:
                             # check if all tokens from keep_vocab in the decoded sentence
                             v = vocab_to_keep[partition_n]
@@ -386,6 +387,7 @@ class Prompter:
                         topk_edit[0], vocab_to_keep[partition_n]))
 
             if len(topk_edit) == 0:
+                print()
                 raise ValueError('no valid sentence found: ({})\n- current prompt: {}'.format(
                     vocab_to_keep[partition_n], seed_sentences[partition_n]))
             # drop duplicated decode and keep the one with tje highest likelihood

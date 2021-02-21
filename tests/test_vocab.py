@@ -13,7 +13,7 @@ tests = [
     ['cat cats dogs dog', ['cat', 'dog'], False],
     ['dogs dogs', ['cat', 'dog'], False],
     ['evaporate is vapor', ['evaporate', 'vapor'], True],
-    ['jeer is a mock-up', ['jeer', 'mock'], True]
+    ['jeer s mock-up', ['jeer', 'mock'], True]
 ]
 
 for s, v, expect in tests:
