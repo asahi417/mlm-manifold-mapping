@@ -284,12 +284,11 @@ class Prompter:
             seed_sentences, ppl = self.replace_single_token(
                 seed_sentences, vocab_to_keep=vocab_to_keep, topk=topk, batch_size=batch_size)
 
-            # extract stable sentence
-            index_fixed = list(filter(lambda x: seed_sentences[x] == edit[x][-1], range(len(seed_sentences))))
-            output_dict.update({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
-
             # sentence keep improving
             index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
+            # extract stable sentence
+            index_fixed = list(filter(lambda x: x not in index_unfixed, range(len(seed_sentences))))
+            output_dict.update({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
             # index_unfixed = list(filter(lambda x: seed_sentences[x] != edit[x][-1], range(len(seed_sentences))))
             edit = list(map(lambda x: tuple(list(edit[x]) + [seed_sentences[x]]), index_unfixed))
             edit_ppl = list(map(lambda x: tuple(list(edit_ppl[x]) + [ppl[x]]), index_unfixed))
@@ -306,6 +305,7 @@ class Prompter:
             if i > n_revision:
                 break
             i += 1
+            print(len(index_fixed), len(index_unfixed))
             print(len(data_index), len(edit), len(edit_ppl), len(output_dict))
 
         output_dict.update({data_key[data_index[i]]: [edit[i], edit_ppl[i]] for i in range(len(data_index))})
