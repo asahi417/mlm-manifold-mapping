@@ -10,8 +10,14 @@ import bertprompt
 
 def get_options():
     parser = argparse.ArgumentParser(description='Run analogy test')
+    parser.add_argument('-t', '--transformers-model',
+                        help='Language model alias from transformers model hub (single model only)',
+                        required=True, type=str)
     parser.add_argument('-l', '--length', help='Max length of language model', default=16, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
+    parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
+    parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='bats', type=str)
+    parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
     parser.add_argument('--reverse', help='Use the reverse mode', action='store_true')
     parser.add_argument('--debug', help='Show debug log', action='store_true')
@@ -20,9 +26,6 @@ def get_options():
 
 
 def get_best_prompt(file_list):
-    _dir = os.path.dirname(file_list)
-    _filename = '{}/prompt_dict.best.json'.format(_dir)
-    # if os.path.exists(_filename):
 
     def safe_load(_file):
         with open(_file, 'r') as f:
@@ -45,22 +48,32 @@ def main():
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
     logging.info('RUN ANALOGY TEST WITH PROMPT')
     accuracy_full = {}
-    list_prompt = glob('{}/prompt_dict*json'.format(opt.output_dir))
-    # if opt.best:
-    #     prompts = [get_best_prompt(list_prompt)]
-    # else:
-    #     prompts
+    list_prompt = glob('{}/prompt_dict.{}.{}.{}*json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk))
+    if opt.best:
+        file_best_prompt = '{}/prompt_dict.{}.{}.{}.best.json'.format(
+            opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+        if not os.path.exists(file_best_prompt):
+            best_prompt = get_best_prompt(list_prompt)
+            with open(file_best_prompt, 'w') as f:
+                json.dump(best_prompt, f)
+        list_prompt = [file_best_prompt]
 
     for _file in list_prompt:
         logging.info('Running inference on {}'.format(_file))
         filename = os.path.basename(_file).replace('.json', '')
-        _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
-        val, test = bertprompt.get_analogy_data(data)
-        full_data = val + test
+
         with open(_file, 'r') as f:
             prompt_dict = json.load(f)
-        output_file = '{}/result.{}.{}.{}.{}.{}.{}.pkl'.format(
-            opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
+        if 'best' in filename:
+            _, data, model, topk = filename.split('.')
+            output_file = '{}/result.{}.{}.{}.best.pkl'.format(
+                opt.output_dir, data, model, topk)
+        else:
+            _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
+            output_file = '{}/result.{}.{}.{}.{}.{}.{}.pkl'.format(
+                opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
+        val, test = bertprompt.get_analogy_data(data)
+        full_data = val + test
         if opt.reverse:
             output_file = output_file.replace('.pkl', '.reverse.pkl')
 
