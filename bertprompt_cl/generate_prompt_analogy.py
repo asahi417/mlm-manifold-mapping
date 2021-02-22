@@ -62,6 +62,7 @@ def main():
         for n in range(0, len(word_pairs), opt.max_data_size):
             logging.info('subset: {}:{}'.format(n, min(n+opt.max_data_size, len(word_pairs))))
             word_pairs_sub = word_pairs[n:min(n+opt.max_data_size, len(word_pairs))]
+            print(len(word_pairs_sub))
             output_dict_tmp = prompter.generate(
                 word_pairs_sub,
                 n_blank=n_blank,
@@ -70,7 +71,9 @@ def main():
                 batch_size=opt.batch,
                 topk=opt.topk,
                 n_revision=opt.revision)
+            print(len(output_dict_tmp))
             output_dict.update(output_dict_tmp)
+            print(len(output_dict))
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         logging.info('exporting output to {}'.format(filename))
         with open(filename, 'w') as f:

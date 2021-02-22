@@ -13,7 +13,9 @@ def get_options():
     parser.add_argument('-l', '--length', help='Max length of language model', default=16, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
+    parser.add_argument('--reverse', help='Use the reverse mode', action='store_true')
     parser.add_argument('--debug', help='Show debug log', action='store_true')
+    parser.add_argument('--best', help='Use the prompt that achieves the best perplexity', action='store_true')
     return parser.parse_args()
 
 
@@ -23,7 +25,12 @@ def main():
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
     logging.info('RUN ANALOGY TEST WITH PROMPT')
     accuracy_full = {}
-    for _file in glob('{}/prompt_dict*json'.format(opt.output_dir)):
+    list_prompt = glob('{}/prompt_dict*json'.format(opt.output_dir))
+    # if opt.best:
+    #
+    # opt.reverse
+
+    for _file in list_prompt:
         logging.info('Running inference on {}'.format(_file))
         filename = os.path.basename(_file).replace('.json', '')
         _, data, model, n_blank, n_blank_b, n_blank_e = filename.split('.')
