@@ -58,7 +58,6 @@ def main():
             logging.info('skip as the output found at: {}'.format(filename))
             continue
 
-        dict_list = []
         output_dict = {}
         for n in range(0, len(word_pairs), opt.max_data_size):
             logging.info('subset: {}:{}'.format(n, min(n+opt.max_data_size, len(word_pairs))))
@@ -71,8 +70,6 @@ def main():
                 batch_size=opt.batch,
                 topk=opt.topk,
                 n_revision=opt.revision)
-            # print(len(output_dict_tmp))
-            # dict_list.append(output_dict_tmp)
             output_dict.update(output_dict_tmp)
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         logging.info('exporting output to {}'.format(filename))

@@ -236,10 +236,6 @@ class Prompter:
         :param n_blank_e: see Prompter.pair_to_seed
         :return:
         """
-        print()
-        print(len(word_pairs))
-        print()
-
         if seed_sentences:
             assert not word_pairs, 'both of `seed_sentences` and `word_pairs` are given'
             if type(seed_sentences) is str:
@@ -272,12 +268,9 @@ class Prompter:
             edit_ppl = list(zip(*edit_ppl))
             if vocab_to_keep is None:
                 vocab_to_keep = word_pairs
-        print(len(edit), len(edit_ppl))
-        input()
         logging.info('### ITERATIVE REVISION ###')
         output_dict = {}
         data_index = list(data_key.keys())
-        print(len(data_index))
         i = 0
         while True:
             logging.info('ITERATIVE REVISION: step {} (max {} steps)'.format(i + 1, n_revision))
@@ -289,7 +282,6 @@ class Prompter:
             # extract stable sentence
             index_fixed = list(filter(lambda x: x not in index_unfixed, range(len(seed_sentences))))
             output_dict.update({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
-            # index_unfixed = list(filter(lambda x: seed_sentences[x] != edit[x][-1], range(len(seed_sentences))))
             edit = list(map(lambda x: tuple(list(edit[x]) + [seed_sentences[x]]), index_unfixed))
             edit_ppl = list(map(lambda x: tuple(list(edit_ppl[x]) + [ppl[x]]), index_unfixed))
 
@@ -305,11 +297,9 @@ class Prompter:
             if i > n_revision:
                 break
             i += 1
-            print(len(index_fixed), len(index_unfixed))
-            print(len(data_index), len(edit), len(edit_ppl), len(output_dict))
 
         output_dict.update({data_key[data_index[i]]: [edit[i], edit_ppl[i]] for i in range(len(data_index))})
-        print(len(output_dict))
+        assert len(word_pairs) == len(output_dict)
         return output_dict
 
     def replace_single_token(self,
