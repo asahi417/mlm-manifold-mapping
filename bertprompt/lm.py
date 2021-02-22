@@ -283,7 +283,8 @@ class Prompter:
             output_dict.update({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
 
             # sentence keep improving
-            index_unfixed = list(filter(lambda x: seed_sentences[x] != edit[x][-1], range(len(seed_sentences))))
+            index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
+            # index_unfixed = list(filter(lambda x: seed_sentences[x] != edit[x][-1], range(len(seed_sentences))))
             edit = list(map(lambda x: tuple(list(edit[x]) + [seed_sentences[x]]), index_unfixed))
             edit_ppl = list(map(lambda x: tuple(list(edit_ppl[x]) + [ppl[x]]), index_unfixed))
 
