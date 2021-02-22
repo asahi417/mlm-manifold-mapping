@@ -22,7 +22,7 @@ def get_options():
 def get_best_prompt(file_list):
     _dir = os.path.dirname(file_list)
     _filename = '{}/prompt_dict.best.json'.format(_dir)
-    if os.path.exists(_filename):
+    # if os.path.exists(_filename):
 
     def safe_load(_file):
         with open(_file, 'r') as f:
