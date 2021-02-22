@@ -268,7 +268,6 @@ class Prompter:
             edit_ppl = list(zip(*edit_ppl))
             if vocab_to_keep is None:
                 vocab_to_keep = word_pairs
-        print(len(seed_sentences))
         logging.info('### ITERATIVE REVISION ###')
         output_dict = {}
         data_index = list(data_key.keys())
@@ -289,10 +288,9 @@ class Prompter:
             seed_sentences = list(map(lambda x: seed_sentences[x], index_unfixed))
             ppl = list(map(lambda x: ppl[x], index_unfixed))
             data_index = list(map(lambda x: data_index[x], index_unfixed))
-            if vocab_to_keep is not None:
+            if vocab_to_keep:
                 vocab_to_keep = list(map(lambda x: vocab_to_keep[x], index_unfixed))
 
-            print(len(index_unfixed), len(index_fixed), len(output_dict), len(seed_sentences), len(data_key))
             if len(seed_sentences) == 0:
                 logging.info('ITERATIVE REVISION: all sentences reached the best perplexity')
                 break
@@ -301,7 +299,6 @@ class Prompter:
             i += 1
 
         output_dict.update({data_key[data_index[i]]: [edit[i], edit_ppl[i]] for i in range(len(data_index))})
-        assert len(word_pairs) == len(output_dict), '{} != {}'.format(len(word_pairs), len(output_dict))
         return output_dict
 
     def replace_single_token(self,
