@@ -31,7 +31,7 @@ def main():
         full_data = val + test
         with open(_file, 'r') as f:
             prompt_dict = json.load(f)
-        output_file = '{}/result.{}.{}.{}.{}.pkl'.format(opt.output_dir, data, model, n_blank, n_blank_b, n_blank_e)
+        output_file = '{}/result.{}.{}.{}.{}.{}.pkl'.format(opt.output_dir, data, model, n_blank, n_blank_b, n_blank_e)
 
         if os.path.exists(output_file):
             with open(output_file, "rb") as fp:
