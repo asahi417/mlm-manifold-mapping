@@ -20,6 +20,9 @@ def get_options():
 
 
 def get_best_prompt(file_list):
+    _dir = os.path.dirname(file_list)
+    _filename = '{}/prompt_dict.best.json'.format(_dir)
+    if os.path.exists(_filename):
 
     def safe_load(_file):
         with open(_file, 'r') as f:
@@ -51,12 +54,13 @@ def main():
     for _file in list_prompt:
         logging.info('Running inference on {}'.format(_file))
         filename = os.path.basename(_file).replace('.json', '')
-        _, data, model, n_blank, n_blank_b, n_blank_e = filename.split('.')
+        _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
         val, test = bertprompt.get_analogy_data(data)
         full_data = val + test
         with open(_file, 'r') as f:
             prompt_dict = json.load(f)
-        output_file = '{}/result.{}.{}.{}.{}.{}.pkl'.format(opt.output_dir, data, model, n_blank, n_blank_b, n_blank_e)
+        output_file = '{}/result.{}.{}.{}.{}.{}.{}.pkl'.format(
+            opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
         if opt.reverse:
             output_file = output_file.replace('.pkl', '.reverse.pkl')
 

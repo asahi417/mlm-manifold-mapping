@@ -268,7 +268,7 @@ class Prompter:
             edit_ppl = list(zip(*edit_ppl))
             if vocab_to_keep is None:
                 vocab_to_keep = word_pairs
-            print(len(word_pairs))
+        print(len(seed_sentences))
         logging.info('### ITERATIVE REVISION ###')
         output_dict = {}
         data_index = list(data_key.keys())
@@ -283,13 +283,13 @@ class Prompter:
             # extract stable sentence
             index_fixed = list(filter(lambda x: x not in index_unfixed, range(len(seed_sentences))))
             output_dict.update({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
+
             edit = list(map(lambda x: tuple(list(edit[x]) + [seed_sentences[x]]), index_unfixed))
             edit_ppl = list(map(lambda x: tuple(list(edit_ppl[x]) + [ppl[x]]), index_unfixed))
-
             seed_sentences = list(map(lambda x: seed_sentences[x], index_unfixed))
             ppl = list(map(lambda x: ppl[x], index_unfixed))
             data_index = list(map(lambda x: data_index[x], index_unfixed))
-            if vocab_to_keep:
+            if vocab_to_keep is not None:
                 vocab_to_keep = list(map(lambda x: vocab_to_keep[x], index_unfixed))
 
             print(len(index_unfixed), len(index_fixed), len(output_dict), len(seed_sentences), len(data_key))

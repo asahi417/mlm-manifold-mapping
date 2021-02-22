@@ -38,8 +38,10 @@ def main():
     val, test = bertprompt.get_analogy_data(opt.data)
     word_pairs = list(chain(*[[i['stem']] + i['choice'] for i in val]))
     word_pairs += list(chain(*[[i['stem']] + i['choice'] for i in test]))
-    # if opt.reverse:
     word_pairs += [[p[1], p[0]] for p in word_pairs]
+    # drop duplicated pair
+    word_pairs_set = {'||'.join(i) for i in word_pairs}
+    word_pairs = [i.split('||') for i in word_pairs_set]
     all_config = list(product(n_blank_list, n_blank_b_list, n_blank_e_list))
 
     logging.info('GENERATE PROMPT FOR ANALOGY')
@@ -52,7 +54,7 @@ def main():
     for i, (n_blank, n_blank_b, n_blank_e) in enumerate(all_config):
         logging.info('CONFIG {}/{}: blank: {}, blank_b: {}, blank_e: {}'.format(
             i + 1, len(all_config), n_blank, n_blank_b, n_blank_e))
-        filename = '{}/prompt_dict.{}.{}.top{}.{}.{}.{}.json'.format(
+        filename = '{}/prompt_dict.{}.{}.{}.{}.{}.{}.json'.format(
             opt.output_dir, opt.data, opt.transformers_model, opt.topk, n_blank, n_blank_b, n_blank_e)
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
