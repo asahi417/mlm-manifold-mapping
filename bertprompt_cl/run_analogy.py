@@ -87,7 +87,7 @@ def main():
             else:
                 output_file_ = output_file
             if os.path.exists(output_file_):
-                with open(output_file, "rb") as fp:
+                with open(output_file_, "rb") as fp:
                     score_flat = pickle.load(fp)
                 return score_flat
 
@@ -121,7 +121,7 @@ def main():
         _score_flat = _main()
         _score_flat_r = _main(True)
         print(_score_flat==_score_flat_r)
-        input()
+
         _score_flat_c = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
         accuracy_full[filename] = _accuracy(_score_flat)
         accuracy_full[filename + '.reverse'] = _accuracy(_score_flat_r)
