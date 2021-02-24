@@ -104,7 +104,7 @@ def main():
 
             prompter = bertprompt.Prompter(model, opt.length)
             score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
-            with open(output_file, 'wb') as fp:
+            with open(output_file_, 'wb') as fp:
                 pickle.dump(score_flat, fp)
 
             return score_flat
