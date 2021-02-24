@@ -109,19 +109,21 @@ def main():
 
             return score_flat
 
+        def _accuracy(__score_flat):
+            score = [__score_flat[s_:e_] for s_, e_ in partition]
+            accuracy = []
+            assert len(score) == len(list_answer)
+            for a, s in zip(list_answer, score):
+                p = s.index(min(s))
+                accuracy.append(int(a == p))
+            return sum(accuracy) / len(accuracy)
+
         _score_flat = _main()
-        if opt.reverse:
-            _score_flat_r = _main(True)
-            _score_flat = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
-        score = [_score_flat[s_:e_] for s_, e_ in partition]
-        accuracy = []
-        assert len(score) == len(list_answer)
-        for a, s in zip(list_answer, score):
-            p = s.index(min(s))
-            accuracy.append(int(a == p))
-        accuracy = sum(accuracy) / len(accuracy)
-        accuracy_full[filename] = accuracy
-        logging.info('Accuracy: {}'.format(accuracy))
+        _score_flat_r = _main(True)
+        _score_flat_c = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
+        accuracy_full[filename] = _accuracy(_score_flat)
+        accuracy_full[filename + '.reverse'] = _accuracy(_score_flat_r)
+        accuracy_full[filename + '.combine'] = _accuracy(_score_flat_r)
     logging.info('All result:\n{}'.format(accuracy_full))
     with open('{}/result.{}.{}.{}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk), 'w') as f:
         json.dump(accuracy_full, f)
