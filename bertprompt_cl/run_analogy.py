@@ -47,7 +47,9 @@ def main():
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
     logging.info('RUN ANALOGY TEST WITH PROMPT')
     accuracy_full = {}
+    print('{}/prompt_dict.{}.{}.{}*json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk))
     list_prompt = glob('{}/prompt_dict.{}.{}.{}*json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk))
+    assert len(list_prompt)
     if opt.best:
         file_best_prompt = '{}/prompt_dict.{}.{}.{}.best.json'.format(
             opt.output_dir, opt.data, opt.transformers_model, opt.topk)
