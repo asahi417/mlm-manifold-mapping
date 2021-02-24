@@ -32,10 +32,8 @@ def get_best_prompt(file_list):
     list_prompt = list(map(safe_load, file_list))
     optimal_prompt = {}
     for k in list_prompt[0].keys():
-        prompts = list(chain(*[p[k][0] for p in list_prompt]))
+        prompts = list(chain(*[p[k][0][1:] for p in list_prompt]))
         scores = list(chain(*[p[k][1] for p in list_prompt]))
-        print(k)
-        print(scores, prompts)
         assert len(prompts) == len(scores), '{} != {}'.format(len(prompts), len(scores))
         best_index = scores.index(min(scores))
         optimal_prompt[k] = [[prompts[best_index]], [scores[best_index]]]
@@ -67,7 +65,7 @@ def main():
         with open(_file, 'r') as f:
             prompt_dict = json.load(f)
         if 'best' in filename:
-            _, data, model, topk = filename.split('.')
+            _, data, model, topk, _ = filename.split('.')
             output_file = '{}/result.{}.{}.{}.best.pkl'.format(
                 opt.output_dir, data, model, topk)
         else:
@@ -121,8 +119,6 @@ def main():
 
         _score_flat = _main()
         _score_flat_r = _main(True)
-        print(_score_flat==_score_flat_r)
-
         _score_flat_c = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
         accuracy_full[filename] = _accuracy(_score_flat)
         accuracy_full[filename + '.reverse'] = _accuracy(_score_flat_r)
