@@ -25,7 +25,8 @@ def main():
     opt = get_options()
     level = logging.DEBUG if opt.debug else logging.INFO
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
-    models = opt.transformers_model.split(',')
+    models = sorted(opt.transformers_model.split(','))
+    models_str = '_'.join(models)
     logging.info('GENERATE PROMPT FOR LAMA: {}'.format(models))
     data = bertprompt.get_lama_data(transformers_model=models)
     for i, model in enumerate(models):
@@ -44,7 +45,7 @@ def main():
         logging.info('Experiment {}'.format(i + 1))
         logging.info('\t * model: {}'.format(model))
         logging.info('\t * data : {}'.format(len(seed_prompt)))
-        filename = '{}/prompt_dict.{}.{}.{}.json'.format(opt.output_dir, model, opt.topk, opt.revision)
+        filename = '{}/{}/prompt_dict.{}{}.{}.json'.format(opt.output_dir, models_str, model, opt.topk, opt.revision)
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
             continue
