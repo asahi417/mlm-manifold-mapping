@@ -120,8 +120,7 @@ def main():
 
         _score_flat = _main()
         _score_flat_r = _main(True)
-        print(_score_flat)
-        print(_score_flat_r)
+        print(_score_flat==_score_flat_r)
         input()
         _score_flat_c = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
         accuracy_full[filename] = _accuracy(_score_flat)
