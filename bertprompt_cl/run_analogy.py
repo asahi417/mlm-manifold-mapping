@@ -16,7 +16,7 @@ def get_options():
     parser.add_argument('-l', '--length', help='Max length of language model', default=16, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='bats', type=str)
-    parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
+    parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=10, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
     parser.add_argument('--reverse', help='Use the reverse mode', action='store_true')
     parser.add_argument('--debug', help='Show debug log', action='store_true')
@@ -117,7 +117,7 @@ def main():
         accuracy_full[filename] = accuracy
         logging.info('Accuracy: {}'.format(accuracy))
     logging.info('All result:\n{}'.format(accuracy_full))
-    with open('{}/result.json'.format(opt.output_dir), 'w') as f:
+    with open('{}/result.{}.{}.{}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk), 'w') as f:
         json.dump(accuracy_full, f)
     logging.info('exported to {}/result.json'.format(opt.output_dir))
 
