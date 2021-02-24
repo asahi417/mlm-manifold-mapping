@@ -18,7 +18,6 @@ def get_options():
     parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='bats', type=str)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=10, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
-    parser.add_argument('--reverse', help='Use the reverse mode', action='store_true')
     parser.add_argument('--debug', help='Show debug log', action='store_true')
     parser.add_argument('--best', help='Use the prompt that achieves the best perplexity', action='store_true')
     return parser.parse_args()
@@ -35,6 +34,8 @@ def get_best_prompt(file_list):
     for k in list_prompt[0].keys():
         prompts = list(chain(*[p[k][0] for p in list_prompt]))
         scores = list(chain(*[p[k][1] for p in list_prompt]))
+        print(k)
+        print(scores, prompts)
         assert len(prompts) == len(scores), '{} != {}'.format(len(prompts), len(scores))
         best_index = scores.index(min(scores))
         optimal_prompt[k] = [[prompts[best_index]], [scores[best_index]]]
