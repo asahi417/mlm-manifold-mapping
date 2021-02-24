@@ -75,39 +75,45 @@ def main():
                 opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
         val, test = bertprompt.get_analogy_data(data)
         full_data = val + test
-        if opt.reverse:
-            output_file = output_file.replace('.pkl', '.reverse.pkl')
 
-        if os.path.exists(output_file):
-            with open(output_file, "rb") as fp:
-                score = pickle.load(fp)
-            list_answer = [data['answer'] for data in full_data]
-        else:
-            prompter = bertprompt.Prompter(model, opt.length)
-            list_answer, list_prompt, list_prompt_reverse = [], [], []
-            for data in full_data:
-                list_answer.append(data['answer'])
-                h, t = data['stem']
-                all_template, all_score = prompt_dict['||'.join([h, t])]
-                all_template_r, all_score_r = prompt_dict['||'.join([t, h])]
+        # get data
+        list_answer = [data_['answer'] for data_ in full_data]
+        list_choice = [data_['choice'] for data_ in full_data]
+        partition = bertprompt.get_partition(list_choice)
+
+        def _main(reverse: bool = False):
+            if reverse:
+                output_file_ = output_file.replace('.pkl', '.reverse.pkl')
+            else:
+                output_file_ = output_file
+            if os.path.exists(output_file_):
+                with open(output_file, "rb") as fp:
+                    score_flat = pickle.load(fp)
+                return score_flat
+
+            list_p = []
+            for data_ in full_data:
+                h, t = data_['stem']
+                if reverse:
+                    all_template, all_score = prompt_dict['||'.join([t, h])]
+                else:
+                    all_template, all_score = prompt_dict['||'.join([h, t])]
                 template = all_template[-1]
-                template_r = all_template_r[-1]
                 assert h in template and t in template, '{} and {} not in {}'.format(h, t, template)
-                assert h in template_r and t in template_r, '{} and {} not in {}'.format(h, t, template_r)
-                list_prompt.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data['choice']])
-                list_prompt_reverse.append([template_r.replace(h, h_c).replace(t, t_c) for h_c, t_c in data['choice']])
+                list_p.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
 
-            partition = bertprompt.get_partition(list_prompt)
-            score = prompter.get_perplexity(list(chain(*list_prompt)), batch_size=opt.batch)
-            score = [score[s:e] for s, e in partition]
-            if opt.reverse:
-                partition_r = bertprompt.get_partition(list_prompt_reverse)
-                score_r = prompter.get_perplexity(list(chain(*list_prompt_reverse)), batch_size=opt.batch)
-                score_r = [score_r[s:e] for s, e in partition_r]
-                score = list(map(lambda x: sum(x), zip(score, score_r)))
-
+            prompter = bertprompt.Prompter(model, opt.length)
+            score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
             with open(output_file, 'wb') as fp:
-                pickle.dump(score, fp)
+                pickle.dump(score_flat, fp)
+
+            return score_flat
+
+        _score_flat = _main()
+        if opt.reverse:
+            _score_flat_r = _main(True)
+            _score_flat = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
+        score = [_score_flat[s_:e_] for s_, e_ in partition]
         accuracy = []
         assert len(score) == len(list_answer)
         for a, s in zip(list_answer, score):
