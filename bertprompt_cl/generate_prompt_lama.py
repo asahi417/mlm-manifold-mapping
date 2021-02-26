@@ -63,9 +63,10 @@ def main():
                     output_dict_tmp = json.load(f)
             else:
                 seed_prompt_sub = seed_prompt[n:end]
+                vocab_to_keep_sub = vocab_to_keep[n:end]
                 output_dict_tmp = prompter.generate(
                     seed_sentences=seed_prompt_sub,
-                    vocab_to_keep=vocab_to_keep,
+                    vocab_to_keep=vocab_to_keep_sub,
                     batch_size=opt.batch,
                     topk=opt.topk,
                     n_revision=opt.revision)
