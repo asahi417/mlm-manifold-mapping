@@ -48,6 +48,7 @@ def main():
         logging.info('\t * model          : {}'.format(model))
         logging.info('\t * unique template: {}'.format(len(seed_prompt)))
         filename = '{}/{}/prompt_dict.{}.{}.{}.json'.format(opt.output_dir, models_str, model, opt.topk, opt.revision)
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
             continue
@@ -74,7 +75,6 @@ def main():
                     json.dump(output_dict_tmp, f)
             output_dict.update(output_dict_tmp)
 
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
         logging.info('experiment finished, exporting result to {}'.format(filename))
         with open(filename, 'w') as f:
             json.dump(output_dict, f)
