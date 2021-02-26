@@ -84,13 +84,12 @@ class EncodePlus:
                 label[p] = i
         return label
 
-    def __call__(self, sentence, token_wise_mask: bool = False):
+    def __call__(self, sentence):
         """ Encoding sentence with label that is
         - masked token if `token_wise_mask` is False (mainly for token prediction)
         - otherwise every token that is not mask token (mainly for perplexity computation)
 
         :param sentence: a string sentence
-        :param token_wise_mask: (optional) to encode the sentence with a mask on each position
         :return: a list of the output from tokenizer.encode_plus
         """
         if self.token_wise_mask is not None:
@@ -240,8 +239,9 @@ class Prompter:
             assert not word_pairs, 'both of `seed_sentences` and `word_pairs` are given'
             if type(seed_sentences) is str:
                 seed_sentences = [seed_sentences]
+            ppl = self.get_perplexity(seed_sentences)
             edit = [[s] for s in seed_sentences]
-            edit_ppl = [[]] * len(seed_sentences)
+            edit_ppl = [[s] for s in ppl]
             data_key = {k: v for k, v in enumerate(seed_sentences)}
         else:
             assert word_pairs, 'either of `seed_sentences` or `word_pairs` is required'
@@ -252,7 +252,7 @@ class Prompter:
             data_key = {k: '||'.join(v) for k, v in enumerate(word_pairs)}
             logging.info('### REPLACE MASK ###')
             edit = [seed_sentences]
-            edit_ppl = []
+            edit_ppl = [self.get_perplexity(seed_sentences)]
             while True:
                 if any(map(lambda x: self.tokenizer.mask_token not in x, seed_sentences)):
                     # mask should be removed one by one, but some has skipped if this raises error
@@ -260,7 +260,10 @@ class Prompter:
                     break
                 logging.info('REPLACE MASK: step {}'.format(1 + len(edit_ppl)))
                 seed_sentences, ppl = self.replace_single_token(
-                    seed_sentences, vocab_to_keep=word_pairs, topk=topk, batch_size=batch_size)
+                    seed_sentences,
+                    vocab_to_keep=word_pairs,
+                    topk=topk,
+                    batch_size=batch_size)
                 edit.append(seed_sentences)
                 edit_ppl.append(ppl)
 
@@ -273,9 +276,17 @@ class Prompter:
         data_index = list(data_key.keys())
         i = 0
         while True:
+            if i > n_revision:
+                logging.info('ITERATIVE REVISION: reached max revision step')
+                break
             logging.info('ITERATIVE REVISION: step {} (max {} steps)'.format(i + 1, n_revision))
             seed_sentences, ppl = self.replace_single_token(
-                seed_sentences, vocab_to_keep=vocab_to_keep, topk=topk, batch_size=batch_size)
+                seed_sentences,
+                vocab_to_keep=vocab_to_keep,
+                topk=topk,
+                batch_size=batch_size,
+                token_wise_mask=True
+            )
 
             # sentence keep improving
             index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
@@ -294,8 +305,6 @@ class Prompter:
             if len(seed_sentences) == 0:
                 logging.info('ITERATIVE REVISION: all sentences reached the best perplexity')
                 break
-            if i > n_revision:
-                break
             i += 1
 
         output_dict.update({data_key[data_index[i]]: [edit[i], edit_ppl[i]] for i in range(len(data_index))})
@@ -305,7 +314,8 @@ class Prompter:
                              seed_sentences: List,
                              vocab_to_keep: List = None,
                              batch_size: int = 4,
-                             topk: int = 5):
+                             topk: int = 5,
+                             token_wise_mask: bool = None):
         """ Replace single token (run parallel over given lists)
         - (i) Greedy token prediction: predict token by masking each token or masked token if sentence consists of mask
         - (ii) Perplexity re-ranking: choose the best replaced sentence that achieves the best perplexity
@@ -332,14 +342,14 @@ class Prompter:
         if type(seed_sentences) is str:
             seed_sentences = [seed_sentences]
 
-        data = get_encoding(seed_sentences, self.tokenizer, self.max_length)
+        data = get_encoding(seed_sentences, self.tokenizer, self.max_length, token_wise_mask=token_wise_mask)
         partition = get_partition(data)
         data_loader = torch.utils.data.DataLoader(
             Dataset(list(chain(*data))),
             num_workers=self.num_worker, batch_size=batch_size, shuffle=False, drop_last=False)
 
         logging.debug('\t* prediction on masked tokens')
-        total_input, total_val, total_ind = [], [], []
+        total_input, total_val, total_ind, labels = [], [], [], []
         with torch.no_grad():
             for encode in tqdm(data_loader):
                 encode = {k: v.to(self.device) for k, v in encode.items()}
@@ -349,17 +359,35 @@ class Prompter:
                 total_input += encode.pop('input_ids').tolist()
                 total_val += values.tolist()
                 total_ind += indices.tolist()
+                if 'labels' in encode:
+                    labels += encode.pop('labels').tolist()
 
         greedy_filling = []
         logging.debug('\t* filter to top {} prediction'.format(topk))
         for partition_n, (s, e) in enumerate(tqdm(partition)):
+            v = None
+            v_mask = False
+            if vocab_to_keep:
+                # check if all tokens from keep_vocab in the decoded sentence
+                v = vocab_to_keep[partition_n]
+                if type(v) is str:
+                    v = [v]
+                if self.tokenizer.mask_token in v:
+                    v = v.copy()
+                    v.pop(v.index(self.tokenizer.mask_token))
+                    v_mask = True
 
             def process_single_pair(_topk, allow_subword=False):
                 topk_decoded = []
                 for i in range(s, e):
                     inp, val, ind = total_input[i], total_val[i], total_ind[i]
-                    filtered = list(filter(
-                        lambda x: inp[x[0]] == self.tokenizer.mask_token_id, enumerate(zip(val, ind))))
+                    if labels:
+                        label = labels[i]
+                        filtered = list(filter(
+                            lambda x: label[x[0]] != PAD_TOKEN_LABEL_ID, enumerate(zip(val, ind))))
+                    else:
+                        filtered = list(filter(
+                            lambda x: inp[x[0]] == self.tokenizer.mask_token_id, enumerate(zip(val, ind))))
 
                     def decode_topk(k, replace_pos, token_index, token_likelihood):
                         tokens = deepcopy(inp)
@@ -367,9 +395,7 @@ class Prompter:
                         decoded = self.tokenizer.decode(tokens, skip_special_tokens=False)
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
-                        if vocab_to_keep:
-                            # check if all tokens from keep_vocab in the decoded sentence
-                            v = vocab_to_keep[partition_n]
+                        if v:
                             if allow_subword:
                                 if not all(map(lambda x: len(re.findall(x, decoded_no_mask)), v)):
                                     return None
@@ -378,9 +404,10 @@ class Prompter:
                                     return None
 
                             # check if all tokens from keep_vocab just appeared once
-
                             if not check_vocab(decoded_no_mask, v):
                                 return None
+                        if v_mask and self.tokenizer.mask_token not in decoded:
+                            return None
 
                         return decoded, token_likelihood[k]
 

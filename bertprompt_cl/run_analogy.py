@@ -19,7 +19,6 @@ def get_options():
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=10, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
     parser.add_argument('--debug', help='Show debug log', action='store_true')
-    parser.add_argument('--best', help='Use the prompt that achieves the best perplexity', action='store_true')
     return parser.parse_args()
 
 
@@ -32,7 +31,7 @@ def get_best_prompt(file_list):
     list_prompt = list(map(safe_load, file_list))
     optimal_prompt = {}
     for k in list_prompt[0].keys():
-        prompts = list(chain(*[p[k][0][1:] for p in list_prompt]))
+        prompts = list(chain(*[p[k][0] for p in list_prompt]))
         scores = list(chain(*[p[k][1] for p in list_prompt]))
         assert len(prompts) == len(scores), '{} != {}'.format(len(prompts), len(scores))
         best_index = scores.index(min(scores))
@@ -46,17 +45,17 @@ def main():
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
     logging.info('RUN ANALOGY TEST WITH PROMPT')
     accuracy_full = {}
-    path = '{}/prompt_dict.{}.{}.{}*json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+    path = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}*json'.format(
+        opt.output_dir, opt.data, opt.transformers_model, opt.topk)
     list_prompt = glob(path)
     assert len(list_prompt), path
-    if opt.best:
-        file_best_prompt = '{}/prompt_dict.{}.{}.{}.best.json'.format(
-            opt.output_dir, opt.data, opt.transformers_model, opt.topk)
-        if not os.path.exists(file_best_prompt):
-            best_prompt = get_best_prompt(list_prompt)
-            with open(file_best_prompt, 'w') as f:
-                json.dump(best_prompt, f)
-        list_prompt = [file_best_prompt]
+    file_best_prompt = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}.best.json'.format(
+        opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+    if not os.path.exists(file_best_prompt):
+        best_prompt = get_best_prompt(list_prompt)
+        with open(file_best_prompt, 'w') as f:
+            json.dump(best_prompt, f)
+    list_prompt += [file_best_prompt]
 
     for _file in list_prompt:
         logging.info('Running inference on {}'.format(_file))
@@ -66,11 +65,11 @@ def main():
             prompt_dict = json.load(f)
         if 'best' in filename:
             _, data, model, topk, _ = filename.split('.')
-            output_file = '{}/result.{}.{}.{}.best.pkl'.format(
+            output_file = '{0}/{1}/result/result.{1}.{2}.{3}.best.pkl'.format(
                 opt.output_dir, data, model, topk)
         else:
             _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
-            output_file = '{}/result.{}.{}.{}.{}.{}.{}.pkl'.format(
+            output_file = '{0}/{1}/result/result.{1}.{2}.{3}.{4}.{5}.{6}.pkl'.format(
                 opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
         val, test = bertprompt.get_analogy_data(data)
         full_data = val + test
@@ -120,13 +119,13 @@ def main():
         _score_flat = _main()
         _score_flat_r = _main(True)
         _score_flat_c = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
-        accuracy_full[filename] = _accuracy(_score_flat)
-        accuracy_full[filename + '.reverse'] = _accuracy(_score_flat_r)
-        accuracy_full[filename + '.combine'] = _accuracy(_score_flat_c)
-    logging.info('All result:\n{}'.format(accuracy_full))
-    with open('{}/result.{}.{}.{}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk), 'w') as f:
+        accuracy_full[filename.replace('prompt_dict.', '') + '.org'] = _accuracy(_score_flat)
+        accuracy_full[filename.replace('prompt_dict.', '') + '.rev'] = _accuracy(_score_flat_r)
+        accuracy_full[filename.replace('prompt_dict.', '') + '.com'] = _accuracy(_score_flat_c)
+    logging.info('All result:\n{}'.format(json.dumps(accuracy_full, indent=4, sort_keys=True)))
+    path = '{0}/{1}/summary.{1}.{2}.{3}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+    with open(path, 'w') as f:
         json.dump(accuracy_full, f)
-    logging.info('exported to {}/result.json'.format(opt.output_dir))
 
 
 if __name__ == '__main__':
