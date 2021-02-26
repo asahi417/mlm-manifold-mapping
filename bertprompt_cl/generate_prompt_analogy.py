@@ -2,8 +2,11 @@
 import argparse
 import json
 import os
-from itertools import chain, product
+import shutil
 import logging
+from glob import glob
+from itertools import chain, product
+
 import bertprompt
 
 
@@ -59,24 +62,39 @@ def main():
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
             continue
-
         output_dict = {}
-        for n in range(0, len(word_pairs), opt.max_data_size):
-            logging.info('subset: {}:{}'.format(n, min(n+opt.max_data_size, len(word_pairs))))
-            word_pairs_sub = word_pairs[n:min(n+opt.max_data_size, len(word_pairs))]
-            output_dict_tmp = prompter.generate(
-                word_pairs_sub,
-                n_blank=n_blank,
-                n_blank_b=n_blank_b,
-                n_blank_e=n_blank_e,
-                batch_size=opt.batch,
-                topk=opt.topk,
-                n_revision=opt.revision)
+        total_range = range(0, len(word_pairs), opt.max_data_size)
+        for n_, n in enumerate(total_range):
+            end = min(n + opt.max_data_size, len(word_pairs))
+            logging.info('sub-experiment {}/{} ({}:{})'.format(n_, len(total_range), n, end))
+            filename_ = filename.replace('.json', '.sub.{}.{}.json'.format(n_, opt.max_data_size))
+            if os.path.exists(filename_):
+                logging.info('\t * loading cache')
+                with open(filename_, 'r') as f:
+                    output_dict_tmp = json.load(f)
+            else:
+                word_pairs_sub = word_pairs[n:end]
+                output_dict_tmp = prompter.generate(
+                    word_pairs_sub,
+                    n_blank=n_blank,
+                    n_blank_b=n_blank_b,
+                    n_blank_e=n_blank_e,
+                    batch_size=opt.batch,
+                    topk=opt.topk,
+                    n_revision=opt.revision)
+                with open(filename_, 'w') as f:
+                    json.dump(output_dict_tmp, f)
             output_dict.update(output_dict_tmp)
+
         os.makedirs(os.path.dirname(filename), exist_ok=True)
-        logging.info('exporting output to {}'.format(filename))
+        logging.info('experiment finished, exporting result to {}'.format(filename))
         with open(filename, 'w') as f:
             json.dump(output_dict, f)
+        with open(filename.replace('.json', '.top.json'), 'w') as f:
+            json.dump({k: [v[0][-1], v[1][-1]] for k, v in output_dict.items()}, f)
+        logging.info('deleting cached files')
+        for p in glob('{0}/{1}/prompt/prompt_dict.*.sub.*.json'.format(opt.output_dir, opt.data)):
+            shutil.rmtree(p)
 
 
 if __name__ == '__main__':

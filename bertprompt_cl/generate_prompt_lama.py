@@ -77,6 +77,8 @@ def main():
         logging.info('experiment finished, exporting result to {}'.format(filename))
         with open(filename, 'w') as f:
             json.dump(output_dict, f)
+        with open(filename.replace('.json', '.top.json'), 'w') as f:
+            json.dump({k: [v[0][-1], v[1][-1]] for k, v in output_dict.items()}, f)
         logging.info('deleting cached files')
         for p in glob('{}/{}/prompt_dict.*.sub.*.json'.format(opt.output_dir, models_str)):
             shutil.rmtree(p)
