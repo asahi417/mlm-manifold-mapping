@@ -11,6 +11,7 @@ class Test(unittest.TestCase):
 
     def test(self):
         lm = Prompter('albert-base-v1', max_length=32)
+        # lm = Prompter('bert-large-cased', max_length=32)
 
         # test word pair infilling
         test_candidates = [["pleasure", "hedonist"], ["emotion", "demagogue"], ["dog", "cat"], ['vapor', 'evaporate']]
@@ -23,9 +24,10 @@ class Test(unittest.TestCase):
 
         # test sentence revision with mask
         test_sentences = ['One of the things you do when you are alive is [MASK].',
-                          'Something that might happen while analysing something is [MASK].']
-        vocab_to_keep = [['alive', '[MASK]'], ['[MASK]']]
-        pprint(lm.generate(seed_sentences=test_sentences, vocab_to_keep=vocab_to_keep, n_revision=2))
+                          'Something that might happen while analysing something is [MASK].',
+                          'Competing against someone requires a desire to [MASK]']
+        vocab_to_keep = [['alive', '[MASK]'], ['[MASK]'], ['competing', '[MASK]']]
+        pprint(lm.generate(seed_sentences=test_sentences, vocab_to_keep=vocab_to_keep, n_revision=2, topk=15))
 
 
 if __name__ == "__main__":

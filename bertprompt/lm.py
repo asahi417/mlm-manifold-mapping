@@ -329,7 +329,7 @@ class Prompter:
         """
 
         def check_vocab(sentence, vocab):
-            vocab_in = re.findall(r'|'.join(vocab), sentence)
+            vocab_in = re.findall(r'|'.join(vocab), sentence.lower())
             vocab_in_unique = list(set(vocab_in))
             if len(vocab_in_unique) == len(vocab_in) == len(vocab):
                 return True
@@ -376,6 +376,7 @@ class Prompter:
                     v = v.copy()
                     v.pop(v.index(self.tokenizer.mask_token))
                     v_mask = True
+                v = [v_.lower() for v_ in v]
 
             def process_single_pair(_topk, allow_subword=False):
                 topk_decoded = []
@@ -397,10 +398,10 @@ class Prompter:
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
                         if v:
                             if allow_subword:
-                                if not all(map(lambda x: len(re.findall(x, decoded_no_mask)), v)):
+                                if not all(map(lambda x: len(re.findall(x, decoded_no_mask.lower())), v)):
                                     return None
                             else:
-                                if not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask)), v)):
+                                if not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask.lower())), v)):
                                     return None
 
                             # check if all tokens from keep_vocab just appeared once
