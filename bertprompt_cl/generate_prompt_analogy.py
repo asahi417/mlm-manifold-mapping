@@ -58,6 +58,8 @@ def main():
             i, len(all_config), n_blank, n_blank_b, n_blank_e))
         filename = '{0}/{1}/prompt_dict.{1}.{2}.{3}.{4}.{5}.{6}.json'.format(
             opt.output_dir, opt.data, opt.transformers_model, opt.topk, n_blank, n_blank_b, n_blank_e)
+        if opt.unique:
+            filename = filename.replace('.json', '.unique.json')
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         if os.path.exists(filename):
             logging.info('skip as the output found at: {}'.format(filename))
