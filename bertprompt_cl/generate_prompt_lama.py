@@ -12,7 +12,7 @@ def get_options():
     parser = argparse.ArgumentParser(description='Generate prompt for LAMA')
     parser.add_argument('-t', '--transformers-model',
                         help='Language model alias from transformers model hub', required=True, type=str)
-    parser.add_argument('-r', '--revision', help='The number of revision by language model', default=15, type=int)
+    parser.add_argument('-r', '--revision', help='The number of revision by language model', default=100, type=int)
     parser.add_argument('-l', '--length', help='Max length of language model', default=256, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
@@ -52,7 +52,6 @@ def main():
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     if os.path.exists(filename):
         logging.info('skip as the output found at: {}'.format(filename))
-
     files = []
     total_range = range(0, len(seed_prompt), opt.max_data_size)
     for n_, n in enumerate(total_range):
@@ -74,7 +73,6 @@ def main():
             with open(filename_, "wb") as fp:
                 pickle.dump(output_list_tmp, fp)
         files.append(filename_)
-        # output_list += output_list_tmp
 
     logging.info('experiment finished, exporting result to {}'.format(filename))
     # combine output
