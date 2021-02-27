@@ -58,7 +58,7 @@ def main():
     for n_, n in enumerate(total_range):
         end = min(n + opt.max_data_size, len(seed_prompt))
         logging.info('sub-experiment {}/{} ({}:{})'.format(n_, len(total_range), n, end))
-        filename_ = filename.replace('.json', '.sub.{}.{}.pkl'.format(n_, opt.max_data_size))
+        filename_ = filename.replace('.pkl', '.sub.{}.{}.pkl'.format(n_, opt.max_data_size))
         seed_prompt_sub = seed_prompt[n:end]
         vocab_to_keep_sub = vocab_to_keep[n:end]
         if not os.path.exists(filename_):
