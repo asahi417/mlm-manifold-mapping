@@ -17,7 +17,8 @@ def get_options():
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='bats', type=str)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=10, type=int)
-    parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
+    parser.add_argument('-p', '--prompt-dir', help='Directory prompts stored', default='./prompts/analogy', type=str)
+    parser.add_argument('-o', '--output-dir', help='Directory to output', default='./results/analogy', type=str)
     parser.add_argument('--debug', help='Show debug log', action='store_true')
     return parser.parse_args()
 
@@ -46,11 +47,11 @@ def main():
     logging.info('RUN ANALOGY TEST WITH PROMPT')
     accuracy_full = {}
     path = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}*json'.format(
-        opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+        opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
     list_prompt = glob(path)
     assert len(list_prompt), path
     file_best_prompt = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}.best.json'.format(
-        opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+        opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
     if not os.path.exists(file_best_prompt):
         best_prompt = get_best_prompt(list_prompt)
         with open(file_best_prompt, 'w') as f:
@@ -65,11 +66,11 @@ def main():
             prompt_dict = json.load(f)
         if 'best' in filename:
             _, data, model, topk, _ = filename.split('.')
-            output_file = '{0}/{1}/result/result.{1}.{2}.{3}.best.pkl'.format(
+            output_file = '{0}/{1}/result.{1}.{2}.{3}.best.pkl'.format(
                 opt.output_dir, data, model, topk)
         else:
             _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
-            output_file = '{0}/{1}/result/result.{1}.{2}.{3}.{4}.{5}.{6}.pkl'.format(
+            output_file = '{0}/{1}/result.{1}.{2}.{3}.{4}.{5}.{6}.pkl'.format(
                 opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
         val, test = bertprompt.get_analogy_data(data)
         full_data = val + test
