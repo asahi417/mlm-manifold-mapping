@@ -49,6 +49,7 @@ def main():
     logging.info('\t * unique template: {}'.format(len(seed_prompt)))
 
     filename = '{}/{}/prompt_dict.{}.{}.pkl'.format(opt.output_dir, opt.transformers_model, opt.topk, opt.revision)
+
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     if os.path.exists(filename):
         logging.info('skip as the output found at: {}'.format(filename))
@@ -66,7 +67,8 @@ def main():
                 vocab_to_keep=vocab_to_keep_sub,
                 batch_size=opt.batch,
                 topk=opt.topk,
-                n_revision=opt.revision)
+                n_revision=opt.revision
+            )
             assert len(seed_prompt_sub) == len(output_list_tmp) == len(vocab_to_keep_sub),\
                 str([len(seed_prompt_sub), len(output_list_tmp), len(vocab_to_keep_sub)])
             output_list_tmp = list(zip(output_list_tmp, seed_prompt_sub, vocab_to_keep_sub))

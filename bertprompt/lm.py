@@ -266,7 +266,8 @@ class Prompter:
                     vocab_to_keep=word_pairs,
                     vocab_to_keep_unique=vocab_to_keep_unique,
                     topk=topk,
-                    batch_size=batch_size)
+                    batch_size=batch_size
+                )
                 edit.append(seed_sentences)
                 edit_ppl.append(ppl)
 
