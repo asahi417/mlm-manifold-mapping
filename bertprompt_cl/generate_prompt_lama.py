@@ -1,6 +1,5 @@
 """ Generate prompt for LAMA """
 import argparse
-import json
 import os
 import logging
 import shutil
@@ -81,8 +80,6 @@ def main():
     logging.info('experiment finished, exporting result to {}'.format(filename))
     with open(filename, "wb") as fp:
         pickle.dump(output_list, fp)
-    # with open(filename.replace('.json', '.top.json'), 'w') as f:
-    #     json.dump({k: [v[0][-1], v[1][-1]] for k, v in output_dict.items()}, f)
     logging.info('deleting cached files')
     for p in glob('{}/{}/prompt_dict.*.sub.*.pkl'.format(opt.output_dir, opt.transformers_model)):
         shutil.rmtree(p)

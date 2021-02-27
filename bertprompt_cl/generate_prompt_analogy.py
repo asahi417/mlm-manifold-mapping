@@ -6,15 +6,13 @@ import shutil
 import logging
 from glob import glob
 from itertools import chain, product
-
 import bertprompt
 
 
 def get_options():
     parser = argparse.ArgumentParser(description='Generate prompt for SAT type analogy dataset')
     parser.add_argument('-t', '--transformers-model',
-                        help='Language model alias from transformers model hub (single model only)',
-                        required=True, type=str)
+                        help='Language model alias from transformers model hub', required=True, type=str)
     parser.add_argument('--n-blank', help='The number of intermediate blank', default='2,3,4', type=str)
     parser.add_argument('--n-blank-b', help='The number of beginning blank', default='0,1,2', type=str)
     parser.add_argument('--n-blank-e', help='The number of last blank', default='0,1,2', type=str)

@@ -10,8 +10,8 @@ class Test(unittest.TestCase):
     """ Test """
 
     def test(self):
-        lm = Prompter('albert-base-v1', max_length=32)
-        # lm = Prompter('bert-large-cased', max_length=32)
+        # lm = Prompter('albert-base-v1', max_length=32)
+        lm = Prompter('bert-large-cased', max_length=32)
 
         # test word pair infilling
         test_candidates = [["pleasure", "hedonist"], ["emotion", "demagogue"], ["dog", "cat"], ['vapor', 'evaporate']]
