@@ -272,8 +272,8 @@ class Prompter:
             if vocab_to_keep is None:
                 vocab_to_keep = word_pairs
         logging.info('### ITERATIVE REVISION ###')
-        output_dict = {}
         data_index = list(data_key.keys())
+        output_list = [[]] * len(data_index)
         i = 0
         while True:
             if i > n_revision:
@@ -292,7 +292,9 @@ class Prompter:
             index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
             # extract stable sentence
             index_fixed = list(filter(lambda x: x not in index_unfixed, range(len(seed_sentences))))
-            output_dict.update({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
+            for n in index_fixed:
+                output_list[data_index[n]] = [edit[n], edit_ppl[n]]
+            # output_list.append({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
 
             edit = list(map(lambda x: tuple(list(edit[x]) + [seed_sentences[x]]), index_unfixed))
             edit_ppl = list(map(lambda x: tuple(list(edit_ppl[x]) + [ppl[x]]), index_unfixed))
@@ -307,8 +309,9 @@ class Prompter:
                 break
             i += 1
 
-        output_dict.update({data_key[data_index[i]]: [edit[i], edit_ppl[i]] for i in range(len(data_index))})
-        return output_dict
+        for i in range(len(data_index)):
+            output_list[data_index[i]] = [edit[i], edit_ppl[i]]
+        return output_list
 
     def replace_single_token(self,
                              seed_sentences: List,

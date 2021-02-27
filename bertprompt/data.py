@@ -24,6 +24,7 @@ relations_google = [
         "template_negated": "[X] did not die in [Y] .",
     },
 ]
+MASK = '[MASK]'
 relations_concept_squad = [{"relation": "test", "template": None}]
 default_cache_dir_lama = '{}/.cache/bertprompt/data/lama'.format(os.path.expanduser('~'))
 root_url_lama = 'https://dl.fbaipublicfiles.com/LAMA/data.zip'
@@ -59,11 +60,24 @@ def get_analogy_data(data_name: str, cache_dir: str = default_cache_dir_analogy)
     return val, test
 
 
-def parse_template(template, subject_label, object_label):
-    return template.replace("[X]", subject_label).replace("[Y]", object_label)
+def parse_template(template, subject_label):
+    return template.replace("[X]", subject_label).replace("[Y]", MASK)
 
 
-def get_lama_data(cache_dir: str = default_cache_dir_lama, vocab: Dict = None, transformers_model: List = None):
+def get_lama_data(cache_dir: str = default_cache_dir_lama,
+                  vocab: Dict = None,
+                  transformers_model: List = None,
+                  drop_duplicated_prompt: bool = False):
+    """ Get LAMA dataset
+
+    :param cache_dir:
+    :param vocab:
+    :param transformers_model:
+    :param drop_duplicated_prompt: Data originally has duplicated entries where they share same prompt i.e.
+                                   same template and subject. This option will drop such a duplication by picking up
+                                   first one.
+    :return:
+    """
     vocab_list = []
     if transformers_model:
         if type(transformers_model) is str:
@@ -83,14 +97,18 @@ def get_lama_data(cache_dir: str = default_cache_dir_lama, vocab: Dict = None, t
 
     def get_value(_dict, template: str = None):
         try:
+            # single character object could be a broken entry
+            if len(_dict['obj_label']) == 1:
+                return None
             if vocab_list:  # make sure obj_label is in vocabulary
                 assert vocab_list[0][_dict['obj_label']]
                 assert all(v[_dict['obj_label']] for v in vocab_list)
             if template:
-                _dict['prompt'] = parse_template(template, _dict['sub_label'], _dict['obj_label'])
+                _dict['prompt'] = parse_template(template, _dict['sub_label'])
             else:
                 assert len(_dict['masked_sentences']) == 1 and type(_dict['masked_sentences']) is list
-                _dict['prompt'] = _dict['masked_sentences'][0].replace('[MASK]', _dict['obj_label'])
+                # _dict['prompt'] = _dict['masked_sentences'][0].replace('[MASK]', _dict['obj_label'])
+                _dict['prompt'] = _dict['masked_sentences'][0]
             return {k: _dict[k] for k in ['obj_label', 'sub_label', 'prompt']}
         except KeyError:
             return None
@@ -116,6 +134,10 @@ def get_lama_data(cache_dir: str = default_cache_dir_lama, vocab: Dict = None, t
                 logging.debug('\t FILE SKIPPED: file not found {}'.format(_file))
             else:
                 data = list(filter(None, map(lambda x: get_value(x, template=r['template']), load_jsonl(_file))))
+                if drop_duplicated_prompt:
+                    # pick one entry from what share same prompt i.e. same template and subject
+                    unique_prompt = list(set([d['prompt'] for d in data]))
+                    data = [list(filter(lambda x: x['prompt'] == p, data))[0] for p in unique_prompt]
                 full_set[i][r['relation']] = data
                 logging.debug('\t * {}/{}: {}'.format(i, r['relation'], len(data)))
         logging.debug('\t * {}: {}'.format(i, sum(len(i) for i in full_set[i].values())))
