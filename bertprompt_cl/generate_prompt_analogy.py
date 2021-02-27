@@ -76,6 +76,7 @@ def main():
                     n_blank_b=n_blank_b,
                     n_blank_e=n_blank_e,
                     batch_size=opt.batch,
+                    vocab_to_keep_unique=True,
                     topk=opt.topk,
                     n_revision=opt.revision)
                 with open(filename_, 'w') as f:

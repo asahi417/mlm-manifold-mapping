@@ -216,6 +216,7 @@ class Prompter:
                  word_pairs: List = None,
                  seed_sentences: List = None,
                  vocab_to_keep: List = None,
+                 vocab_to_keep_unique: bool = False,
                  n_revision: int = 100,
                  topk: int = 10,
                  batch_size: int = 4,
@@ -229,6 +230,7 @@ class Prompter:
         :param n_revision: the number of revision after replacing all the mask
         :param batch_size: batch size
         :param vocab_to_keep: see Prompter.replace_single_token
+        :param vocab_to_keep_unique: see Prompter.replace_single_token
         :param topk: see Prompter.replace_single_token
         :param n_blank: see Prompter.pair_to_seed
         :param n_blank_b: see Prompter.pair_to_seed
@@ -262,6 +264,7 @@ class Prompter:
                 seed_sentences, ppl = self.replace_single_token(
                     seed_sentences,
                     vocab_to_keep=word_pairs,
+                    vocab_to_keep_unique=vocab_to_keep_unique,
                     topk=topk,
                     batch_size=batch_size)
                 edit.append(seed_sentences)
@@ -283,6 +286,7 @@ class Prompter:
             seed_sentences, ppl = self.replace_single_token(
                 seed_sentences,
                 vocab_to_keep=vocab_to_keep,
+                vocab_to_keep_unique=vocab_to_keep_unique,
                 topk=topk,
                 batch_size=batch_size,
                 token_wise_mask=True
@@ -316,6 +320,7 @@ class Prompter:
     def replace_single_token(self,
                              seed_sentences: List,
                              vocab_to_keep: List = None,
+                             vocab_to_keep_unique: bool = False,
                              batch_size: int = 4,
                              topk: int = 5,
                              token_wise_mask: bool = None):
@@ -325,13 +330,15 @@ class Prompter:
 
         :param seed_sentences: a list of sentence
         :param vocab_to_keep: (optional) a list of token to keep while replacing
-        # :param vocab_to_keep_unique: (optional) limit the tokens from vocab_to_keep be unique while replacing
+        :param vocab_to_keep_unique: (optional) only to include unique word from vocab_to_keep
         :param batch_size: batch size
         :param topk: keep topk prediction on masked token for perplexity filtering
         :return:
         """
 
         def check_vocab(sentence, vocab):
+            if not vocab_to_keep_unique:
+                return True
             vocab_in = re.findall(r'|'.join(vocab), sentence.lower())
             vocab_in_unique = list(set(vocab_in))
             if len(vocab_in_unique) == len(vocab_in) == len(vocab):
@@ -426,9 +433,8 @@ class Prompter:
                 topk_edit = process_single_pair(topk_per_position)
             if len(topk_edit) == 0:
                 topk_edit = process_single_pair(topk_per_position, True)
-                if len(topk_edit) != 0 and vocab_to_keep is not None:
-                    logging.warning('prompt may include subword: `{}` ({})'.format(
-                        topk_edit[0], vocab_to_keep[partition_n]))
+                if len(topk_edit) != 0 and v is not None:
+                    logging.warning('prompt may include subword: `{}` ({})'.format(topk_edit[0], v))
 
             if len(topk_edit) == 0:
                 raise ValueError('no valid sentence found: ({})\n- current prompt: {}'.format(
