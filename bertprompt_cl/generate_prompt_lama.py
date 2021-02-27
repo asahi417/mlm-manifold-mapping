@@ -37,7 +37,9 @@ def main():
         for rel_type, subsub_data in sub_data.items():
             for n, subsubsub_data in enumerate(subsub_data):
                 masked_prompt = subsubsub_data['prompt'].replace(bertprompt.data.MASK, mask)
-                vtk = [subsubsub_data['sub_label'], mask]
+                vtk = [mask]
+                if subsubsub_data['sub_label'] != '':
+                    vtk.append(subsubsub_data['sub_label'])
                 if masked_prompt in seed_prompt and vtk == vocab_to_keep[seed_prompt.index(masked_prompt)]:
                     continue
                 vocab_to_keep.append(vtk)

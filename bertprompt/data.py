@@ -95,8 +95,11 @@ def get_lama_data(cache_dir: str = default_cache_dir_lama,
         with open(__file, 'r') as _f:
             return list(filter(None, map(lambda x: json.loads(x) if len(x) else None, _f.read().split('\n'))))
 
-    def get_value(_dict, template: str = None):
+    def get_value(_dict, template: str = None, is_squad=False):
         try:
+            # Squad does not have subject label
+            if is_squad:
+                _dict['sub_label'] = ''
             # single character object could be a broken entry
             if len(_dict['obj_label']) == 1:
                 return None
@@ -133,7 +136,8 @@ def get_lama_data(cache_dir: str = default_cache_dir_lama,
             if not os.path.exists(_file):
                 logging.debug('\t FILE SKIPPED: file not found {}'.format(_file))
             else:
-                data = list(filter(None, map(lambda x: get_value(x, template=r['template']), load_jsonl(_file))))
+                data = list(filter(None, map(
+                    lambda x: get_value(x, template=r['template'], is_squad=i == 'Squad'), load_jsonl(_file))))
                 if drop_duplicated_prompt:
                     # pick one entry from what share same prompt i.e. same template and subject
                     unique_prompt = list(set([d['prompt'] for d in data]))
