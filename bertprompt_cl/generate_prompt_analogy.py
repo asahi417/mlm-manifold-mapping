@@ -2,7 +2,6 @@
 import argparse
 import json
 import os
-import shutil
 import logging
 from glob import glob
 from itertools import chain, product
@@ -24,6 +23,7 @@ def get_options():
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/analogy', type=str)
     parser.add_argument('--max-data-size', help='Max data size in single run', default=2000, type=int)
     parser.add_argument('--debug', help='Show debug log', action='store_true')
+    parser.add_argument('--unique', help='Drop duplicated word in prompt', action='store_true')
     return parser.parse_args()
 
 
@@ -76,7 +76,7 @@ def main():
                     n_blank_b=n_blank_b,
                     n_blank_e=n_blank_e,
                     batch_size=opt.batch,
-                    vocab_to_keep_unique=True,
+                    vocab_to_keep_unique=opt.unique,
                     topk=opt.topk,
                     n_revision=opt.revision)
                 with open(filename_, 'w') as f:
@@ -93,7 +93,7 @@ def main():
             json.dump(output_dict, f)
         logging.info('deleting cached files')
         for p in glob('{0}/{1}/prompt_dict.*.sub.*.json'.format(opt.output_dir, opt.data)):
-            shutil.rmtree(p)
+            os.remove(p)
 
 
 if __name__ == '__main__':
