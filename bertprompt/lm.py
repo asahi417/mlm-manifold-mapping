@@ -418,14 +418,19 @@ class Prompter:
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
                         if v:
+                            print(decoded_no_mask.lower(), v)
                             if allow_subword:
-                                if not all(map(lambda x: len(re.findall(x, decoded_no_mask.lower())), v)):
+                                # very important to apply re.escape, otherwise it gets error if x contains special
+                                # characters such as ()[]\.
+                                if not all(map(lambda x: len(re.findall(re.escape(x), decoded_no_mask.lower())), v)):
                                     return None
                             else:
-                                if not all(map(lambda x: len(re.findall(r'\b{}\b'.format(x), decoded_no_mask.lower())), v)):
+                                if not all(map(lambda x: len(re.findall(
+                                        r'\b{}\b'.format(re.escape(x)), decoded_no_mask.lower())), v)):
                                     return None
 
                             # check if all tokens from keep_vocab just appeared once
+
                             if not check_vocab(decoded_no_mask, v):
                                 return None
                         if v_mask and self.tokenizer.mask_token not in decoded:
