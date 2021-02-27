@@ -26,10 +26,10 @@ def main():
     opt = get_options()
     level = logging.DEBUG if opt.debug else logging.INFO
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
-    logging.info('GENERATE PROMPT FOR LAMA')
-    data = bertprompt.get_lama_data(transformers_model=opt.transformers_model)
-
     prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
+
+    # aggregate data
+    data = bertprompt.get_lama_data(transformers_model=opt.transformers_model)
     mask = prompter.tokenizer.mask_token
     # get flattened template list
     vocab_to_keep, seed_prompt = [], []
@@ -42,15 +42,18 @@ def main():
                     continue
                 vocab_to_keep.append(vtk)
                 seed_prompt.append(masked_prompt)
+
     # language model inference
-    logging.info('Experiment')
+    logging.info('GENERATE PROMPT FOR LAMA')
     logging.info('\t * model          : {}'.format(opt.transformers_model))
     logging.info('\t * unique template: {}'.format(len(seed_prompt)))
-    filename = '{}/{}/prompt_dict.{}.{}.json'.format(opt.output_dir, opt.transformers_model, opt.topk, opt.revision)
+
+    filename = '{}/{}/prompt_dict.{}.{}.pkl'.format(opt.output_dir, opt.transformers_model, opt.topk, opt.revision)
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     if os.path.exists(filename):
         logging.info('skip as the output found at: {}'.format(filename))
-    output_list = []
+
+    files = []
     total_range = range(0, len(seed_prompt), opt.max_data_size)
     for n_, n in enumerate(total_range):
         end = min(n + opt.max_data_size, len(seed_prompt))
@@ -58,12 +61,7 @@ def main():
         filename_ = filename.replace('.json', '.sub.{}.{}.pkl'.format(n_, opt.max_data_size))
         seed_prompt_sub = seed_prompt[n:end]
         vocab_to_keep_sub = vocab_to_keep[n:end]
-        if os.path.exists(filename_):
-            logging.info('\t * loading cache')
-            with open(filename_, "rb") as fp:  # Unpickling
-                output_list_tmp = pickle.load(fp)
-            output_list_tmp = list(zip(output_list_tmp, seed_prompt_sub, vocab_to_keep_sub))
-        else:
+        if not os.path.exists(filename_):
             output_list_tmp = prompter.generate(
                 seed_sentences=seed_prompt_sub,
                 vocab_to_keep=vocab_to_keep_sub,
@@ -75,9 +73,15 @@ def main():
             output_list_tmp = list(zip(output_list_tmp, seed_prompt_sub, vocab_to_keep_sub))
             with open(filename_, "wb") as fp:
                 pickle.dump(output_list_tmp, fp)
-        output_list += output_list_tmp
+        files.append(filename_)
+        # output_list += output_list_tmp
 
     logging.info('experiment finished, exporting result to {}'.format(filename))
+    # combine output
+    output_list = []
+    for _file in files:
+        with open(_file, "rb") as fp:
+            output_list += pickle.load(fp)
     with open(filename, "wb") as fp:
         pickle.dump(output_list, fp)
     logging.info('deleting cached files')

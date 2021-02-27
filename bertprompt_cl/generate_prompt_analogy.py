@@ -31,8 +31,9 @@ def main():
     opt = get_options()
     level = logging.DEBUG if opt.debug else logging.INFO
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
-
     prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
+
+    # aggregate data
     n_blank_list = [int(i) for i in opt.n_blank.split(',')]
     n_blank_b_list = [int(i) for i in opt.n_blank_b.split(',')]
     n_blank_e_list = [int(i) for i in opt.n_blank_e.split(',')]
@@ -41,10 +42,10 @@ def main():
     word_pairs += list(chain(*[[i['stem']] + i['choice'] for i in test]))
     word_pairs += [[p[1], p[0]] for p in word_pairs]
     # drop duplicated pair
-    word_pairs_set = {'||'.join(i) for i in word_pairs}
-    word_pairs = [i.split('||') for i in word_pairs_set]
+    word_pairs = [i.split('||') for i in sorted({'||'.join(i) for i in word_pairs})]
     all_config = list(product(n_blank_list, n_blank_b_list, n_blank_e_list))
 
+    # language model inference
     logging.info('GENERATE PROMPT FOR ANALOGY')
     logging.info('\t * data     : {} ({} pairs)'.format(opt.data, len(word_pairs)))
     logging.info('\t * model    : {}'.format(opt.transformers_model))
@@ -53,7 +54,7 @@ def main():
     logging.info('\t * blank (e): {}'.format(n_blank_e_list))
 
     for i, (n_blank, n_blank_b, n_blank_e) in enumerate(all_config):
-        logging.info('CONFIG {}/{}: blank: {}, blank_b: {}, blank_e: {}'.format(
+        logging.info('EXPERIMENT {}/{}: blank: {}, blank_b: {}, blank_e: {}'.format(
             i + 1, len(all_config), n_blank, n_blank_b, n_blank_e))
         filename = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}.{4}.{5}.{6}.json'.format(
             opt.output_dir, opt.data, opt.transformers_model, opt.topk, n_blank, n_blank_b, n_blank_e)
@@ -72,7 +73,7 @@ def main():
                     output_dict_tmp = json.load(f)
             else:
                 word_pairs_sub = word_pairs[n:end]
-                output_dict_tmp = prompter.generate(
+                output_list_tmp = prompter.generate(
                     word_pairs_sub,
                     n_blank=n_blank,
                     n_blank_b=n_blank_b,
