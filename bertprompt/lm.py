@@ -241,6 +241,7 @@ class Prompter:
             assert not word_pairs, 'both of `seed_sentences` and `word_pairs` are given'
             if type(seed_sentences) is str:
                 seed_sentences = [seed_sentences]
+            assert all(map(len, seed_sentences)), 'empty string found in {}'.format(seed_sentences)
             ppl = self.get_perplexity(seed_sentences)
             edit = [[s] for s in seed_sentences]
             edit_ppl = [[s] for s in ppl]
@@ -348,7 +349,7 @@ class Prompter:
 
         if vocab_to_keep:
             assert len(seed_sentences) == len(vocab_to_keep), '{} != {}'.format(len(seed_sentences), len(vocab_to_keep))
-        topk_per_position = 100
+        topk_buffer = 100
         self.__load_model()
         if type(seed_sentences) is str:
             seed_sentences = [seed_sentences]
@@ -366,7 +367,7 @@ class Prompter:
                 encode = {k: v.to(self.device) for k, v in encode.items()}
                 output = self.model(**encode, return_dict=True)
                 prediction_scores = output['logits']
-                values, indices = prediction_scores.topk(topk_per_position, dim=-1)
+                values, indices = prediction_scores.topk(topk_buffer, dim=-1)
                 total_input += encode.pop('input_ids').tolist()
                 total_val += values.tolist()
                 total_ind += indices.tolist()
@@ -388,6 +389,15 @@ class Prompter:
                     v.pop(v.index(self.tokenizer.mask_token))
                     v_mask = True
                 v = [v_.lower() for v_ in v]
+                # if sentence only has tokens from vocab_to_keep
+                sent = seed_sentences[partition_n]
+                if v_mask:
+                    sent = re.sub(r'|'.join(v + [self.tokenizer.mask_token]), '', sent.lower()).replace(' ', '')
+                else:
+                    sent = re.sub(r'|'.join(v), '', sent.lower()).replace(' ', '')
+                if len(sent) == 0:
+                    greedy_filling.append([seed_sentences[partition_n]])
+                    continue
 
             def process_single_pair(_topk, allow_subword=False):
                 topk_decoded = []
@@ -430,10 +440,10 @@ class Prompter:
                 return topk_decoded
 
             topk_edit = process_single_pair(topk)
-            if len(topk_edit) == 0 and topk_per_position > topk:
-                topk_edit = process_single_pair(topk_per_position)
+            if len(topk_edit) == 0 and topk_buffer > topk:
+                topk_edit = process_single_pair(topk_buffer)
             if len(topk_edit) == 0:
-                topk_edit = process_single_pair(topk_per_position, True)
+                topk_edit = process_single_pair(topk_buffer, True)
                 if len(topk_edit) != 0 and v is not None:
                     logging.warning('prompt may include subword: `{}` ({})'.format(topk_edit[0], v))
 
@@ -447,7 +457,6 @@ class Prompter:
             ))
             topk_edit = sorted(topk_edit, key=lambda x: x[1], reverse=True)
             greedy_filling.append(list(zip(*topk_edit))[0][:min(topk, len(topk_edit))])
-
         logging.debug('\t* ppl re-ranking')
         partition = get_partition(greedy_filling)
         list_ppl = self.get_perplexity(list(chain(*greedy_filling)), batch_size=batch_size)
