@@ -418,7 +418,6 @@ class Prompter:
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
                         if v:
-                            print(decoded_no_mask.lower(), v)
                             if allow_subword:
                                 # very important to apply re.escape, otherwise it gets error if x contains special
                                 # characters such as ()[]\.
