@@ -395,11 +395,10 @@ class Prompter:
                 sent = seed_sentences[partition_n]
                 if v_mask:
                     sent = re.sub(
-                        r'|'.join(v + [re.escape(self.tokenizer.mask_token)]), '', sent.lower()).replace(' ', '')
+                        r'|'.join(v + [re.escape(self.tokenizer.mask_token.lower())]), '',
+                        sent.lower()).replace(' ', '')
                 else:
                     sent = re.sub(r'|'.join(v), '', sent.lower()).replace(' ', '')
-                print(sent)
-                input()
                 if len(sent) == 0:
                     greedy_filling.append([seed_sentences[partition_n]])
                     continue
