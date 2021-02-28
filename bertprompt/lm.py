@@ -388,7 +388,8 @@ class Prompter:
                     v = v.copy()
                     v.pop(v.index(self.tokenizer.mask_token))
                     v_mask = True
-                v = [v_.lower() for v_ in v]
+                # make sure the vocabulary is in valid form in terms of tokenizer
+                v = [self.tokenizer.convert_tokens_to_string(self.tokenizer.tokenize(v_.lower())) for v_ in v]
                 # if sentence only has tokens from vocab_to_keep
                 sent = seed_sentences[partition_n]
                 if v_mask:

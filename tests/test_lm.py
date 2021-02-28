@@ -59,11 +59,21 @@ class Test(unittest.TestCase):
     #                        n_revision=1,
     #                        topk=1))
 
-    def test_issue3(self):
+    # def test_issue3(self):
+    #     lm = Prompter('albert-base-v1', max_length=32)
+    #     test_sentences = ['Interleukin 6 signal transducer (Gp130, oncostatin M receptor) is a subclass of [MASK]']
+    #     vocab_to_keep = [['[MASK]', 'Interleukin 6 signal transducer (Gp130, oncostatin M receptor)']]
+    #     pprint(lm.generate(seed_sentences=test_sentences, vocab_to_keep=vocab_to_keep,
+    #                        vocab_to_keep_unique=False,
+    #                        n_revision=1,
+    #                        topk=1))
+
+    def test_issue4(self):
         lm = Prompter('albert-base-v1', max_length=32)
-        test_sentences = ['Interleukin 6 signal transducer (Gp130, oncostatin M receptor) is a subclass of [MASK]']
-        vocab_to_keep = [['[MASK]', 'Interleukin 6 signal transducer (Gp130, oncostatin M receptor)']]
-        pprint(lm.generate(seed_sentences=test_sentences, vocab_to_keep=vocab_to_keep,
+        test_sentences = ['Stanis%C5%82aw Stolarczyk was born in [MASK] .']
+        vocab_to_keep = [['Stanis%C5%82aw Stolarczyk', '[MASK]']]
+        pprint(lm.generate(seed_sentences=test_sentences,
+                           vocab_to_keep=vocab_to_keep,
                            vocab_to_keep_unique=False,
                            n_revision=1,
                            topk=1))
