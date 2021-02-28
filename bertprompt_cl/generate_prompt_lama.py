@@ -88,7 +88,7 @@ def main():
         pickle.dump(output_list, fp)
     logging.info('deleting cached files')
     for p in glob('{}/{}/prompt_dict.*.sub.*.pkl'.format(opt.output_dir, opt.transformers_model)):
-        shutil.rmtree(p)
+        os.remove(p)
 
 
 if __name__ == '__main__':
