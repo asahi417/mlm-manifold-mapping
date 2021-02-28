@@ -74,14 +74,26 @@ class Test(unittest.TestCase):
     #                        n_revision=1,
     #                        topk=1))
 
+    # def test_issue5(self):
+    #     lm = Prompter('albert-base-v1', max_length=64)
+    #     pprint(lm.generate(seed_sentences=['advertisement [MASK]'],
+    #                        vocab_to_keep=[['advertisement', '[MASK]']],
+    #                        n_revision=1,
+    #                        topk=1))
+    #     pprint(lm.generate(seed_sentences=['advertisement ask'],
+    #                        vocab_to_keep=[['advertisement', 'ask']],
+    #                        n_revision=1,
+    #                        topk=1))
+
     def test_issue5(self):
         lm = Prompter('albert-base-v1', max_length=64)
-        pprint(lm.generate(seed_sentences=['advertisement [MASK]'],
-                           vocab_to_keep=[['advertisement', '[MASK]']],
+        pprint(lm.generate(seed_sentences=['Visual Basic .NET is developed by [MASK] .'],
+                           vocab_to_keep=[['[MASK]', 'Visual Basic .NET']],
                            n_revision=1,
                            topk=1))
-        pprint(lm.generate(seed_sentences=['advertisement ask'],
-                           vocab_to_keep=[['advertisement', 'ask']],
+        lm = Prompter('bert-large-cased', max_length=64)
+        pprint(lm.generate(seed_sentences=['Csaba Őry was born in [MASK] .'],
+                           vocab_to_keep=[['[MASK]', 'Csaba Őry']],
                            n_revision=1,
                            topk=1))
 

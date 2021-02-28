@@ -189,8 +189,7 @@ class Prompter:
         cleaned_sent = re.sub(r'\s+', ' ', cleaned_sent)
         # remove special tokens but keep mask
         to_remove = list(filter(lambda x: x != mask, self.tokenizer.all_special_tokens))
-        to_remove = '|'.join(list(map(re.escape, to_remove)))
-        cleaned_sent = re.sub(r'{}'.format(to_remove), '', cleaned_sent)
+        cleaned_sent = re.sub(r'|'.join(list(map(re.escape, to_remove))), '', cleaned_sent)
         # remove redundant spaces on the beginning of the sentence
         return re.sub(r'\A\s*', '', cleaned_sent)
 
@@ -380,18 +379,21 @@ class Prompter:
             v = None
             v_mask = False
             if vocab_to_keep:
-                # check if all tokens from keep_vocab in the decoded sentence
+                # convert all tokens from keep_vocab to suitable form of the tokenizer
                 v = vocab_to_keep[partition_n]
                 if type(v) is str:
                     v = [v]
                 if self.tokenizer.mask_token in v:
+                    # mask token is handled separately
                     v = v.copy()
                     v.pop(v.index(self.tokenizer.mask_token))
                     v_mask = True
-                # make sure the vocabulary is in valid form in terms of tokenizer
-                v = [self.tokenizer.convert_tokens_to_string(self.tokenizer.tokenize(v_.lower())) for v_ in v]
+                # convert keep_vocab in a way tokenizer can deal with
+                v = [self.tokenizer.decode(self.tokenizer(v_)['input_ids'], skip_special_tokens=True).lower()
+                     for v_ in v]
+                # add escape symbol to special character so that it not fails in regx
                 v = list(map(re.escape, v))
-                # if sentence only has tokens from vocab_to_keep
+                # if sentence only has tokens from vocab_to_keep, skip process
                 sent = seed_sentences[partition_n]
                 if v_mask:
                     sent = re.sub(
@@ -421,11 +423,12 @@ class Prompter:
                         decoded = self.tokenizer.decode(tokens, skip_special_tokens=False)
                         decoded = self.cleanup_decode(decoded)
                         decoded_no_mask = decoded.replace(self.tokenizer.mask_token, '')
+                        print(decoded_no_mask, v)
                         if v:
                             if allow_subword:
                                 # very important to apply re.escape, otherwise it gets error if x contains special
                                 # characters such as ()[]\.
-                                if not all(map(lambda x: len(re.findall(x, decoded_no_mask.lower())), v)):
+                                if not all(map(lambda x: len(re.findall(r'{}'.format(x), decoded_no_mask.lower())), v)):
                                     return None
                             else:
                                 if not all(map(lambda x: len(re.findall(
