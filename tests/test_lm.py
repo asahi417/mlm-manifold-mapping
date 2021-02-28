@@ -10,11 +10,11 @@ class Test(unittest.TestCase):
     """ Test """
 
     # def test(self):
-    #     # lm = Prompter('albert-base-v1', max_length=32)
-    #     lm = Prompter('bert-large-cased', max_length=32)
+    #     lm = Prompter('albert-base-v1', max_length=32)
+    #     # lm = Prompter('bert-large-cased', max_length=32)
     #
     #     # test word pair infilling
-    #     test_candidates = [["pleasure", "hedonist"], ["emotion", "demagogue"], ["dog", "cat"], ['vapor', 'evaporate']]
+    #     test_candidates = [["mask", "hedonist"], ["emotion", "demagogue"], ["dog", "cat"], ['vapor', 'evaporate']]
     #     pprint(lm.generate(word_pairs=test_candidates, n_blank=2, n_blank_b=0, n_blank_e=0, n_revision=1))
     #
     #     # test sentence revision
@@ -43,7 +43,7 @@ class Test(unittest.TestCase):
     #                        n_revision=1, topk=1))
     #
     # def test_issue2(self):
-    #     lm = Prompter('roberta-large', max_length=32)
+    #     lm = Prompter('albert-base-v1', max_length=64)
     #     pprint(lm.generate(word_pairs=['advertisement', 'agenda'],
     #                        n_revision=1,
     #                        n_blank=1,
@@ -54,11 +54,7 @@ class Test(unittest.TestCase):
     #                        vocab_to_keep=[['advertisement', 'agenda']],
     #                        n_revision=1,
     #                        topk=1))
-    #     pprint(lm.generate(seed_sentences=['advertisement <mask>'],
-    #                        vocab_to_keep=[['advertisement', '<mask>']],
-    #                        n_revision=1,
-    #                        topk=1))
-
+    #
     # def test_issue3(self):
     #     lm = Prompter('albert-base-v1', max_length=32)
     #     test_sentences = ['Interleukin 6 signal transducer (Gp130, oncostatin M receptor) is a subclass of [MASK]']
@@ -67,14 +63,25 @@ class Test(unittest.TestCase):
     #                        vocab_to_keep_unique=False,
     #                        n_revision=1,
     #                        topk=1))
+    #
+    # def test_issue4(self):
+    #     lm = Prompter('albert-base-v1', max_length=32)
+    #     test_sentences = ['Stanis%C5%82aw Stolarczyk was born in [MASK] .']
+    #     vocab_to_keep = [['Stanis%C5%82aw Stolarczyk', '[MASK]']]
+    #     pprint(lm.generate(seed_sentences=test_sentences,
+    #                        vocab_to_keep=vocab_to_keep,
+    #                        vocab_to_keep_unique=False,
+    #                        n_revision=1,
+    #                        topk=1))
 
-    def test_issue4(self):
-        lm = Prompter('albert-base-v1', max_length=32)
-        test_sentences = ['Stanis%C5%82aw Stolarczyk was born in [MASK] .']
-        vocab_to_keep = [['Stanis%C5%82aw Stolarczyk', '[MASK]']]
-        pprint(lm.generate(seed_sentences=test_sentences,
-                           vocab_to_keep=vocab_to_keep,
-                           vocab_to_keep_unique=False,
+    def test_issue5(self):
+        lm = Prompter('albert-base-v1', max_length=64)
+        pprint(lm.generate(seed_sentences=['advertisement [MASK]'],
+                           vocab_to_keep=[['advertisement', '[MASK]']],
+                           n_revision=1,
+                           topk=1))
+        pprint(lm.generate(seed_sentences=['advertisement ask'],
+                           vocab_to_keep=[['advertisement', 'ask']],
                            n_revision=1,
                            topk=1))
 

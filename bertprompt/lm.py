@@ -189,7 +189,7 @@ class Prompter:
         cleaned_sent = re.sub(r'\s+', ' ', cleaned_sent)
         # remove special tokens but keep mask
         to_remove = list(filter(lambda x: x != mask, self.tokenizer.all_special_tokens))
-        to_remove = '|'.join(to_remove).replace('[', '\[').replace(']', '\]')
+        to_remove = '|'.join(list(map(re.escape, to_remove)))
         cleaned_sent = re.sub(r'{}'.format(to_remove), '', cleaned_sent)
         # remove redundant spaces on the beginning of the sentence
         return re.sub(r'\A\s*', '', cleaned_sent)
@@ -390,12 +390,16 @@ class Prompter:
                     v_mask = True
                 # make sure the vocabulary is in valid form in terms of tokenizer
                 v = [self.tokenizer.convert_tokens_to_string(self.tokenizer.tokenize(v_.lower())) for v_ in v]
+                v = list(map(re.escape, v))
                 # if sentence only has tokens from vocab_to_keep
                 sent = seed_sentences[partition_n]
                 if v_mask:
-                    sent = re.sub(r'|'.join(v + [self.tokenizer.mask_token]), '', sent.lower()).replace(' ', '')
+                    sent = re.sub(
+                        r'|'.join(v + [re.escape(self.tokenizer.mask_token)]), '', sent.lower()).replace(' ', '')
                 else:
                     sent = re.sub(r'|'.join(v), '', sent.lower()).replace(' ', '')
+                print(sent)
+                input()
                 if len(sent) == 0:
                     greedy_filling.append([seed_sentences[partition_n]])
                     continue
@@ -422,11 +426,11 @@ class Prompter:
                             if allow_subword:
                                 # very important to apply re.escape, otherwise it gets error if x contains special
                                 # characters such as ()[]\.
-                                if not all(map(lambda x: len(re.findall(re.escape(x), decoded_no_mask.lower())), v)):
+                                if not all(map(lambda x: len(re.findall(x, decoded_no_mask.lower())), v)):
                                     return None
                             else:
                                 if not all(map(lambda x: len(re.findall(
-                                        r'\b{}\b'.format(re.escape(x)), decoded_no_mask.lower())), v)):
+                                        r'\b{}\b'.format(x), decoded_no_mask.lower())), v)):
                                     return None
 
                             # check if all tokens from keep_vocab just appeared once
