@@ -236,6 +236,7 @@ class Prompter:
         :param n_blank_e: see Prompter.pair_to_seed
         :return:
         """
+        tol = 0.05
         if seed_sentences:
             assert not word_pairs, 'both of `seed_sentences` and `word_pairs` are given'
             if type(seed_sentences) is str:
@@ -294,7 +295,10 @@ class Prompter:
             )
 
             # sentence keep improving
-            index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
+            # index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
+            # index_unfixed = list(filter(lambda x: (ppl[x] - edit_ppl[x][-1]) < 0, range(len(seed_sentences))))
+            index_unfixed = list(filter(lambda x: (edit_ppl[x][-1] - ppl[x]) > tol, range(len(seed_sentences))))
+
             # extract stable sentence
             index_fixed = list(filter(lambda x: x not in index_unfixed, range(len(seed_sentences))))
             for n in index_fixed:
