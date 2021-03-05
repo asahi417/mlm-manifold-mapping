@@ -464,13 +464,14 @@ class Prompter:
             if len(topk_edit) == 0:
                 raise ValueError('no valid sentence found: ({})\n- current prompt: {}'.format(
                     vocab_to_keep[partition_n], seed_sentences[partition_n]))
-            # drop duplicated decode and keep the one with tje highest likelihood
+            # drop duplicated decode and keep the one with the highest likelihood
             topk_edit = list(map(
                 lambda d: max(filter(lambda x: x[0] == d, topk_edit), key=lambda x: x[1]),
                 set(list(zip(*topk_edit))[0])
             ))
             topk_edit = sorted(topk_edit, key=lambda x: x[1], reverse=True)
-            greedy_filling.append(list(zip(*topk_edit))[0][:min(topk, len(topk_edit))])
+            topk_candidate = list(zip(*topk_edit))[0][:min(topk, len(topk_edit))]
+            greedy_filling.append(topk_candidate)
         logging.debug('\t* ppl re-ranking')
         partition = get_partition(greedy_filling)
         list_ppl = self.get_perplexity(list(chain(*greedy_filling)), batch_size=batch_size)
