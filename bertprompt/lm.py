@@ -164,16 +164,26 @@ class Prompter:
         self.device = None
         self.model = None
         self.max_length = max_length
-        self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir)
-        self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir)
+        try:
+            self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir)
+        except ValueError:
+            self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir, local_files_only=True)
+        try:
+            self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir)
+        except ValueError:
+            self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir, local_files_only=True)
 
     def __load_model(self):
         """ Load pretrained language model """
         if self.model:
             return
         logging.debug('loading language model')
-        self.model = transformers.AutoModelForMaskedLM.from_pretrained(
-            self.model_name, config=self.config, cache_dir=self.cache_dir)
+        try:
+            self.model = transformers.AutoModelForMaskedLM.from_pretrained(
+                self.model_name, config=self.config, cache_dir=self.cache_dir)
+        except ValueError:
+            self.model = transformers.AutoModelForMaskedLM.from_pretrained(
+                self.model_name, config=self.config, cache_dir=self.cache_dir, local_files_only=True)
         self.model.eval()
         # GPU setup
         self.device = 'cuda' if torch.cuda.device_count() > 0 else 'cpu'
