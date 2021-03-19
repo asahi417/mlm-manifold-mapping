@@ -252,7 +252,7 @@ class Prompter:
             if type(seed_sentences) is str:
                 seed_sentences = [seed_sentences]
             assert all(map(len, seed_sentences)), 'empty string found in {}'.format(seed_sentences)
-            ppl = self.get_perplexity(seed_sentences)
+            ppl = self.get_perplexity(seed_sentences, batch_size=batch_size)
             edit = [[s] for s in seed_sentences]
             edit_ppl = [[s] for s in ppl]
             data_key = {k: v for k, v in enumerate(seed_sentences)}
@@ -265,7 +265,7 @@ class Prompter:
             data_key = {k: '||'.join(v) for k, v in enumerate(word_pairs)}
             logging.info('### REPLACE MASK ###')
             edit = [seed_sentences]
-            edit_ppl = [self.get_perplexity(seed_sentences)]
+            edit_ppl = [self.get_perplexity(seed_sentences, batch_size=batch_size)]
             while True:
                 if any(map(lambda x: self.tokenizer.mask_token not in x, seed_sentences)):
                     # mask should be removed one by one, but some has skipped if this raises error

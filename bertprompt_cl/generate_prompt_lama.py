@@ -2,7 +2,6 @@
 import argparse
 import os
 import logging
-import shutil
 import pickle
 from glob import glob
 import bertprompt
