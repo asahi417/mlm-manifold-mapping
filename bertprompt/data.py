@@ -82,7 +82,10 @@ def get_lama_data(cache_dir: str = default_cache_dir_lama,
     if transformers_model:
         if type(transformers_model) is str:
             transformers_model = [transformers_model]
-        vocab_list = [transformers.AutoTokenizer.from_pretrained(m).vocab for m in transformers_model]
+        try:
+            vocab_list = [transformers.AutoTokenizer.from_pretrained(m).vocab for m in transformers_model]
+        except ValueError:
+            vocab_list = [transformers.AutoTokenizer.from_pretrained(m, local_files_only=True).vocab for m in transformers_model]
     if vocab:
         vocab_list += [vocab]
 
