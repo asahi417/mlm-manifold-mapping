@@ -30,7 +30,7 @@ default_cache_dir_lama = '{}/.cache/bertprompt/data/lama'.format(os.path.expandu
 root_url_lama = 'https://dl.fbaipublicfiles.com/LAMA/data.zip'
 
 default_cache_dir_analogy = '{}/.cache/bertprompt/data/analogy'.format(os.path.expanduser('~'))
-root_url_analogy = 'https://github.com/asahi417/AnalogyDataset/raw/master'
+root_url_analogy = 'https://github.com/asahi417/AnalogyTools/releases/download/0.0.0'
 
 
 def wget(url, cache_dir):
@@ -64,20 +64,28 @@ def parse_template(template, subject_label):
     return template.replace("[X]", subject_label).replace("[Y]", MASK)
 
 
-def get_lama_data(cache_dir: str = default_cache_dir_lama,
+def get_lama_data(cache_dir: str = None,
                   vocab: Dict = None,
                   transformers_model: List = None,
                   drop_duplicated_prompt: bool = False):
-    """ Get LAMA dataset
+    """ Get LAMA dataset.
 
-    :param cache_dir:
-    :param vocab:
-    :param transformers_model:
-    :param drop_duplicated_prompt: Data originally has duplicated entries where they share same prompt i.e.
-                                   same template and subject. This option will drop such a duplication by picking up
-                                   first one.
-    :return:
+    Parameters
+    ----------
+    cache_dir : str
+        To change the directory to cache data.
+    vocab : dict
+        Dictionary where
+    transformers_model
+    drop_duplicated_prompt : bool
+        Data originally has duplicated entries where they share same prompt i.e. same template and subject. This option
+        will drop such a duplication by picking up first one.
+
+    Returns
+    -------
+
     """
+    cache_dir = default_cache_dir_lama if cache_dir is None else cache_dir
     vocab_list = []
     if transformers_model:
         if type(transformers_model) is str:

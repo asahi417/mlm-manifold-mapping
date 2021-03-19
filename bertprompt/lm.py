@@ -19,6 +19,7 @@ __all__ = ('get_partition', 'Prompter')
 
 
 def pool_map(f, arg):
+    """ Multiprocessing map function. """
     _pool = Pool()
     out = _pool.map(f, arg)
     _pool.close()
@@ -26,19 +27,19 @@ def pool_map(f, arg):
 
 
 def get_partition(_list):
-    """ Get partition in multiprocess """
+    """ Get partition in multiprocess. """
     p = Partition(_list)
     return pool_map(p, range(len(_list)))
 
 
 def get_encoding(sentences, tokenizer, max_length, token_wise_mask: bool = None):
-    """ Get encode_plus in multiprocess """
+    """ Get encode_plus in multiprocess. """
     p = EncodePlus(tokenizer, max_length, token_wise_mask=token_wise_mask)
     return pool_map(p, sentences)
 
 
 class Partition:
-    """ Get the partition information of a nested list for restoring the original structure """
+    """ Get the partition information of a nested list for restoring the original structure. """
 
     def __init__(self, _list):
         self.length = pool_map(len, _list)
@@ -48,7 +49,7 @@ class Partition:
 
 
 class EncodePlus:
-    """ Get encode_plus """
+    """ Get encode_plus output in parallel. """
 
     def __init__(self, tokenizer, max_length, token_wise_mask: bool = None):
         self.tokenizer = tokenizer
@@ -63,17 +64,25 @@ class EncodePlus:
         self.sp_token_prefix = tokens_encode[:tokens_encode.index(tokens[0])]
 
     def input_ids_to_labels(self,
-                            input_ids,
+                            input_ids: List,
                             label_position: List = None,
                             label_id: List = None):
         """ Generate a label for language model loss. If `label_position` is None, label is the original input_ids for
         every token except padding token, or it keeps what specified by `label_position` with label defined by
         `label_id`.
 
-        :param input_ids: input_ids given by tokenizer.encode
-        :param label_position: (optional) position in input_ids for prediction
-        :param label_id: (optional) token id for each position in `label_position`
-        :return: `label` that can be used for loss computation
+        Parameters
+        ----------
+        input_ids : list
+            The input_ids given by tokenizer.encode .
+        label_position : list
+            Position in input_ids for prediction.
+        label_id :
+            Token id for each position in `label_position`.
+
+        Returns
+        -------
+        List of `label` that can be used for loss computation
         """
         if label_position is None and label_id is None:  # just to ignore padding token
             label = list(map(lambda x: PAD_TOKEN_LABEL_ID if x == self.tokenizer.pad_token_id else x, input_ids))
@@ -89,8 +98,14 @@ class EncodePlus:
         - masked token if `token_wise_mask` is False (mainly for token prediction)
         - otherwise every token that is not mask token (mainly for perplexity computation)
 
-        :param sentence: a string sentence
-        :return: a list of the output from tokenizer.encode_plus
+        Parameters
+        ----------
+        sentence : str
+            A string sentence.
+
+        Returns
+        -------
+        A list of the output from tokenizer.encode_plus .
         """
         if self.token_wise_mask is not None:
             token_wise_mask = self.token_wise_mask
@@ -153,8 +168,14 @@ class Prompter:
                  num_worker: int = 0):
         """ Prompt generator based on pretrained language models
 
-        :param model: a model name corresponding to a model card in `transformers`
-        :param max_length: a model max length if specified, else use model_max_length
+        Parameters
+        ----------
+        model : str
+            A model name corresponding to a model card in `transformers` .
+        max_length : int
+            A model max length if specified, else use model_max_length.
+        cache_dir : str
+        num_worker : int
         """
         logging.debug('Initialize `Prompter`')
         assert 'bert' in model, '{} is not BERT'.format(model)
@@ -210,11 +231,20 @@ class Prompter:
                      n_blank_e: int = 0):
         """ Convert word pair to a seed template with placeholders by masking token
 
-        :param word_pair: a list of two words
-        :param n_blank: the number of mask in between word_pair
-        :param n_blank_b: the number of mask at the beginning of the template
-        :param n_blank_e: the number of mask at the end of the template
-        :return: the generated template
+        Parameters
+        ----------
+        word_pair : list
+            A list of two words.
+        n_blank : int
+            The number of mask in between word_pair.
+        n_blank_b : int
+            The number of mask at the beginning of the template.
+        n_blank_e : int
+            The number of mask at the end of the template.
+
+        Returns
+        -------
+        A generated template.
         """
         assert len(word_pair) == 2, 'word_pair contains wrong number of tokens: {}'.format(len(word_pair))
         mask = self.tokenizer.mask_token
@@ -234,17 +264,18 @@ class Prompter:
                  n_blank_e: int = 1):
         """ Generate/rewrite prompt based on perplexity
 
-        :param word_pairs: a list of two words
-        :param seed_sentences: a list of sentences
-        :param n_revision: the number of revision after replacing all the mask
-        :param batch_size: batch size
-        :param vocab_to_keep: see Prompter.replace_single_token
-        :param vocab_to_keep_unique: see Prompter.replace_single_token
-        :param topk: see Prompter.replace_single_token
-        :param n_blank: see Prompter.pair_to_seed
-        :param n_blank_b: see Prompter.pair_to_seed
-        :param n_blank_e: see Prompter.pair_to_seed
-        :return:
+        Parameters
+        ----------
+        word_pairs : a list of two words
+        seed_sentences : a list of sentences
+        n_revision : the number of revision after replacing all the mask
+        batch_size : batch size
+        vocab_to_keep : see Prompter.replace_single_token
+        vocab_to_keep_unique : see Prompter.replace_single_token
+        topk : see Prompter.replace_single_token
+        n_blank : see Prompter.pair_to_seed
+        n_blank_b : see Prompter.pair_to_seed
+        n_blank_e : see Prompter.pair_to_seed
         """
         tol = 0.05
         if seed_sentences:
@@ -343,12 +374,13 @@ class Prompter:
         - (i) Greedy token prediction: predict token by masking each token or masked token if sentence consists of mask
         - (ii) Perplexity re-ranking: choose the best replaced sentence that achieves the best perplexity
 
-        :param seed_sentences: a list of sentence
-        :param vocab_to_keep: (optional) a list of token to keep while replacing
-        :param vocab_to_keep_unique: (optional) only to include unique word from vocab_to_keep
-        :param batch_size: batch size
-        :param topk: keep topk prediction on masked token for perplexity filtering
-        :return:
+        Parameters
+        ----------
+        seed_sentences : a list of sentence
+        vocab_to_keep : (optional) a list of token to keep while replacing
+        vocab_to_keep_unique : (optional) only to include unique word from vocab_to_keep
+        batch_size : batch size
+        topk : keep topk prediction on masked token for perplexity filtering
         """
 
         def check_vocab(sentence, vocab):
@@ -469,7 +501,9 @@ class Prompter:
             if len(topk_edit) == 0:
                 topk_edit = process_single_pair(topk_buffer, True)
                 if len(topk_edit) != 0 and v is not None:
-                    logging.warning('prompt may include subword: `{}` ({})'.format(topk_edit[0], v))
+                    logging.warning('prompt may include subword (ignore if term to keep consists of multiple words)')
+                    logging.warning('\t - prompt      : {}'.format(topk_edit[0]))
+                    logging.warning('\t - term to keep: {}'.format(v))
 
             if len(topk_edit) == 0:
                 raise ValueError('no valid sentence found: ({})\n- current prompt: {}'.format(
@@ -503,9 +537,14 @@ class Prompter:
     def get_perplexity(self, sentences, batch_size: int = 4):
         """ Compute perplexity on sentences
 
-        :param batch_size:
-        :param sentences: a list of strings
-        :return: a list of perplexity
+        Parameters
+        ----------
+        batch_size :
+        sentences : a list of strings
+
+        Returns
+        ----------
+        A list of perplexity
         """
         self.__load_model()
         if type(sentences) is str:

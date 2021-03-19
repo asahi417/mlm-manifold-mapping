@@ -18,6 +18,7 @@ def get_options():
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/lama', type=str)
     parser.add_argument('--max-data-size', help='Max data size in single run', default=2000, type=int)
     parser.add_argument('--debug', help='Show debug log', action='store_true')
+    parser.add_argument('--log-file', help='Export log file', default=None, type=str)
     return parser.parse_args()
 
 
@@ -25,6 +26,14 @@ def main():
     opt = get_options()
     level = logging.DEBUG if opt.debug else logging.INFO
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
+    if opt.log_file is not None:
+        # add file handler
+        logger = logging.getLogger()
+        file_handler = logging.FileHandler(opt.log_file)
+        file_handler.setLevel(level)
+        file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)-8s %(message)s'))
+        logger.addHandler(file_handler)
+
     prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
 
     # aggregate data
