@@ -95,7 +95,9 @@ def main():
     with open(filename, "wb") as fp:
         pickle.dump(output_list, fp)
     logging.info('deleting cached files')
-    for p in glob('{}/{}/prompt_dict.*.sub.*.pkl'.format(opt.output_dir, opt.transformers_model)):
+    # filename = '{}/{}/prompt_dict.{}.{}.pkl'.format(opt.output_dir, opt.transformers_model, opt.topk, opt.revision)
+    for p in glob('{}/{}/prompt_dict.{}.{}.sub.*.pkl'.format(
+            opt.output_dir, opt.transformers_model, opt.topk, opt.revision)):
         os.remove(p)
 
 
