@@ -302,7 +302,7 @@ class Prompter:
                     # mask should be removed one by one, but some has skipped if this raises error
                     assert all(self.tokenizer.mask_token not in i for i in seed_sentences), 'some masks got lost'
                     break
-                logging.info('REPLACE MASK: step {}'.format(1 + len(edit_ppl)))
+                logging.info('REPLACE MASK: step {}'.format(len(edit_ppl)))
                 seed_sentences, ppl = self.replace_single_token(
                     seed_sentences,
                     vocab_to_keep=word_pairs,

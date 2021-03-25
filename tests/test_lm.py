@@ -105,13 +105,13 @@ class Test(unittest.TestCase):
                            n_blank=2,
                            n_blank_b=0,
                            n_blank_e=0,
-                           topk=1))
+                           topk=15))
         pprint(lm.generate(word_pairs=['Albania', 'Albanian'],
                            n_revision=1,
                            n_blank=2,
                            n_blank_b=0,
                            n_blank_e=0,
-                           topk=1))
+                           topk=15))
 
 
 if __name__ == "__main__":
