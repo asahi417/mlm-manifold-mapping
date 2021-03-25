@@ -386,7 +386,8 @@ class Prompter:
         def check_vocab(sentence, vocab):
             if not vocab_to_keep_unique:
                 return True
-            vocab_in = re.findall(r'|'.join(vocab), sentence.lower())
+            vocab = sorted(vocab, reverse=True)
+            vocab_in = re.findall(r'|'.join(vocab).lower(), sentence.lower())
             vocab_in_unique = list(set(vocab_in))
             if len(vocab_in_unique) == len(vocab_in) == len(vocab):
                 return True
