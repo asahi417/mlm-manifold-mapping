@@ -85,16 +85,32 @@ class Test(unittest.TestCase):
     #                        n_revision=1,
     #                        topk=1))
 
-    def test_issue5(self):
-        lm = Prompter('albert-base-v1', max_length=64)
-        pprint(lm.generate(seed_sentences=['Visual Basic .NET is developed by [MASK] .'],
-                           vocab_to_keep=[['[MASK]', 'Visual Basic .NET']],
+    # def test_issue5(self):
+    #     lm = Prompter('albert-base-v1', max_length=64)
+    #     pprint(lm.generate(seed_sentences=['Visual Basic .NET is developed by [MASK] .'],
+    #                        vocab_to_keep=[['[MASK]', 'Visual Basic .NET']],
+    #                        n_revision=1,
+    #                        topk=1))
+    #     lm = Prompter('bert-large-cased', max_length=64)
+    #     pprint(lm.generate(seed_sentences=['Csaba Őry was born in [MASK] .'],
+    #                        vocab_to_keep=[['[MASK]', 'Csaba Őry']],
+    #                        n_revision=1,
+    #                        topk=1))
+
+    def test_issue6(self):
+        # lm = Prompter('albert-base-v1', max_length=64)
+        lm = Prompter('roberta-large', max_length=64)
+        pprint(lm.generate(word_pairs=['aberdeen', 'aberdeenshire'],
                            n_revision=1,
+                           n_blank=2,
+                           n_blank_b=0,
+                           n_blank_e=0,
                            topk=1))
-        lm = Prompter('bert-large-cased', max_length=64)
-        pprint(lm.generate(seed_sentences=['Csaba Őry was born in [MASK] .'],
-                           vocab_to_keep=[['[MASK]', 'Csaba Őry']],
+        pprint(lm.generate(word_pairs=['Albania', 'Albanian'],
                            n_revision=1,
+                           n_blank=2,
+                           n_blank_b=0,
+                           n_blank_e=0,
                            topk=1))
 
 
