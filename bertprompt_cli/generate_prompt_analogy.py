@@ -106,7 +106,9 @@ def main():
         with open(filename, 'w') as f:
             json.dump(output_dict, f)
         logging.info('deleting cached files')
-        for p in glob('{0}/{1}/prompt_dict.*.sub.*.json'.format(opt.output_dir, opt.data)):
+        filename = '{0}/{1}/prompt_dict.{1}.{2}.{3}.{4}.{5}.{6}.sub.*.json'.format(
+            opt.output_dir, opt.data, opt.transformers_model, opt.topk, n_blank, n_blank_b, n_blank_e)
+        for p in glob(filename):
             os.remove(p)
 
 
