@@ -100,13 +100,13 @@ class Test(unittest.TestCase):
     def test_issue6(self):
         # lm = Prompter('albert-base-v1', max_length=64)
         lm = Prompter('roberta-large', max_length=64)
-        pprint(lm.generate(word_pairs=['Albania', 'Albanian'],
-                           n_revision=1,
-                           n_blank=2,
-                           n_blank_b=0,
-                           n_blank_e=0,
-                           topk=15))
-        pprint(lm.generate(word_pairs=['aberdeen', 'aberdeenshire'],
+        # pprint(lm.generate(word_pairs=['Albania', 'Albanian'],
+        #                    n_revision=1,
+        #                    n_blank=2,
+        #                    n_blank_b=0,
+        #                    n_blank_e=0,
+        #                    topk=15))
+        pprint(lm.generate(word_pairs=['Moldova', 'Moldova'],
                            n_revision=1,
                            n_blank=2,
                            n_blank_b=0,
