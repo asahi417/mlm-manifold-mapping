@@ -13,7 +13,7 @@ def get_options():
                         help='Language model alias from transformers model hub', required=True, type=str)
     parser.add_argument('-r', '--revision', help='The number of revision by language model', default=100, type=int)
     parser.add_argument('-l', '--length', help='Max length of language model', default=256, type=int)
-    parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
+    parser.add_argument('-b', '--batch', help='Batch size', default=32, type=int)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='./prompts/lama', type=str)
     parser.add_argument('--max-data-size', help='Max data size in single run', default=2000, type=int)
