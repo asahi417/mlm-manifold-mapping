@@ -59,7 +59,7 @@ def main():
             json.dump(best_prompt, f)
         list_prompt += [file_best_prompt]
 
-    list_prompt = [file_best_prompt]
+    # list_prompt = [file_best_prompt]
 
     accuracy_full = {}
 
