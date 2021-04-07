@@ -49,15 +49,18 @@ def main():
     logging.info('RUN ANALOGY TEST WITH PROMPT')
     path = '{0}/{1}/prompt_dict.{1}.{2}.{3}*json'.format(
         opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
-    list_prompt = glob(path)
+    list_prompt = sorted(glob(path))
     assert len(list_prompt), path
     file_best_prompt = '{0}/{1}/prompt_dict.{1}.{2}.{3}.best.json'.format(
         opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
-    if not os.path.exists(file_best_prompt):
+    if file_best_prompt not in list_prompt:
         best_prompt = get_best_prompt(list_prompt)
         with open(file_best_prompt, 'w') as f:
             json.dump(best_prompt, f)
-    list_prompt += [file_best_prompt]
+        list_prompt += [file_best_prompt]
+    
+    list_prompt = [file_best_prompt]
+
     accuracy_full = {}
 
     for _file in list_prompt:
