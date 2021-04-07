@@ -594,7 +594,7 @@ class Prompter:
                 out = self.model(**encode, return_dict=True)
                 embedding = out['hidden_states'][-1]
                 if return_cls:
-                    embedding += embedding[:, 0, :].cpu().tolist()
+                    embeddings += embedding[:, 0, :].cpu().tolist()
                 else:
                     mask = (encode['input_ids'] != self.tokenizer.pad_token_id).view(len(encode['input_ids']), -1, 1)
                     length = (encode['input_ids'] != self.tokenizer.pad_token_id).sum(-1).view(-1, 1)
