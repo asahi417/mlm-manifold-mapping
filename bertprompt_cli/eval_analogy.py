@@ -100,8 +100,8 @@ def main():
                     v_stem = embedding_dict[str(single_data['stem'])]
                     v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
                     sims = [cos_similarity(v_stem, v) for v in v_choice]
-                    print(sims)
-                    input()
+                    # print(sims)
+                    # input()
                     pred = sims.index(max(sims))
                     prediction.append(pred)
             elif opt.mode == 'ppl':
