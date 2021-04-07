@@ -76,29 +76,29 @@ def main():
         cache_file = '{0}/cache/{1}.{2}.{3}.pkl'.format(opt.output_dir, filename, opt.mode, opt.prompt_mode)
         os.makedirs(os.path.dirname(cache_file), exist_ok=True)
         val, test = bertprompt.get_analogy_data(opt.data)
-        all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
         if opt.prompt_mode == 'stem':
+            all_pairs = []
             all_template = []
             for data_ in val + test:
                 h, t = data_['stem']
                 template = prompt_dict['||'.join([h, t])][0][-1]
+                all_pairs.append([h, t])
+                all_template.append(template)
                 h_var = re.findall(h, template, re.IGNORECASE)
                 t_var = re.findall(t, template, re.IGNORECASE)
                 assert len(h_var) and len(t_var), '`{}` and `{}` not in `{}`'.format(h, t, template)
-                all_template.append([
-                    re.sub(r'|'.join(t_var), t_c, re.sub(r'|'.join(h_var), h_c, template))
-                    for h_c, t_c in data_['choice']])
 
-                # all_template.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
+                for h_c, t_c in data_['choice']:
+                    all_pairs.append([h_c, t_c])
+                    all_template.append(re.sub(r'|'.join(t_var), t_c, re.sub(r'|'.join(h_var), h_c, template)))
         elif opt.prompt_mode == 'all':
+            all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
             all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
         else:
             raise ValueError('unknown prompt_mode: {}'.format(opt.prompt_mode))
 
         if opt.mode in ['avg', 'cls']:
             # embedding similarity in between averaged embedding
-
-            # all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
             if os.path.exists(cache_file):
                 with open(cache_file, "rb") as fp:
                     embedding = pickle.load(fp)
@@ -119,20 +119,20 @@ def main():
 
             prediction = []
             for single_data in val + test:
-                v_stem = embedding_dict[str(single_data['stem'])]
                 v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
+                v_stem = embedding_dict[str(single_data['stem'])]
                 sims = [cos_similarity(v_stem, v) for v in v_choice]
                 pred = sims.index(max(sims))
                 prediction.append(pred)
-        elif opt.mode == 'ppl':
-            # validity score based on perplexity
-            # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
-            prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
-            score_flat = prompter.get_perplexity(list(chain(*all_template)), batch_size=opt.batch)
-            list_choice = [data_['stem'] for data_ in val + test]
-            partition = bertprompt.get_partition(list_choice)
-            score = [score_flat[s_:e_] for s_, e_ in partition]
-            prediction = [s.index(min(s)) for s in score]
+        # elif opt.mode == 'ppl':
+        #     # validity score based on perplexity
+        #     # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
+        #     prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
+        #     score_flat = prompter.get_perplexity(list(chain(*all_template)), batch_size=opt.batch)
+        #     list_choice = [data_['stem'] for data_ in val + test]
+        #     partition = bertprompt.get_partition(list_choice)
+        #     score = [score_flat[s_:e_] for s_, e_ in partition]
+        #     prediction = [s.index(min(s)) for s in score]
         else:
             raise ValueError('unknown mode: {}'.format(opt.mode))
 
