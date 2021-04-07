@@ -127,7 +127,7 @@ def main():
                 print(prompt_dict['||'.join(single_data['stem'])])
                 print([prompt_dict['||'.join(c)] for c in single_data['choice']])
                 print(pred, single_data['answer'])
-                input()
+                # input()
         # elif opt.mode == 'ppl':
         #     # validity score based on perplexity
         #     # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
