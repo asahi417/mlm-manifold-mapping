@@ -71,26 +71,26 @@ def main():
             prompt_dict = json.load(f_dict)
         if 'best' in filename:
             _, data, model, topk, _ = filename.split('.')
-            output_file = '{0}/cache/{1}.{2}.{3}.{4}.best.pkl'.format(
+            cache_file = '{0}/cache/{1}.{2}.{3}.{4}.best.pkl'.format(
                 opt.output_dir, data, model, topk, opt.mode)
         else:
             _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
-            output_file = '{0}/cache/{1}.{2}.{3}.{4}.{5}.{6}.{7}.pkl'.format(
+            cache_file = '{0}/cache/{1}.{2}.{3}.{4}.{5}.{6}.{7}.pkl'.format(
                 opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e, opt.mode)
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        os.makedirs(os.path.dirname(cache_file), exist_ok=True)
         val, test = bertprompt.get_analogy_data(data)
         if opt.mode in ['avg', 'cls']:
             # embedding similarity in between averaged embedding
             all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
             all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
-            if os.path.exists(output_file):
-                with open(output_file, "rb") as fp:
-                    prediction = pickle.load(fp)
+            if os.path.exists(cache_file):
+                with open(cache_file, "rb") as fp:
+                    embedding = pickle.load(fp)
             else:
                 prompter = bertprompt.Prompter(model, opt.length)
                 embedding = prompter.get_embedding(all_template, batch_size=opt.batch, return_cls=opt.mode == 'cls')
-                with open(output_file, 'wb') as fp:
-                    pickle.dump(prediction, fp)
+                with open(cache_file, 'wb') as fp:
+                    pickle.dump(embedding, fp)
 
             embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
 
