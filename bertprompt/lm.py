@@ -190,9 +190,10 @@ class Prompter:
         except ValueError:
             self.tokenizer = transformers.AutoTokenizer.from_pretrained(model, cache_dir=cache_dir, local_files_only=True)
         try:
-            self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir)
+            self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir, output_hidden_states=True)
         except ValueError:
-            self.config = transformers.AutoConfig.from_pretrained(model, cache_dir=cache_dir, local_files_only=True)
+            self.config = transformers.AutoConfig.from_pretrained(
+                model, cache_dir=cache_dir, output_hidden_states=True, local_files_only=True)
 
     def __load_model(self):
         """ Load pretrained language model """
@@ -575,6 +576,28 @@ class Prompter:
                     zip(loss.cpu().tolist(), labels.cpu().tolist())
                 ))
         return list(map(lambda x: math.exp(sum(nll[x[0]:x[1]]) / (x[1] - x[0])), partition))
+
+    def get_embedding(self, sentences, batch_size: int = 4):
+        """ Get averaged embedding over context """
+        self.__load_model()
+        if type(sentences) is str:
+            sentences = [sentences]
+        data = get_encoding(sentences, self.tokenizer, self.max_length, token_wise_mask=True)
+        data_loader = torch.utils.data.DataLoader(
+            Dataset(list(chain(*data))),
+            num_workers=self.num_worker, batch_size=batch_size, shuffle=False, drop_last=False)
+        embeddings = []
+        with torch.no_grad():
+            for encode in tqdm(data_loader):
+                encode = {k: v.to(self.device) for k, v in encode.items()}
+                encode.pop('labels')
+                out = self.model(**encode, return_dict=True)
+                embedding = out['hidden_states'][-1]
+                mask = (encode['input_ids'] != self.tokenizer.pad_token_id).view(len(encode['input_ids']), -1, 1)
+                length = (encode['input_ids'] != self.tokenizer.pad_token_id).sum(-1).view(-1, 1)
+                y = (embedding * mask).sum(1) / length
+                embeddings += y.cpu().tolist()
+        return embeddings
 
     def release_cache(self):
         if self.device == "cuda":

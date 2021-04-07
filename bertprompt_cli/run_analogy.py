@@ -9,21 +9,23 @@ import bertprompt
 
 
 def get_options():
-    parser = argparse.ArgumentParser(description='Run analogy test')
+    parser = argparse.ArgumentParser(description='Run analogy test with prompt.')
     parser.add_argument('-t', '--transformers-model',
-                        help='Language model alias from transformers model hub (single model only)',
+                        help='Language model alias from transformers model hub',
                         required=True, type=str)
     parser.add_argument('-l', '--length', help='Max length of language model', default=16, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
-    parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='bats', type=str)
-    parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=10, type=int)
+    parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='sat', type=str)
+    parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
     parser.add_argument('-p', '--prompt-dir', help='Directory prompts stored', default='./prompts/analogy', type=str)
-    parser.add_argument('-o', '--output-dir', help='Directory to output', default='./results/analogy', type=str)
+    parser.add_argument('-o', '--output-dir', help='Directory to output', default='./eval/analogy', type=str)
+    parser.add_argument('--mode', help='Inference mode (ppl/avg)', default='avg', type=str)
     parser.add_argument('--debug', help='Show debug log', action='store_true')
     return parser.parse_args()
 
 
 def get_best_prompt(file_list):
+    """ Get best prompt in terms of ppl. """
 
     def safe_load(_file):
         with open(_file, 'r') as f:
@@ -45,7 +47,6 @@ def main():
     level = logging.DEBUG if opt.debug else logging.INFO
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
     logging.info('RUN ANALOGY TEST WITH PROMPT')
-    accuracy_full = {}
     path = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}*json'.format(
         opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
     list_prompt = glob(path)
@@ -57,74 +58,95 @@ def main():
         with open(file_best_prompt, 'w') as f:
             json.dump(best_prompt, f)
     list_prompt += [file_best_prompt]
+    accuracy_full = {}
 
     for _file in list_prompt:
         logging.info('Running inference on {}'.format(_file))
         filename = os.path.basename(_file).replace('.json', '')
 
-        with open(_file, 'r') as f:
-            prompt_dict = json.load(f)
+        with open(_file, 'r') as f_dict:
+            prompt_dict = json.load(f_dict)
         if 'best' in filename:
             _, data, model, topk, _ = filename.split('.')
-            output_file = '{0}/{1}/result.{1}.{2}.{3}.best.pkl'.format(
-                opt.output_dir, data, model, topk)
+            output_file = '{0}/cache/{1}.{2}.{3}.{4}.best.pkl'.format(
+                opt.output_dir, data, model, topk, opt.mode)
         else:
             _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
-            output_file = '{0}/{1}/result.{1}.{2}.{3}.{4}.{5}.{6}.pkl'.format(
-                opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e)
+            output_file = '{0}/cache/{1}.{2}.{3}.{4}.{5}.{6}.{7}.pkl'.format(
+                opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e, opt.mode)
+        os.makedirs(os.path.dirname(output_file), exist_ok=True)
         val, test = bertprompt.get_analogy_data(data)
-        full_data = val + test
-
-        # get data
-        list_answer = [data_['answer'] for data_ in full_data]
-        list_choice = [data_['choice'] for data_ in full_data]
-        partition = bertprompt.get_partition(list_choice)
-
-        def _main(reverse: bool = False):
-            if reverse:
-                output_file_ = output_file.replace('.pkl', '.reverse.pkl')
+        if opt.mode == 'avg':
+            # embedding similarity in between averaged embedding
+            all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
+            all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
+            if os.path.exists(output_file):
+                with open(output_file, "rb") as fp:
+                    embedding = pickle.load(fp)
             else:
-                output_file_ = output_file
-            if os.path.exists(output_file_):
-                with open(output_file_, "rb") as fp:
+                prompter = bertprompt.Prompter(model, opt.length)
+                embedding = prompter.get_embedding(all_template, batch_size=opt.batch)
+                with open(output_file, 'wb') as fp:
+                    pickle.dump(embedding, fp)
+
+            embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
+
+            def cos_similarity(a_, b_):
+                inner = sum(list(map(lambda x: x[0] * x[1], zip(a_, b_))))
+                norm_a = sum(list(map(lambda x: x * x, a_))) ** 0.5
+                norm_b = sum(list(map(lambda x: x * x, b_))) ** 0.5
+                return inner / (norm_b * norm_a)
+
+            def get_prediction(_data):
+                _list = []
+                for single_data in _data:
+                    v_stem = embedding_dict[str(single_data['stem'])]
+                    v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
+                    sims = [cos_similarity(v_stem, v) for v in v_choice]
+                    pred = sims.index(max(sims))
+                    _list.append(single_data['answer'] == pred)
+                return _list
+
+            acc_val = get_prediction(val)
+            acc_test = get_prediction(test)
+            accuracy = acc_val + acc_test
+        elif opt.mode == 'ppl':
+            # validity score based on perplexity
+            # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
+            full_data = val + test
+            if os.path.exists(output_file):
+                with open(output_file, "rb") as fp:
                     score_flat = pickle.load(fp)
-                return score_flat
+            else:
+                list_p = []
 
-            list_p = []
-            for data_ in full_data:
-                h, t = data_['stem']
-                if reverse:
-                    all_template, all_score = prompt_dict['||'.join([t, h])]
-                else:
+                for data_ in full_data:
+                    h, t = data_['stem']
                     all_template, all_score = prompt_dict['||'.join([h, t])]
-                template = all_template[-1]
-                assert h in template and t in template, '{} and {} not in {}'.format(h, t, template)
-                list_p.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
+                    template = all_template[-1]
+                    assert h in template and t in template, '{} and {} not in {}'.format(h, t, template)
+                    list_p.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
+                prompter = bertprompt.Prompter(model, opt.length)
+                score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
+                with open(output_file, 'wb') as fp:
+                    pickle.dump(score_flat, fp)
 
-            prompter = bertprompt.Prompter(model, opt.length)
-            score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
-            with open(output_file_, 'wb') as fp:
-                pickle.dump(score_flat, fp)
+            list_choice = [data_['stem'] for data_ in val + test]
+            partition = bertprompt.get_partition(list_choice)
+            score = [score_flat[s_:e_] for s_, e_ in partition]
+            accuracy = [int(d['answer'] == s.index(min(s))) for s, d in zip(score, full_data)]
+            acc_val = accuracy[:len(val)]
+            acc_test = accuracy[len(val):len(full_data)]
+        else:
+            raise ValueError('unknown mode: {}'.format(opt.mode))
 
-            return score_flat
-
-        def _accuracy(__score_flat):
-            score = [__score_flat[s_:e_] for s_, e_ in partition]
-            accuracy = []
-            assert len(score) == len(list_answer)
-            for a, s in zip(list_answer, score):
-                p = s.index(min(s))
-                accuracy.append(int(a == p))
-            return sum(accuracy) / len(accuracy)
-
-        _score_flat = _main()
-        _score_flat_r = _main(True)
-        _score_flat_c = list(map(lambda x: sum(x), zip(_score_flat, _score_flat_r)))
-        accuracy_full[filename.replace('prompt_dict.', '') + '.org'] = _accuracy(_score_flat)
-        accuracy_full[filename.replace('prompt_dict.', '') + '.rev'] = _accuracy(_score_flat_r)
-        accuracy_full[filename.replace('prompt_dict.', '') + '.com'] = _accuracy(_score_flat_c)
+        accuracy_full[filename.replace('prompt_dict.', '')] = {
+            'accuracy_valid': 100 * sum(acc_val) / len(acc_val),
+            'accuracy_test': 100 * sum(acc_test) / len(acc_test),
+            'accuracy': 100 * sum(accuracy) / len(accuracy)
+        }
     logging.info('All result:\n{}'.format(json.dumps(accuracy_full, indent=4, sort_keys=True)))
-    path = '{0}/{1}/summary.{1}.{2}.{3}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk)
+    path = '{0}/{1}.{2}.{3}.{4}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.mode, opt.topk)
     with open(path, 'w') as f:
         json.dump(accuracy_full, f)
 
