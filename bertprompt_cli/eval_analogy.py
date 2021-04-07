@@ -76,19 +76,16 @@ def main():
                 opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e, opt.mode)
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         val, test = bertprompt.get_analogy_data(data)
-        if opt.mode == 'avg':
-            # embedding similarity in between averaged embedding
-            all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
-            all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
-            if os.path.exists(output_file):
-                with open(output_file, "rb") as fp:
-                    prediction = pickle.load(fp)
-            else:
+        if os.path.exists(output_file):
+            with open(output_file, "rb") as fp:
+                prediction = pickle.load(fp)
+        else:
+            if opt.mode == 'avg':
+                # embedding similarity in between averaged embedding
+                all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
+                all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
                 prompter = bertprompt.Prompter(model, opt.length)
                 embedding = prompter.get_embedding(all_template, batch_size=opt.batch)
-                with open(output_file, 'wb') as fp:
-                    pickle.dump(embedding, fp)
-
                 embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
 
                 def cos_similarity(a_, b_):
@@ -102,18 +99,15 @@ def main():
                     v_stem = embedding_dict[str(single_data['stem'])]
                     v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
                     sims = [cos_similarity(v_stem, v) for v in v_choice]
+                    print(sims)
+                    input()
                     pred = sims.index(max(sims))
                     prediction.append(pred)
-        elif opt.mode == 'ppl':
-            # validity score based on perplexity
-            # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
-            full_data = val + test
-            if os.path.exists(output_file):
-                with open(output_file, "rb") as fp:
-                    prediction = pickle.load(fp)
-            else:
+            elif opt.mode == 'ppl':
+                # validity score based on perplexity
+                # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
                 list_p = []
-                for data_ in full_data:
+                for data_ in val + test:
                     h, t = data_['stem']
                     all_template, all_score = prompt_dict['||'.join([h, t])]
                     template = all_template[-1]
@@ -122,15 +116,14 @@ def main():
 
                 prompter = bertprompt.Prompter(model, opt.length)
                 score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
-                with open(output_file, 'wb') as fp:
-                    pickle.dump(score_flat, fp)
-
                 list_choice = [data_['stem'] for data_ in val + test]
                 partition = bertprompt.get_partition(list_choice)
                 score = [score_flat[s_:e_] for s_, e_ in partition]
                 prediction = [s.index(min(s)) for s in score]
-        else:
-            raise ValueError('unknown mode: {}'.format(opt.mode))
+            else:
+                raise ValueError('unknown mode: {}'.format(opt.mode))
+            with open(output_file, 'wb') as fp:
+                pickle.dump(prediction, fp)
 
         accuracy = [int(d['answer'] == p) for p, d in zip(prediction, val + test)]
         accuracy_full[filename.replace('prompt_dict.', '')] = {
