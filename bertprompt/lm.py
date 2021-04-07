@@ -595,7 +595,7 @@ class Prompter:
                     embeddings += embedding[:, 0, :].cpu().tolist()
                 else:
                     print(self.tokenizer.all_special_ids)
-                    mask_ = torch.cat([encode['input_ids'] != i for i in self.tokenizer.all_special_ids])
+                    mask_ = torch.stack([encode['input_ids'] != i for i in self.tokenizer.all_special_ids], dim=0)
                     print(mask_.shape)
                     print(mask_)
                     input()
