@@ -577,7 +577,7 @@ class Prompter:
                 ))
         return list(map(lambda x: math.exp(sum(nll[x[0]:x[1]]) / (x[1] - x[0])), partition))
 
-    def get_embedding(self, sentences, batch_size: int = 4):
+    def get_embedding(self, sentences, batch_size: int = 4, return_cls: bool = False):
         """ Get averaged embedding over context """
         self.__load_model()
         if type(sentences) is str:
@@ -593,10 +593,13 @@ class Prompter:
                 encode.pop('labels')
                 out = self.model(**encode, return_dict=True)
                 embedding = out['hidden_states'][-1]
-                mask = (encode['input_ids'] != self.tokenizer.pad_token_id).view(len(encode['input_ids']), -1, 1)
-                length = (encode['input_ids'] != self.tokenizer.pad_token_id).sum(-1).view(-1, 1)
-                y = (embedding * mask).sum(1) / length
-                embeddings += y.cpu().tolist()
+                if return_cls:
+                    embedding += embedding[:, 0, :].cpu().tolist()
+                else:
+                    mask = (encode['input_ids'] != self.tokenizer.pad_token_id).view(len(encode['input_ids']), -1, 1)
+                    length = (encode['input_ids'] != self.tokenizer.pad_token_id).sum(-1).view(-1, 1)
+                    y = (embedding * mask).sum(1) / length
+                    embeddings += y.cpu().tolist()
         return embeddings
 
     def release_cache(self):

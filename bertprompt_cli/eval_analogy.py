@@ -58,7 +58,7 @@ def main():
         with open(file_best_prompt, 'w') as f:
             json.dump(best_prompt, f)
         list_prompt += [file_best_prompt]
-    
+
     list_prompt = [file_best_prompt]
 
     accuracy_full = {}
@@ -83,12 +83,12 @@ def main():
             with open(output_file, "rb") as fp:
                 prediction = pickle.load(fp)
         else:
-            if opt.mode == 'avg':
+            if opt.mode in ['avg', 'cls']:
                 # embedding similarity in between averaged embedding
                 all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
                 all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
                 prompter = bertprompt.Prompter(model, opt.length)
-                embedding = prompter.get_embedding(all_template, batch_size=opt.batch)
+                embedding = prompter.get_embedding(all_template, batch_size=opt.batch, return_cls=opt.mode == 'cls')
                 embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
 
                 def cos_similarity(a_, b_):
@@ -126,8 +126,8 @@ def main():
                 prediction = [s.index(min(s)) for s in score]
             else:
                 raise ValueError('unknown mode: {}'.format(opt.mode))
-            with open(output_file, 'wb') as fp:
-                pickle.dump(prediction, fp)
+            # with open(output_file, 'wb') as fp:
+            #     pickle.dump(prediction, fp)
 
         accuracy = [int(d['answer'] == p) for p, d in zip(prediction, val + test)]
         accuracy_full[filename.replace('prompt_dict.', '')] = {
