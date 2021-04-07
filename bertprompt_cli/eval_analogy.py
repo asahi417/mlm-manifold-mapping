@@ -12,7 +12,7 @@ def get_options():
     parser = argparse.ArgumentParser(description='Run analogy test with prompt.')
     parser.add_argument('-t', '--transformers-model',
                         help='Language model alias from transformers model hub',
-                        required=True, type=str)
+                        default='roberta-large', type=str)
     parser.add_argument('-l', '--length', help='Max length of language model', default=16, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='sat', type=str)
@@ -47,11 +47,11 @@ def main():
     level = logging.DEBUG if opt.debug else logging.INFO
     logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=level, datefmt='%Y-%m-%d %H:%M:%S')
     logging.info('RUN ANALOGY TEST WITH PROMPT')
-    path = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}*json'.format(
+    path = '{0}/{1}/prompt_dict.{1}.{2}.{3}*json'.format(
         opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
     list_prompt = glob(path)
     assert len(list_prompt), path
-    file_best_prompt = '{0}/{1}/prompt/prompt_dict.{1}.{2}.{3}.best.json'.format(
+    file_best_prompt = '{0}/{1}/prompt_dict.{1}.{2}.{3}.best.json'.format(
         opt.prompt_dir, opt.data, opt.transformers_model, opt.topk)
     if not os.path.exists(file_best_prompt):
         best_prompt = get_best_prompt(list_prompt)
