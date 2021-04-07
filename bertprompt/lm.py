@@ -594,15 +594,14 @@ class Prompter:
                 if return_cls:
                     embeddings += embedding[:, 0, :].cpu().tolist()
                 else:
-
-                    mask = (encode['input_ids'] not in [self.tokenizer.pad_token_id, self.tokenizer.cls_token_id]
-                            ).view(len(encode['input_ids']), -1, 1)
-                    length = (encode['input_ids'] not in [self.tokenizer.pad_token_id, self.tokenizer.cls_token_id]
-                              ).sum(-1).view(-1, 1)
-                    print(mask)
-                    print(length)
+                    print(self.tokenizer.all_special_ids)
+                    mask_ = sum(encode['input_ids'] != i for i in self.tokenizer.all_special_ids)
+                    print(mask_)
+                    print(mask_.shape)
+                    input()
+                    mask = mask_.view(len(encode['input_ids']), -1, 1)
+                    length = mask_.sum(-1).view(-1, 1)
                     y = (embedding * mask).sum(1) / length
-                    input(y.shape)
                     embeddings += y.cpu().tolist()
         return embeddings
 
