@@ -3,6 +3,7 @@ import logging
 import json
 import pickle
 import os
+import re
 from itertools import chain
 from glob import glob
 import bertprompt
@@ -63,6 +64,7 @@ def main():
     # list_prompt = [file_best_prompt]
 
     accuracy_full = {}
+    os.makedirs(opt.output_dir, exist_ok=True)
 
     for _file in list_prompt:
         logging.info('Running inference on {}'.format(_file))
@@ -80,8 +82,14 @@ def main():
             for data_ in val + test:
                 h, t = data_['stem']
                 template = prompt_dict['||'.join([h, t])][0][-1]
-                assert h in template and t in template, '{} and {} not in {}'.format(h, t, template)
-                all_template.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
+                h_var = re.findall(h, template, re.IGNORECASE)
+                t_var = re.findall(t, template, re.IGNORECASE)
+                assert len(h_var) and len(t_var), '`{}` and `{}` not in `{}`'.format(h, t, template)
+                all_template.append([
+                    re.sub(r'|'.join(t_var), t_c, re.sub(r'|'.join(h_var), h_c, template))
+                    for h_c, t_c in data_['choice']])
+
+                # all_template.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
         elif opt.prompt_mode == 'all':
             all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
         else:
