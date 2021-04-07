@@ -591,8 +591,6 @@ class Prompter:
                 out = self.model(**encode, return_dict=True)
                 embedding = out['hidden_states'][-1]
                 mag = torch.abs(embedding).sum(-1)
-                print(mag.cpu().tolist(), mag.shape)
-                input()
                 if return_cls:
                     embeddings += embedding[:, 0, :].cpu().tolist()
                 else:

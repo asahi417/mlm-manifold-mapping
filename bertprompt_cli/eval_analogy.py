@@ -122,9 +122,12 @@ def main():
                 v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
                 v_stem = embedding_dict[str(single_data['stem'])]
                 sims = [cos_similarity(v_stem, v) for v in v_choice]
-                print(sims)
                 pred = sims.index(max(sims))
                 prediction.append(pred)
+                print(prompt_dict['||'.join(single_data['stem'])])
+                print([prompt_dict['||'.join(c)] for c in single_data['choice']])
+                print(pred, single_data['answer'])
+                input()
         # elif opt.mode == 'ppl':
         #     # validity score based on perplexity
         #     # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
