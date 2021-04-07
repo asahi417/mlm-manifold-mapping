@@ -82,69 +82,65 @@ def main():
             all_template = [prompt_dict['||'.join([h, t])][0][-1] for h, t in all_pairs]  # get last prompt
             if os.path.exists(output_file):
                 with open(output_file, "rb") as fp:
-                    embedding = pickle.load(fp)
+                    prediction = pickle.load(fp)
             else:
                 prompter = bertprompt.Prompter(model, opt.length)
                 embedding = prompter.get_embedding(all_template, batch_size=opt.batch)
                 with open(output_file, 'wb') as fp:
                     pickle.dump(embedding, fp)
 
-            embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
+                embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
 
-            def cos_similarity(a_, b_):
-                inner = sum(list(map(lambda x: x[0] * x[1], zip(a_, b_))))
-                norm_a = sum(list(map(lambda x: x * x, a_))) ** 0.5
-                norm_b = sum(list(map(lambda x: x * x, b_))) ** 0.5
-                return inner / (norm_b * norm_a)
+                def cos_similarity(a_, b_):
+                    inner = sum(list(map(lambda x: x[0] * x[1], zip(a_, b_))))
+                    norm_a = sum(list(map(lambda x: x * x, a_))) ** 0.5
+                    norm_b = sum(list(map(lambda x: x * x, b_))) ** 0.5
+                    return inner / (norm_b * norm_a)
 
-            def get_prediction(_data):
-                _list = []
-                for single_data in _data:
+                prediction = []
+                for single_data in val + test:
                     v_stem = embedding_dict[str(single_data['stem'])]
                     v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
                     sims = [cos_similarity(v_stem, v) for v in v_choice]
                     pred = sims.index(max(sims))
-                    _list.append(single_data['answer'] == pred)
-                return _list
-
-            acc_val = get_prediction(val)
-            acc_test = get_prediction(test)
-            accuracy = acc_val + acc_test
+                    prediction.append(pred)
         elif opt.mode == 'ppl':
             # validity score based on perplexity
             # (A, B) and (C, D) --> P_{A, B}(C, D) is used to compute prompt.
             full_data = val + test
             if os.path.exists(output_file):
                 with open(output_file, "rb") as fp:
-                    score_flat = pickle.load(fp)
+                    prediction = pickle.load(fp)
             else:
                 list_p = []
-
                 for data_ in full_data:
                     h, t = data_['stem']
                     all_template, all_score = prompt_dict['||'.join([h, t])]
                     template = all_template[-1]
                     assert h in template and t in template, '{} and {} not in {}'.format(h, t, template)
                     list_p.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
+
                 prompter = bertprompt.Prompter(model, opt.length)
                 score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
                 with open(output_file, 'wb') as fp:
                     pickle.dump(score_flat, fp)
 
-            list_choice = [data_['stem'] for data_ in val + test]
-            partition = bertprompt.get_partition(list_choice)
-            score = [score_flat[s_:e_] for s_, e_ in partition]
-            accuracy = [int(d['answer'] == s.index(min(s))) for s, d in zip(score, full_data)]
-            acc_val = accuracy[:len(val)]
-            acc_test = accuracy[len(val):len(full_data)]
+                list_choice = [data_['stem'] for data_ in val + test]
+                partition = bertprompt.get_partition(list_choice)
+                score = [score_flat[s_:e_] for s_, e_ in partition]
+                prediction = [s.index(min(s)) for s in score]
         else:
             raise ValueError('unknown mode: {}'.format(opt.mode))
 
+        accuracy = [int(d['answer'] == p) for p, d in zip(prediction, val + test)]
         accuracy_full[filename.replace('prompt_dict.', '')] = {
-            'accuracy_valid': 100 * sum(acc_val) / len(acc_val),
-            'accuracy_test': 100 * sum(acc_test) / len(acc_test),
+            'accuracy_valid': 100 * sum(accuracy[:len(val)]) / len(val),
+            'accuracy_test': 100 * sum(accuracy[len(val):len(val) + len(test)]) / len(test),
             'accuracy': 100 * sum(accuracy) / len(accuracy)
         }
+        logging.info('accuracy: \n{}'.format(
+            json.dumps(accuracy_full[filename.replace('prompt_dict.', '')], indent=4, sort_keys=True)
+        ))
     logging.info('All result:\n{}'.format(json.dumps(accuracy_full, indent=4, sort_keys=True)))
     path = '{0}/{1}.{2}.{3}.{4}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.mode, opt.topk)
     os.makedirs(opt.output_dir, exist_ok=True)
