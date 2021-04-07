@@ -590,6 +590,8 @@ class Prompter:
                 encode.pop('labels')
                 out = self.model(**encode, return_dict=True)
                 embedding = out['hidden_states'][-1]
+                print(torch.abs(embedding).sum(-1))
+                input()
                 if return_cls:
                     embeddings += embedding[:, 0, :].cpu().tolist()
                 else:
