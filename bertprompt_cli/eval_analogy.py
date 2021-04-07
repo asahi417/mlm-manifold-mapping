@@ -89,10 +89,11 @@ def main():
                 embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
 
                 def cos_similarity(a_, b_):
-                    inner = sum(list(map(lambda x: x[0] * x[1], zip(a_, b_))))
-                    norm_a = sum(list(map(lambda x: x * x, a_))) ** 0.5
-                    norm_b = sum(list(map(lambda x: x * x, b_))) ** 0.5
-                    return inner / (norm_b * norm_a)
+                    return - sum(list(map(lambda x: (x[0] - x[1]) ** 2, zip(a_, b_)))) ** 0.5
+                    # inner = sum(list(map(lambda x: x[0] * x[1], zip(a_, b_))))
+                    # norm_a = sum(list(map(lambda x: x * x, a_))) ** 0.5
+                    # norm_b = sum(list(map(lambda x: x * x, b_))) ** 0.5
+                    # return inner / (norm_b * norm_a)
 
                 prediction = []
                 for single_data in val + test:
