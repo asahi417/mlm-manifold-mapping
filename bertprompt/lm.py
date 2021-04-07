@@ -590,13 +590,16 @@ class Prompter:
                 encode.pop('labels')
                 out = self.model(**encode, return_dict=True)
                 embedding = out['hidden_states'][-1]
-                mag = torch.abs(embedding).sum(-1)
+                # mag = torch.abs(embedding).sum(-1)
                 if return_cls:
                     embeddings += embedding[:, 0, :].cpu().tolist()
                 else:
                     mask = (encode['input_ids'] != self.tokenizer.pad_token_id).view(len(encode['input_ids']), -1, 1)
                     length = (encode['input_ids'] != self.tokenizer.pad_token_id).sum(-1).view(-1, 1)
+                    print(mask)
+                    print(length)
                     y = (embedding * mask).sum(1) / length
+                    input(y.shape)
                     embeddings += y.cpu().tolist()
         return embeddings
 
