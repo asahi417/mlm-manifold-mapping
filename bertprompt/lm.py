@@ -337,15 +337,12 @@ class Prompter:
             )
 
             # sentence keep improving
-            # index_unfixed = list(filter(lambda x: ppl[x] < edit_ppl[x][-1], range(len(seed_sentences))))
-            # index_unfixed = list(filter(lambda x: (ppl[x] - edit_ppl[x][-1]) < 0, range(len(seed_sentences))))
             index_unfixed = list(filter(lambda x: (edit_ppl[x][-1] - ppl[x]) > tol, range(len(seed_sentences))))
 
             # extract stable sentence
             index_fixed = list(filter(lambda x: x not in index_unfixed, range(len(seed_sentences))))
             for n in index_fixed:
                 output_list[data_index[n]] = [edit[n], edit_ppl[n]]
-            # output_list.append({data_key[data_index[n]]: [edit[n], edit_ppl[n]] for n in index_fixed})
 
             edit = list(map(lambda x: tuple(list(edit[x]) + [seed_sentences[x]]), index_unfixed))
             edit_ppl = list(map(lambda x: tuple(list(edit_ppl[x]) + [ppl[x]]), index_unfixed))

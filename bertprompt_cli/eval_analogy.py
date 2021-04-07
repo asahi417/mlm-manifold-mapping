@@ -105,8 +105,8 @@ def main():
             else:
                 prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
                 embedding = prompter.get_embedding(all_template, batch_size=opt.batch, return_cls=opt.mode == 'cls')
-                # with open(cache_file, 'wb') as fp:
-                #     pickle.dump(embedding, fp)
+                with open(cache_file, 'wb') as fp:
+                    pickle.dump(embedding, fp)
 
             embedding_dict = {str(k): v for k, v in zip(all_pairs, embedding)}
 
@@ -122,6 +122,7 @@ def main():
                 v_choice = [embedding_dict[str(c)] for c in single_data['choice']]
                 v_stem = embedding_dict[str(single_data['stem'])]
                 sims = [cos_similarity(v_stem, v) for v in v_choice]
+                print(sims)
                 pred = sims.index(max(sims))
                 prediction.append(pred)
         # elif opt.mode == 'ppl':
@@ -146,7 +147,7 @@ def main():
             json.dumps(accuracy_full[filename.replace('prompt_dict.', '')], indent=4, sort_keys=True)
         ))
     logging.info('All result:\n{}'.format(json.dumps(accuracy_full, indent=4, sort_keys=True)))
-    path = '{0}/{1}.{2}.{3}.{4}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.mode, opt.topk)
+    path = '{0}/{1}.{2}.{3}.{4}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.topk, opt.mode, opt.prompt_mode)
     os.makedirs(opt.output_dir, exist_ok=True)
     with open(path, 'w') as f:
         json.dump(accuracy_full, f)
