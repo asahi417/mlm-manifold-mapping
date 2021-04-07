@@ -594,8 +594,11 @@ class Prompter:
                 if return_cls:
                     embeddings += embedding[:, 0, :].cpu().tolist()
                 else:
-                    mask = (encode['input_ids'] != self.tokenizer.pad_token_id).view(len(encode['input_ids']), -1, 1)
-                    length = (encode['input_ids'] != self.tokenizer.pad_token_id).sum(-1).view(-1, 1)
+
+                    mask = (encode['input_ids'] not in [self.tokenizer.pad_token_id, self.tokenizer.cls_token_id]
+                            ).view(len(encode['input_ids']), -1, 1)
+                    length = (encode['input_ids'] not in [self.tokenizer.pad_token_id, self.tokenizer.cls_token_id]
+                              ).sum(-1).view(-1, 1)
                     print(mask)
                     print(length)
                     y = (embedding * mask).sum(1) / length
