@@ -13,7 +13,7 @@ def get_options():
     parser.add_argument('-t', '--transformers-model',
                         help='Language model alias from transformers model hub',
                         default='roberta-large', type=str)
-    parser.add_argument('-l', '--length', help='Max length of language model', default=16, type=int)
+    parser.add_argument('-l', '--length', help='Max length of language model', default=32, type=int)
     parser.add_argument('-b', '--batch', help='Batch size', default=512, type=int)
     parser.add_argument('-d', '--data', help='Data name: sat/u2/u4/google/bats', default='sat', type=str)
     parser.add_argument('-k', '--topk', help='Filter to top k token prediction', default=15, type=int)
@@ -147,6 +147,7 @@ def main():
         }
     logging.info('All result:\n{}'.format(json.dumps(accuracy_full, indent=4, sort_keys=True)))
     path = '{0}/{1}.{2}.{3}.{4}.json'.format(opt.output_dir, opt.data, opt.transformers_model, opt.mode, opt.topk)
+    os.makedirs(opt.output_dir, exist_ok=True)
     with open(path, 'w') as f:
         json.dump(accuracy_full, f)
 
