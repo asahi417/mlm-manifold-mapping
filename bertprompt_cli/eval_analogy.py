@@ -69,16 +69,18 @@ def main():
 
         with open(_file, 'r') as f_dict:
             prompt_dict = json.load(f_dict)
-        if 'best' in filename:
-            _, data, model, topk, _ = filename.split('.')
-            cache_file = '{0}/cache/{1}.{2}.{3}.{4}.best.pkl'.format(
-                opt.output_dir, data, model, topk, opt.mode)
-        else:
-            _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
-            cache_file = '{0}/cache/{1}.{2}.{3}.{4}.{5}.{6}.{7}.pkl'.format(
-                opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e, opt.mode)
+
+        cache_file = '{0}/cache/{1}.pkl'.format(opt.output_dir, filename)
+        # if 'best' in filename:
+        #     _, data, model, topk, _ = filename.split('.')
+        #     cache_file = '{0}/cache/{1}.{2}.{3}.{4}.best.pkl'.format(
+        #         opt.output_dir, data, model, topk, opt.mode)
+        # else:
+        #     _, data, model, topk, n_blank, n_blank_b, n_blank_e = filename.split('.')
+        #     cache_file = '{0}/cache/{1}.{2}.{3}.{4}.{5}.{6}.{7}.pkl'.format(
+        #         opt.output_dir, data, model, topk, n_blank, n_blank_b, n_blank_e, opt.mode)
         os.makedirs(os.path.dirname(cache_file), exist_ok=True)
-        val, test = bertprompt.get_analogy_data(data)
+        val, test = bertprompt.get_analogy_data(opt.data)
         if opt.mode in ['avg', 'cls']:
             # embedding similarity in between averaged embedding
             all_pairs = list(chain(*[[o['stem']] + o['choice'] for o in val + test]))
@@ -87,7 +89,7 @@ def main():
                 with open(cache_file, "rb") as fp:
                     embedding = pickle.load(fp)
             else:
-                prompter = bertprompt.Prompter(model, opt.length)
+                prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
                 embedding = prompter.get_embedding(all_template, batch_size=opt.batch, return_cls=opt.mode == 'cls')
                 with open(cache_file, 'wb') as fp:
                     pickle.dump(embedding, fp)
@@ -121,7 +123,7 @@ def main():
                 assert h in template and t in template, '{} and {} not in {}'.format(h, t, template)
                 list_p.append([template.replace(h, h_c).replace(t, t_c) for h_c, t_c in data_['choice']])
 
-            prompter = bertprompt.Prompter(model, opt.length)
+            prompter = bertprompt.Prompter(opt.transformers_model, opt.length)
             score_flat = prompter.get_perplexity(list(chain(*list_p)), batch_size=opt.batch)
             list_choice = [data_['stem'] for data_ in val + test]
             partition = bertprompt.get_partition(list_choice)
