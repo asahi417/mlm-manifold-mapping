@@ -124,9 +124,6 @@ def main():
                 sims = [cos_similarity(v_stem, v) for v in v_choice]
                 pred = sims.index(max(sims))
                 prediction.append(pred)
-                print(prompt_dict['||'.join(single_data['stem'])])
-                print([prompt_dict['||'.join(c)] for c in single_data['choice']])
-                print(pred, single_data['answer'])
                 # input()
         # elif opt.mode == 'ppl':
         #     # validity score based on perplexity
