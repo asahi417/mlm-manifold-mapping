@@ -5,13 +5,13 @@ with open('README.md', 'r') as f:
 
 VERSION = '0.0.0'
 setup(
-    name='bertprompt',
+    name='m3',
     packages=find_packages(exclude=['tests']),
     version=VERSION,
-    # license='MIT',
-    description='BERT based conditional text generation/revision with pseudo perplexity objectives.',
-    url='https://github.com/asahi417/bertprompt',
-    # download_url="https://github.com/asahi417/bertprompt/archive/v{}.tar.gz".format(VERSION),
+    license='MIT',
+    description="Iterative text revision based on the mapping onto manifold of masked language model's low-perplexity space.",
+    url='https://github.com/asahi417/mlm-manifold-mapping',
+    download_url="https://github.com/asahi417/bertprompt/archive/v{}.tar.gz".format(VERSION),
     keywords=['language-model', 'nlp', 'bert', 'text-generation'],
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -38,9 +38,7 @@ setup(
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
-            'bertprompt-lama = bertprompt_cli.generate_prompt_lama:main',
-            'bertprompt-analogy = bertprompt_cli.generate_prompt_analogy:main',
-            'bertprompt-analogy-eval = bertprompt_cli.eval_analogy:main'
+            'm3-rewrite = m3.m3_cl.rewrite_text:main'
         ]
     }
 )
