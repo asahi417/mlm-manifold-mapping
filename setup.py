@@ -33,7 +33,12 @@ setup(
         "torch",
         "tqdm",
         "pandas",
-        "requests"
+        "requests",
+        "datasets",
+        "sklearn",
+        "wandb",
+        "ray[tune]"
+
     ],
     python_requires='>=3.6',
     entry_points={

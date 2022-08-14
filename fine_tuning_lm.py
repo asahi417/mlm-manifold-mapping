@@ -3,7 +3,6 @@ import numpy as np
 from datasets import load_dataset, load_metric
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 
-# DEBUG = True
 
 def get_metrics():
     metric_accuracy = load_metric("accuracy")
@@ -37,7 +36,9 @@ def main():
     parser.add_argument('-e', '--epoch', help='epoch', default=10, type=int)
     parser.add_argument('-l', '--seq-length', help='', default=128, type=int)
     parser.add_argument('--random-seed', help='', default=42, type=int)
-    parser.add_argument('-o', '--output-dir', help='Directory to output', default='.', type=str)
+    parser.add_argument('--eval-step', help='', default=10, type=int)
+    parser.add_argument('-o', '--output-dir', help='Directory to output', required=True, type=str)
+    parser.add_argument('--hyperparameter-search', action='store_true')
     # input
     opt = parser.parse_args()
 
@@ -56,10 +57,10 @@ def main():
     trainer = Trainer(
         model=model,
         args=TrainingArguments(
-            output_dir="test_trainer",
+            output_dir=opt.output_dir,
             evaluation_strategy="steps",
             num_train_epochs=opt.epoch,
-            eval_steps=10,
+            eval_steps=opt.eval_step,
             seed=opt.random_seed,
             per_device_train_batch_size=opt.batch_size
         ),
@@ -69,14 +70,15 @@ def main():
         model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
             opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
     )
-    trainer.train()
-    # trainer.evaluate()
-    # trainer.hyperparameter_search(
-    #     direction="maximize",
-    #     backend="ray",
-    #     n_trials=10  # number of trials
-    # )
-
+    if opt.hyperparameter_search:
+        trainer.hyperparameter_search(
+            direction="maximize",
+            backend="ray",
+            n_trials=10  # number of trials
+        )
+    else:
+        trainer.train()
+    trainer.evaluate()
 
 if __name__ == '__main__':
     main()
