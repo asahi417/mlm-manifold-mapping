@@ -3,6 +3,29 @@ import numpy as np
 from datasets import load_dataset, load_metric
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 
+# DEBUG = True
+
+def get_metrics():
+    metric_accuracy = load_metric("accuracy")
+    metric_f1 = load_metric("f1")
+
+    def compute_f1_micro(eval_pred):
+        logits, labels = eval_pred
+        predictions = np.argmax(logits, axis=-1)
+        return metric_f1.compute(predictions=predictions, references=labels, average='micro')
+
+    def compute_f1_macro(eval_pred):
+        logits, labels = eval_pred
+        predictions = np.argmax(logits, axis=-1)
+        return metric_f1.compute(predictions=predictions, references=labels, average='macro')
+
+    def compute_accuracy(eval_pred):
+        logits, labels = eval_pred
+        predictions = np.argmax(logits, axis=-1)
+        return metric_accuracy.compute(predictions=predictions, references=labels)
+
+    return compute_f1_micro, compute_f1_macro, compute_accuracy
+
 
 def main():
     parser = argparse.ArgumentParser(description='Fine-tuning language model.')
@@ -10,58 +33,50 @@ def main():
     parser.add_argument('-m', '--model', help='transformer LM', default='albert-base-v2', type=str)
     parser.add_argument('-d', '--dataset', help='', default='asahi417/multi_domain_document_classification', type=str)
     parser.add_argument('--dataset-name', help='huggingface dataset name', default='citation_intent', type=str)
-    parser.add_argument('-b', '--batch-size', help='Batch size', default=512, type=int)
+    parser.add_argument('-b', '--batch-size', help='batch size', default=64, type=int)
+    parser.add_argument('-e', '--epoch', help='epoch', default=10, type=int)
+    parser.add_argument('-l', '--seq-length', help='', default=128, type=int)
     parser.add_argument('--random-seed', help='', default=42, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='.', type=str)
     # input
     opt = parser.parse_args()
 
-    # set up data
+    # setup data
     dataset = load_dataset(opt.dataset, opt.dataset_name)
-    # set up model
+    # setup model
     tokenizer = AutoTokenizer.from_pretrained(opt.model)
-    model = AutoModelForSequenceClassification.from_pretrained(opt.model, num_labels=5)
+    model = AutoModelForSequenceClassification.from_pretrained(
+        opt.model, num_labels=dataset['train'].features['label'].num_classes)
+    tokenized_datasets = dataset.map(
+        lambda x: tokenizer(x["text"], padding="max_length", truncation=True, max_length=opt.seq_length),
+        batched=True)
+    # setup metrics
+    compute_f1_micro, compute_f1_macro, compute_accuracy = get_metrics()
+    # trainer
+    trainer = Trainer(
+        model=model,
+        args=TrainingArguments(
+            output_dir="test_trainer",
+            evaluation_strategy="steps",
+            num_train_epochs=opt.epoch,
+            eval_steps=10,
+            seed=opt.random_seed,
+            per_device_train_batch_size=opt.batch_size
+        ),
+        train_dataset=tokenized_datasets["train"],
+        eval_dataset=tokenized_datasets["validation"],
+        compute_metrics=compute_f1_micro,
+        model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
+            opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
+    )
+    trainer.train()
+    # trainer.evaluate()
+    # trainer.hyperparameter_search(
+    #     direction="maximize",
+    #     backend="ray",
+    #     n_trials=10  # number of trials
+    # )
 
-    def model_init():
-        return AutoModelForSequenceClassification.from_pretrained(opt.model, return_dict=True)
 
-    def tokenize_function(examples):
-        return tokenizer(examples["text"], padding="max_length", truncation=True)
-
-    lm_name = "albert-base-v2"
-    dataset = "yelp_review_full"
-    dataset = load_dataset(dataset)
-
-
-
-tokenized_datasets = dataset.map(tokenize_function, batched=True)
-small_train_dataset = tokenized_datasets["train"].shuffle(seed=opt.random_seed).select(range(1000))
-small_eval_dataset = tokenized_datasets["test"].shuffle(seed=opt.random_seed).select(range(1000))
-
-
-metric = load_metric("accuracy")
-
-
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
-
-
-
-
-training_args = TrainingArguments(output_dir="test_trainer", evaluation_strategy="steps", eval_steps=500)
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=small_train_dataset,
-    eval_dataset=small_eval_dataset,
-    compute_metrics=compute_metrics,
-    model_init=model_init
-)
-# trainer.train()
-trainer.hyperparameter_search(
-    direction="maximize",
-    backend="ray",
-    n_trials=10  # number of trials
-)
+if __name__ == '__main__':
+    main()
