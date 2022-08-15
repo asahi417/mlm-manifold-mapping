@@ -8,7 +8,7 @@ def load_model(model, local_files_only):
     """ Load pretrained language model """
     tokenizer = transformers.AutoTokenizer.from_pretrained(model, local_files_only=local_files_only)
     config = transformers.AutoConfig.from_pretrained(model, output_hidden_states=True,
-                                                           local_files_only=local_files_only)
+                                                     local_files_only=local_files_only)
     lm = transformers.AutoModelForMaskedLM.from_pretrained(model, config=config, local_files_only=local_files_only)
     lm.eval()
     parallel = torch.cuda.device_count() > 1

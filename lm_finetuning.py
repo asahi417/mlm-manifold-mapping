@@ -21,6 +21,7 @@ from huggingface_hub import create_repo
 from datasets import load_dataset, load_metric
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 from ray import tune
+
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
 
@@ -85,9 +86,14 @@ def main():
             else:
                 dataset[k] = dataset[k].map(lambda x: {'text': x if x not in v else v[x][0][-1]})
     # setup model
-    tokenizer = AutoTokenizer.from_pretrained(opt.model)
-    model = AutoModelForSequenceClassification.from_pretrained(
-        opt.model, num_labels=dataset['train'].features['label'].num_classes)
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(opt.model)
+        model = AutoModelForSequenceClassification.from_pretrained(
+            opt.model, num_labels=dataset['train'].features['label'].num_classes)
+    except Exception:
+        tokenizer = AutoTokenizer.from_pretrained(opt.model, local_files_only=True)
+        model = AutoModelForSequenceClassification.from_pretrained(
+            opt.model, num_labels=dataset['train'].features['label'].num_classes, local_files_only=True)
     tokenized_datasets = dataset.map(
         lambda x: tokenizer(x["text"], padding="max_length", truncation=True, max_length=opt.seq_length),
         batched=True)
