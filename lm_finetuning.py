@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import shutil
+from glob import glob
 from os.path import join as pj
 
 import numpy as np
@@ -33,15 +34,35 @@ def main():
     parser.add_argument('--random-seed', help='', default=42, type=int)
     parser.add_argument('--eval-step', help='', default=50, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='tmp', type=str)
-    parser.add_argument('-t', '--n-trials', default=5, type=int)
+    parser.add_argument('-t', '--n-trials', default=10, type=int)
     parser.add_argument('--push-to-hub', action='store_true')
     parser.add_argument('--use-auth-token', action='store_true')
     parser.add_argument('--hf-organization', default=None, type=str)
     parser.add_argument('-a', '--model-alias', help='', default=None, type=str)
+    parser.add_argument('--rewrite-dictionary-dir', default=None, type=str)
+    parser.add_argument('--add-rewrite-text', action='store_true')
+    parser.add_argument('--skip-train', action='store_true')
     opt = parser.parse_args()
 
     # setup data
     dataset = load_dataset(opt.dataset, opt.dataset_name)
+    if opt.rewrite_dirctionary_dir is not None:
+        for k in glob(pj(opt.rewrite_dirctionary_dir, '*.json')):
+            split_type = os.path.basename(k).replace('.json', '')
+            if split_type not in dataset.keys():
+                logging.warning(f'skip file {k}')
+            with open(k) as f:
+                v = json.load(f)
+            logging.info(f'Rewriting {len(v)}/{len(dataset[k])} texts')
+            if split_type == 'train' and opt.add_rewrite_text:
+                logging.info(f"adding rewrite to training data: {len(dataset[k])}")
+                for i in dataset[k]:
+                    if i['text'] in v:
+                        dataset[k] = dataset[k].add_item({'text': v[i['text']], 'label': v['label']})
+                logging.info(f"final training data: {len(dataset[k])}")
+            else:
+                dataset[k] = dataset[k].map(lambda x: {'text': x if x not in v else v[x][0][-1]})
+
     # setup model
     tokenizer = AutoTokenizer.from_pretrained(opt.model)
     model = AutoModelForSequenceClassification.from_pretrained(
@@ -52,17 +73,13 @@ def main():
     # setup metric
     metric_accuracy = load_metric("accuracy")
     metric_f1 = load_metric("f1")
-
-    ##########################
-    # HYPER-PARAMETER SEARCH #
-    ##########################
+    # setup trainer
 
     def compute_metric_search(eval_pred):
         logits, labels = eval_pred
         predictions = np.argmax(logits, axis=-1)
         return metric_f1.compute(predictions=predictions, references=labels, average='micro')
 
-    # parameter search
     trainer = Trainer(
         model=model,
         args=TrainingArguments(
@@ -77,22 +94,24 @@ def main():
         model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
             opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
     )
-
-    best_run = trainer.hyperparameter_search(
-        hp_space=lambda x: {
-            "learning_rate": tune.loguniform(1e-6, 1e-4),
-            "num_train_epochs": tune.choice(list(range(1, 6))),
-            "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
-        },
-        local_dir="ray_results",
-        direction="maximize",
-        backend="ray",
-        n_trials=opt.n_trials  # number of trials
-    )
-
-    ##############
-    # FINETUNING #
-    ##############
+    if not opt.skip_train:
+        # parameter search
+        best_run = trainer.hyperparameter_search(
+            hp_space=lambda x: {
+                "learning_rate": tune.loguniform(1e-6, 1e-4),
+                "num_train_epochs": tune.choice(list(range(1, 6))),
+                "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
+            },
+            local_dir="ray_results",
+            direction="maximize",
+            backend="ray",
+            n_trials=opt.n_trials  # number of trials
+        )
+        # finetuning
+        for n, v in best_run.hyperparameters.items():
+            setattr(trainer.args, n, v)
+        trainer_output = trainer.train()
+        result = trainer_output.metrics
 
     def compute_metric_all(eval_pred):
         logits, labels = eval_pred
@@ -103,11 +122,6 @@ def main():
             'accuracy': metric_accuracy.compute(predictions=predictions, references=labels)['accuracy']
         }
 
-    for n, v in best_run.hyperparameters.items():
-        setattr(trainer.args, n, v)
-
-    trainer_output = trainer.train()
-    result = trainer_output.metrics
     trainer.compute_metrics = compute_metric_all
     result.update({
         f'valid/{k}': v for k, v in trainer.evaluate(eval_dataset=tokenized_datasets['validation']).items()

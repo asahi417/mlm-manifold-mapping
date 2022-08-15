@@ -117,7 +117,7 @@ class EncodePlus:
             _token_list[mask_position] = self.tokenizer.mask_token
             tmp_string = self.tokenizer.convert_tokens_to_string(_token_list)
             _encode = self.tokenizer.encode_plus(tmp_string, **param)
-            assert _encode['input_ids'][-1] == self.tokenizer.pad_token_id, 'exceeded max_length'
+            # assert _encode['input_ids'][-1] == self.tokenizer.pad_token_id, 'exceeded max_length'
             _encode['labels'] = self.input_ids_to_labels(
                 _encode['input_ids'],
                 label_position=[mask_position + len(self.sp_token_prefix)],
