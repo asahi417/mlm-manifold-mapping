@@ -9,6 +9,11 @@ m3-rewriter -i "AHH i'm so HAPPY." "I just found my ipod. God is sooo good to me
 m3-rewriter -f "tests/sample_sentence.txt" -n 3 -k 2 
 ```
 
+```shell
+export DATA='citation_intent'
+m3-rewriter -m 'albert-base-v2' -n 5 -k 5 -l 128 -b 512 -d asahi417/multi_domain_document_classification \
+ --dataset-name ${DATA} -s train --dataset-column text -e "result_m3/${DATA}" 
+```
 
 ```shell
 #DATA="rct-sample"

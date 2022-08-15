@@ -6,15 +6,19 @@ https://github.com/huggingface/notebooks/blob/main/examples/text_classification.
 
 MODEL='albert-base-v2'  #  distilbert-base-uncased, distilbert-base-cased
 DATA='citation_intent'
-python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_result/${MODEL}.${DATA}" --hf-organization asahi417 --push-to-hub
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_result/${MODEL}.${DATA}" -t 5 \
+--push-to-hub --hf-organization asahi417 -a tmp
 """
 import argparse
 import json
 import logging
+import os
+import shutil
+from distutils.dir_util import copy_tree
 from os.path import join as pj
 
 import numpy as np
-from huggingface_hub import Repository
+from huggingface_hub import Repository, create_repo
 from datasets import load_dataset, load_metric
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 from ray import tune
@@ -30,9 +34,11 @@ def main():
     parser.add_argument('--random-seed', help='', default=42, type=int)
     parser.add_argument('--eval-step', help='', default=50, type=int)
     parser.add_argument('-o', '--output-dir', help='Directory to output', default='tmp', type=str)
-    parser.add_argument('--n-trials', default=5, type=int)
+    parser.add_argument('-t', '--n-trials', default=5, type=int)
     parser.add_argument('--push-to-hub', action='store_true')
+    parser.add_argument('--use-auth-token', action='store_true')
     parser.add_argument('--hf-organization', default=None, type=str)
+    parser.add_argument('-a', '--model-alias', help='', default=None, type=str)
     opt = parser.parse_args()
 
     # setup data
@@ -48,8 +54,11 @@ def main():
     metric_accuracy = load_metric("accuracy")
     metric_f1 = load_metric("f1")
     # huggingface
+    url = None
     if opt.push_to_hub:
         assert opt.hf_organization is not None, f'specify hf organization `--hf-organization`'
+        assert opt.model_alias is not None, f'specify hf organization `--model-alias`'
+        url = create_repo(opt.output_dir, organization=opt.hf_organization, exist_ok=True)
 
     ##########################
     # HYPER-PARAMETER SEARCH #
@@ -67,10 +76,7 @@ def main():
             output_dir=opt.output_dir,
             evaluation_strategy="steps",
             eval_steps=opt.eval_step,
-            seed=opt.random_seed,
-            push_to_hub=opt.push_to_hub,
-            hub_model_id=f'{opt.hf_organization}/{opt.output_dir}',
-            hub_strategy="end",
+            seed=opt.random_seed
         ),
         train_dataset=tokenized_datasets["train"],
         eval_dataset=tokenized_datasets["validation"],
@@ -120,12 +126,13 @@ def main():
     with open(pj(opt.output_dir, 'metric_summary.json'), 'w') as f:
         json.dump(result, f)
     if opt.push_to_hub:
-        with Repository(
-                local_dir=pj(opt.output_dir, 'tmp_clone_hf_repo'),
-                clone_from=f"{opt.hf_organization}/{opt.output_dir}"
-        ).commit(commit_message="metric file"):
-            with open("metric_summary.json", "w") as f:
-                json.dump(result, f)
+        args = {"use_auth_token": opt.use_auth_token, "repo_url": url, "organization": opt.hf_organization}
+        trainer.model.push_to_hub(opt.model_alias, **args)
+        tokenizer.push_to_hub(opt.model_alias, **args)
+        shutil.copy2(pj(opt.output_dir, 'metric_summary.json'), opt.model_alias)
+        os.system(
+            f"cd {opt.model_alias} && git lfs install && git add . && git commit -m 'model update' && git push && cd ../")
+        shutil.rmtree(f"{opt.model_alias}")  # clean up the cloned repo
 
 
 if __name__ == '__main__':
