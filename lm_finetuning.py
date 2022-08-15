@@ -14,7 +14,6 @@ import json
 import logging
 import os
 import shutil
-from glob import glob
 from os.path import join as pj
 
 import numpy as np
@@ -68,10 +67,10 @@ def main():
     assert opt.summary_file.endswith('.json'), f'`--summary-file` should be a json file {opt.summary_file}'
     # setup data
     dataset = load_dataset(opt.dataset, opt.dataset_name)
-    if opt.rewrite_dirctionary_dir is not None:
-        for k in opt.rewrite_dirctionary_split:
+    if opt.rewrite_dictionary_dir is not None:
+        for k in opt.rewrite_dictionary_split:
             assert k in dataset.keys(), f'{k} not in {dataset.keys()}'
-            rewrite_file = pj(opt.rewrite_dirctionary_dir, f'{k}.json')
+            rewrite_file = pj(opt.rewrite_dictionary_dir, f'{k}.json')
             assert os.path.exists(rewrite_file), f'file not found: {rewrite_file}'
             with open(rewrite_file) as f:
                 v = json.load(f)
