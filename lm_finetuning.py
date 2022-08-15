@@ -84,7 +84,10 @@ def main():
                         dataset[k] = dataset[k].add_item({'text': v[i['text']], 'label': v['label']})
                 logging.info(f"final training data: {len(dataset[k])}")
             else:
-                dataset[k] = dataset[k].map(lambda x: {'text': x if x not in v else v[x][0][-1]})
+                dataset[k] = dataset[k].map(lambda x: {
+                    'text': x['text'] if x['text'] not in v else v[x['text']][0][-1],
+                    'label': x['label']
+                })
     # setup model
     try:
         tokenizer = AutoTokenizer.from_pretrained(opt.model)
