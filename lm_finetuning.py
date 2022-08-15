@@ -14,7 +14,6 @@ import json
 import logging
 import os
 import shutil
-from distutils.dir_util import copy_tree
 from os.path import join as pj
 
 import numpy as np
@@ -53,12 +52,6 @@ def main():
     # setup metric
     metric_accuracy = load_metric("accuracy")
     metric_f1 = load_metric("f1")
-    # huggingface
-    url = None
-    if opt.push_to_hub:
-        assert opt.hf_organization is not None, f'specify hf organization `--hf-organization`'
-        assert opt.model_alias is not None, f'specify hf organization `--model-alias`'
-        url = create_repo(opt.model_alias, organization=opt.hf_organization, exist_ok=True)
 
     ##########################
     # HYPER-PARAMETER SEARCH #
@@ -125,7 +118,14 @@ def main():
     logging.info(json.dumps(result, indent=4))
     with open(pj(opt.output_dir, 'metric_summary.json'), 'w') as f:
         json.dump(result, f)
+
     if opt.push_to_hub:
+        ###############
+        # PUSH TO HUB #
+        ###############
+        assert opt.hf_organization is not None, f'specify hf organization `--hf-organization`'
+        assert opt.model_alias is not None, f'specify hf organization `--model-alias`'
+        url = create_repo(opt.model_alias, organization=opt.hf_organization, exist_ok=True)
         args = {"use_auth_token": opt.use_auth_token, "repo_url": url, "organization": opt.hf_organization}
         trainer.model.push_to_hub(opt.model_alias, **args)
         tokenizer.push_to_hub(opt.model_alias, **args)

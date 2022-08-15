@@ -3,7 +3,6 @@ import argparse
 import json
 import os
 import logging
-from pprint import pprint
 from datasets import load_dataset
 from m3 import Rewriter
 
@@ -46,17 +45,18 @@ def main():
         input_sentences = data[opt.dataset_column]
     assert input_sentences is not None, 'input is not specified'
     logging.info(f'total: {len(input_sentences)} sentences')
+    input_sentences_filtered = [i for i in input_sentences if len(rewriter.tokenizer.encode(i)) < rewriter.max_length]
+    logging.info(f'filtered: {len(input_sentences)} --> {len(input_sentences_filtered)}')
     output = rewriter.generate(
-        input_sentences,
+        input_sentences_filtered,
         max_n_iteration=opt.max_n_iteration,
         topk=opt.topk,
         batch_size=opt.batch_size
     )
-    pprint(output)
     if os.path.dirname(opt.export_file_path) != '':
         os.makedirs(os.path.dirname(opt.export_file_path), exist_ok=True)
     with open(opt.export_file_path, 'w') as f:
-        json.dump({i: o for i, o in zip(input_sentences, output)}, f)
+        json.dump({i: o for i, o in zip(input_sentences_filtered, output)}, f)
 
 
 if __name__ == '__main__':

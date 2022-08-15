@@ -195,6 +195,10 @@ class Rewriter:
         tol = 0.05
         if type(seed_sentences) is str:
             seed_sentences = [seed_sentences]
+        # seed_sentence_id = [n for n, i in enumerate(seed_sentences) if len(self.tokenizer.encode(i)) < self.max_length]
+        # skip_sentence = [(n, i) for n, i in enumerate(seed_sentences) if n not in seed_sentence_id]
+        # seed_sentences = [i for n, i in enumerate(seed_sentences) if n in seed_sentence_id]
+        # self.max_length
         assert all(map(len, seed_sentences)), f'empty string found in {seed_sentences}'
         ppl = self.get_perplexity(seed_sentences, batch_size=batch_size)
         edit = [[s] for s in seed_sentences]
