@@ -15,7 +15,7 @@ m3-rewriter -f "tests/sample_sentence.txt" -n 3 -k 2
 DATA='citation_intent'
 MODEL='albert-base-v2'  #  distilbert-base-uncased, distilbert-base-cased
 MAX_LENGTH=128
-BATCH=256
+BATCH=512
 ORG='asahi417'
 # generate inputs based on M3
 for SPLIT in 'train' 'validation' 'test'
@@ -34,8 +34,8 @@ python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_result/${MOD
 
 ```shell
 DATA='amcd'
-MODEL='albert-base-v2'  #  distilbert-base-uncased, distilbert-base-cased
 MAX_LENGTH=64
+MODEL='albert-base-v2'  #  distilbert-base-uncased, distilbert-base-cased
 BATCH=512
 ORG='asahi417'
 # generate inputs based on M3
@@ -45,4 +45,15 @@ do
   -e "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10/${SPLIT}.json"
 done
 
+DATA='citation_intent'
+MAX_LENGTH=128
+MODEL='albert-base-v2'  #  distilbert-base-uncased, distilbert-base-cased
+BATCH=512
+ORG='asahi417'
+# generate inputs based on M3
+for SPLIT in 'train' 'validation' 'test'
+do
+  m3-rewrite -m ${MODEL} -n 10 -k 10 -l ${MAX_LENGTH} -b ${BATCH} -d asahi417/multi_domain_document_classification --dataset-name ${DATA} -s ${SPLIT} --dataset-column text \
+  -e "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10/${SPLIT}.json"
+done
 ```

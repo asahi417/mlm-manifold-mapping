@@ -19,6 +19,7 @@ def main():
     parser.add_argument('-k', '--topk', help='', default=5, type=int)
     parser.add_argument('-l', '--length', help='max sequence length of language model', default=128, type=int)
     parser.add_argument('-b', '--batch-size', help='Batch size', default=512, type=int)
+    parser.add_argument('-c', '--chunk-size', help='Chunk size', default=1000, type=int)
     # input
     parser.add_argument('-f', '--file-path', help='path to file', default=None, type=str)
     parser.add_argument('-i', '--input-sentence', help='input sentence', default=None, type=str, nargs='+')
@@ -47,12 +48,20 @@ def main():
     logging.info(f'total: {len(input_sentences)} sentences')
     input_sentences_filtered = [i for i in input_sentences if len(rewriter.tokenizer.encode(i)) < rewriter.max_length - 1]
     logging.info(f'filtered: {len(input_sentences)} --> {len(input_sentences_filtered)}')
-    output = rewriter.generate(
-        input_sentences_filtered,
-        max_n_iteration=opt.max_n_iteration,
-        topk=opt.topk,
-        batch_size=opt.batch_size
-    )
+    output = []
+    chunk_id = 0
+    while True:
+        end = min([len(input_sentences_filtered), opt.chunk_size * (chunk_id + 1)])
+        output += rewriter.generate(
+            input_sentences_filtered[opt.chunk_size * chunk_id:end],
+            max_n_iteration=opt.max_n_iteration,
+            topk=opt.topk,
+            batch_size=opt.batch_size
+        )
+        chunk_id += 1
+        if end == len(input_sentences_filtered):
+            break
+    assert len(output) == len(input_sentences_filtered), f'{len(output)} != {len(input_sentences_filtered)}'
     if os.path.dirname(opt.export_file_path) != '':
         os.makedirs(os.path.dirname(opt.export_file_path), exist_ok=True)
     with open(opt.export_file_path, 'w') as f:
