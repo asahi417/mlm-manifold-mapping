@@ -18,7 +18,7 @@ from distutils.dir_util import copy_tree
 from os.path import join as pj
 
 import numpy as np
-from huggingface_hub import Repository, create_repo
+from huggingface_hub import create_repo
 from datasets import load_dataset, load_metric
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 from ray import tune
@@ -58,7 +58,7 @@ def main():
     if opt.push_to_hub:
         assert opt.hf_organization is not None, f'specify hf organization `--hf-organization`'
         assert opt.model_alias is not None, f'specify hf organization `--model-alias`'
-        url = create_repo(opt.output_dir, organization=opt.hf_organization, exist_ok=True)
+        url = create_repo(opt.model_alias, organization=opt.hf_organization, exist_ok=True)
 
     ##########################
     # HYPER-PARAMETER SEARCH #
