@@ -13,13 +13,13 @@ m3-rewriter -f "tests/sample_sentence.txt" -n 3 -k 2
 export DATA='citation_intent'
 export MODEL='albert-base-v2'
 export SPLIT='train'
-m3-rewrite -m ${MODEL} -n 5 -k 5 -l 512 -b 64 -d asahi417/multi_domain_document_classification \
- --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5"
+m3-rewrite -m ${MODEL} -n 5 -k 5 -l 64 -b 64 -d asahi417/multi_domain_document_classification \
+ --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5.64"
 export SPLIT='validation'
 m3-rewrite -m ${MODEL} -n 5 -k 5 -l 128 -b 512 -d asahi417/multi_domain_document_classification \
  --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5"
 export SPLIT='test'
-m3-rewrite -m ${MODEL} -n 5 -k 5 -l 128 -b 512 -d asahi417/multi_domain_document_classification \
+m3-rewrite -m ${MODEL} -n 5 -k 5 -l 64 -b 512 -d asahi417/multi_domain_document_classification \
  --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5" 
 ```
 

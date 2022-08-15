@@ -45,7 +45,7 @@ def main():
         input_sentences = data[opt.dataset_column]
     assert input_sentences is not None, 'input is not specified'
     logging.info(f'total: {len(input_sentences)} sentences')
-    input_sentences_filtered = [i for i in input_sentences if len(rewriter.tokenizer.encode(i)) < rewriter.max_length]
+    input_sentences_filtered = [i for i in input_sentences if len(rewriter.tokenizer.encode(i)) < rewriter.max_length - 1]
     logging.info(f'filtered: {len(input_sentences)} --> {len(input_sentences_filtered)}')
     output = rewriter.generate(
         input_sentences_filtered,
