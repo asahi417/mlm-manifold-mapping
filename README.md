@@ -25,7 +25,7 @@ do
 done
 
 # vanilla fine-tuning
-python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}" --push-to-hub --hf-organization ${ORG} -a "m3-experiment-${MODEL}-${DATA}-vanilla"  
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}" --push-to-hub --hf-organization ${ORG} -a "m3-experiment-${MODEL}-${DATA}-vanilla" --summary-file 'metric_summary.json'  
 
 python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_result/${MODEL}.${DATA}" -t 5 \
 --push-to-hub --hf-organization asahi417 -a "m3-experiment-${MODEL}-${DATA}-replace" \
