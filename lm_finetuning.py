@@ -81,7 +81,7 @@ def main():
                 tmp_data = dataset[k]
                 for i in tmp_data:
                     if i['text'] in v:
-                        dataset[k] = dataset[k].add_item({'text': v[i['text']], 'label': v['label']})
+                        dataset[k] = dataset[k].add_item({'text': v[i['text']], 'label': i['label']})
                 logging.info(f"final training data: {len(dataset[k])}")
             else:
                 dataset[k] = dataset[k].map(lambda x: {
