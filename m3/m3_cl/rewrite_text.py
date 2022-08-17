@@ -47,6 +47,7 @@ def main():
     assert input_sentences is not None, 'input is not specified'
     logging.info(f'total: {len(input_sentences)} sentences')
     input_sentences_filtered = [i for i in input_sentences if len(rewriter.tokenizer.encode(i)) < rewriter.max_length - 1]
+    input_sentences_filtered = [i for i in input_sentences_filtered if len(i) > 0]
     logging.info(f'filtered: {len(input_sentences)} --> {len(input_sentences_filtered)}')
     output = []
     chunk_id = 0

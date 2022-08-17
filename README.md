@@ -54,6 +54,7 @@ MAX_LENGTH=64
 - generate m3 data
 ```shell
 # generate inputs based on M3
+#for SPLIT in 'train' 'validation'
 for SPLIT in 'train' 'validation' 'test'
 do
   m3-rewrite -m ${MODEL} -n 10 -k 10 -l ${MAX_LENGTH} -b ${BATCH} -d asahi417/multi_domain_document_classification --dataset-name ${DATA} -s ${SPLIT} --dataset-column text \
