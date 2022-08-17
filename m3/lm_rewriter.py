@@ -16,6 +16,7 @@ from .util import load_model, Dataset
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"  # to turn off warning message
 PAD_TOKEN_LABEL_ID = nn.CrossEntropyLoss().ignore_index
+PARALLEL = bool(int(os.getenv("PARALLEL", 1)))
 
 
 def pool_map(f, arg):
@@ -29,20 +30,31 @@ def pool_map(f, arg):
 def get_partition(_list):
     """ Get partition in multiprocess. """
     p = Partition(_list)
-    return pool_map(p, range(len(_list)))
+    if PARALLEL:
+        return pool_map(p, range(len(_list)))
+    return [p(i) for i in range(len(_list))]
 
 
 def get_encoding(sentences, tokenizer, max_length):
     """ Get encode_plus in multiprocess. """
     p = EncodePlus(tokenizer, max_length)
-    return pool_map(p, sentences)
+    if PARALLEL:
+        return pool_map(p, sentences)
+    logging.info(f'processing {len(sentences)} inputs')
+    output = []
+    for i in tqdm(sentences):
+        output.append(p(i))
+    return output
 
 
 class Partition:
     """ Get the partition information of a nested list for restoring the original structure. """
 
     def __init__(self, _list):
-        self.length = pool_map(len, _list)
+        if PARALLEL:
+            self.length = pool_map(len, _list)
+        else:
+            self.length = [len(i) for i in _list]
 
     def __call__(self, x):
         return [sum(self.length[:x]), sum(self.length[:x + 1])]
