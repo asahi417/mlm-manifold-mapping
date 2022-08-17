@@ -102,23 +102,24 @@ def main():
         batched=True)
     # setup metrics
     compute_metric_search, compute_metric_all = get_metrics()
-    # setup trainer
-    trainer = Trainer(
-        model=model,
-        args=TrainingArguments(
-            output_dir=opt.output_dir,
-            evaluation_strategy="steps",
-            eval_steps=opt.eval_step,
-            seed=opt.random_seed
-        ),
-        train_dataset=tokenized_datasets["train"],
-        eval_dataset=tokenized_datasets["validation"],
-        compute_metrics=compute_metric_search,
-        model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
-            opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
-    )
+
     result = {}
     if not opt.skip_train:
+        # setup trainer
+        trainer = Trainer(
+            model=model,
+            args=TrainingArguments(
+                output_dir=opt.output_dir,
+                evaluation_strategy="steps",
+                eval_steps=opt.eval_step,
+                seed=opt.random_seed
+            ),
+            train_dataset=tokenized_datasets["train"],
+            eval_dataset=tokenized_datasets["validation"],
+            compute_metrics=compute_metric_search,
+            model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
+                opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
+        )
         # parameter search
         best_run = trainer.hyperparameter_search(
             hp_space=lambda x: {
@@ -136,14 +137,24 @@ def main():
             setattr(trainer.args, n, v)
         trainer_output = trainer.train()
         result.update(trainer_output.metrics)
+        trainer.save_model(pj(opt.output_dir, 'best_model'))
+
     # evaluation
-    trainer.compute_metrics = compute_metric_all
-    # result.update({
-    #     f'valid/{k}': v for k, v in trainer.evaluate(eval_dataset=tokenized_datasets['validation']).items()
-    # })
-    result.update({
-        f'test/{k}': v for k, v in trainer.evaluate(eval_dataset=tokenized_datasets['test']).items()
-    })
+    trainer = Trainer(
+        model=model,
+        args=TrainingArguments(
+            output_dir=opt.output_dir,
+            evaluation_strategy="steps",
+            eval_steps=opt.eval_step,
+            seed=opt.random_seed
+        ),
+        train_dataset=tokenized_datasets["train"],
+        eval_dataset=tokenized_datasets["test"],
+        compute_metrics=compute_metric_all,
+        model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
+            opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
+    )
+    result.update({f'test/{k}': v for k, v in trainer.evaluate().items()})
     logging.info(json.dumps(result, indent=4))
     with open(pj(opt.output_dir, opt.summary_file), 'w') as f:
         json.dump(result, f)
