@@ -72,6 +72,7 @@ def main():
     parser.add_argument('--add-rewrite-text', action='store_true')
     parser.add_argument('--skip-train', action='store_true')
     parser.add_argument('--skip-eval', action='store_true')
+    parser.add_argument('--disable-parallel', action='store_true')
     opt = parser.parse_args()
     assert opt.summary_file.endswith('.json'), f'`--summary-file` should be a json file {opt.summary_file}'
     # setup data
@@ -125,18 +126,26 @@ def main():
                 opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
         )
         # parameter search
-        best_run = trainer.hyperparameter_search(
-            hp_space=lambda x: {
-                "learning_rate": tune.loguniform(1e-6, 1e-4),
-                "num_train_epochs": tune.choice(list(range(1, 6))),
-                "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
-            },
-            local_dir="ray_results",
-            direction="maximize",
-            backend="ray",
-            resources_per_trial={'cpu': multiprocessing.cpu_count(), "gpu": torch.cuda.device_count()},
-            n_trials=opt.n_trials  # number of trials
-        )
+        if opt.disable_parallel:
+            best_run = trainer.hyperparameter_search(
+                hp_space=lambda x: {
+                    "learning_rate": tune.loguniform(1e-6, 1e-4),
+                    "num_train_epochs": tune.choice(list(range(1, 6))),
+                    "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
+                },
+                local_dir="ray_results", direction="maximize", backend="ray", n_trials=opt.n_trials,
+                resources_per_trial={'cpu': multiprocessing.cpu_count(), "gpu": torch.cuda.device_count()},
+
+            )
+        else:
+            best_run = trainer.hyperparameter_search(
+                hp_space=lambda x: {
+                    "learning_rate": tune.loguniform(1e-6, 1e-4),
+                    "num_train_epochs": tune.choice(list(range(1, 6))),
+                    "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
+                },
+                local_dir="ray_results", direction="maximize", backend="ray", n_trials=opt.n_trials
+            )
         # finetuning
         for n, v in best_run.hyperparameters.items():
             setattr(trainer.args, n, v)
