@@ -27,21 +27,26 @@ CHUNK=250
 DATA='citation_intent'
 MAX_LENGTH=128
 
+# v2
 DATA='amcd'
 MAX_LENGTH=64
 
+# v2
 DATA='sciie'
 MAX_LENGTH=128
+
 
 DATA='chemprot'
 MAX_LENGTH=128
 
+# all
 DATA='yelp_review'
 MAX_LENGTH=256
 
 DATA='tweet_eval_emotion'
 MAX_LENGTH=64
 
+# all
 DATA='tweet_eval_hate'
 MAX_LENGTH=64
 
@@ -112,4 +117,26 @@ python lm_finetuning.py -m "${ORG}/m3-experiment-${MODEL}-${DATA//_/-}-replace-v
 python lm_finetuning.py -m "${ORG}/m3-experiment-${MODEL}-${DATA//_/-}-add-v2" --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2" --skip-train \
 --push-to-hub --hf-organization ${ORG} -a "m3-experiment-${MODEL}-${DATA//_/-}-add-v2" --summary-file 'metric_summary.edit.json' \
 --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test'
+```
+
+
+```shell
+wandb offline
+export WANDB_DISABLED='true'
+
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.vanilla" --summary-file 'metric_summary.json'  
+
+
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace" --summary-file 'metric_summary.json' \
+--rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'train' 'validation'
+# fine-tuning on m3 dataset (concatenation)
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add" --summary-file 'metric_summary.json' \
+--rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'train' 'validation' --add-rewrite-text
+
+# fine-tuning on m3 dataset (validation on original data)
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2" --summary-file 'metric_summary.json' \
+--rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'train'
+# fine-tuning on m3 dataset (concatenation) (validation on original data)
+python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2" --summary-file 'metric_summary.json' \
+--rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'train' --add-rewrite-text
 ```

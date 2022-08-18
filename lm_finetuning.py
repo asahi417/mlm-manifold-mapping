@@ -4,10 +4,6 @@ https://huggingface.co/docs/transformers/main_classes/trainer#transformers.Train
 https://huggingface.co/transformers/v3.1.0/_modules/transformers/trainer_utils.html
 https://github.com/huggingface/notebooks/blob/main/examples/text_classification.ipynb
 
-MODEL='albert-base-v2'  #  distilbert-base-uncased, distilbert-base-cased
-DATA='citation_intent'
-python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_result/${MODEL}.${DATA}" -t 5 \
---push-to-hub --hf-organization asahi417 -a tmp
 """
 import argparse
 import json
@@ -16,6 +12,7 @@ import os
 import shutil
 from os.path import join as pj
 
+import torch
 import numpy as np
 from huggingface_hub import create_repo
 from datasets import load_dataset, load_metric
@@ -64,6 +61,7 @@ def main():
     parser.add_argument('--rewrite-dictionary-split', default=['train'], nargs='+', type=str)
     parser.add_argument('--add-rewrite-text', action='store_true')
     parser.add_argument('--skip-train', action='store_true')
+    parser.add_argument('--skip-eval', action='store_true')
     opt = parser.parse_args()
     assert opt.summary_file.endswith('.json'), f'`--summary-file` should be a json file {opt.summary_file}'
     # setup data
@@ -130,6 +128,7 @@ def main():
             local_dir="ray_results",
             direction="maximize",
             backend="ray",
+            resources_per_trial={'cpu': 1, "gpu": torch.cuda.device_count()},
             n_trials=opt.n_trials  # number of trials
         )
         # finetuning
@@ -154,10 +153,12 @@ def main():
         model_init=lambda x: AutoModelForSequenceClassification.from_pretrained(
             opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
     )
-    result.update({f'test/{k}': v for k, v in trainer.evaluate().items()})
-    logging.info(json.dumps(result, indent=4))
-    with open(pj(opt.output_dir, opt.summary_file), 'w') as f:
-        json.dump(result, f)
+    summary_file = pj(opt.output_dir, opt.summary_file)
+    if not opt.skip_eval:
+        result.update({f'test/{k}': v for k, v in trainer.evaluate().items()})
+        logging.info(json.dumps(result, indent=4))
+        with open(summary_file, 'w') as f:
+            json.dump(result, f)
 
     if opt.push_to_hub:
         assert opt.hf_organization is not None, f'specify hf organization `--hf-organization`'
@@ -167,9 +168,8 @@ def main():
         args = {"use_auth_token": opt.use_auth_token, "repo_url": url, "organization": opt.hf_organization}
         trainer.model.push_to_hub(opt.model_alias, **args)
         tokenizer.push_to_hub(opt.model_alias, **args)
-        # else:
-        #     os.system(f"git clone {url}")
-        shutil.copy2(pj(opt.output_dir, opt.summary_file), opt.model_alias)
+        if os.path.exists(summary_file):
+            shutil.copy2(summary_file, opt.model_alias)
         os.system(
             f"cd {opt.model_alias} && git lfs install && git add . && git commit -m 'model update' && git push && cd ../")
         shutil.rmtree(f"{opt.model_alias}")  # clean up the cloned repo
