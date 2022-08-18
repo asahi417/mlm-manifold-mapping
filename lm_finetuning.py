@@ -23,6 +23,8 @@ from ray import tune
 
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
+PARALLEL = bool(int(os.getenv("PARALLEL", 1)))
+
 
 def internet_connection(host='http://google.com'):
     try:
@@ -72,7 +74,6 @@ def main():
     parser.add_argument('--add-rewrite-text', action='store_true')
     parser.add_argument('--skip-train', action='store_true')
     parser.add_argument('--skip-eval', action='store_true')
-    parser.add_argument('--disable-parallel', action='store_true')
     opt = parser.parse_args()
     assert opt.summary_file.endswith('.json'), f'`--summary-file` should be a json file {opt.summary_file}'
     # setup data
@@ -126,7 +127,7 @@ def main():
                 opt.model, return_dict=True, num_labels=dataset['train'].features['label'].num_classes)
         )
         # parameter search
-        if opt.disable_parallel:
+        if PARALLEL:
             best_run = trainer.hyperparameter_search(
                 hp_space=lambda x: {
                     "learning_rate": tune.loguniform(1e-6, 1e-4),
