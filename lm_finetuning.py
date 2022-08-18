@@ -140,7 +140,8 @@ def main():
 
     # evaluation
     trainer = Trainer(
-        model=model,
+        # model=model,
+        model=pj(opt.output_dir, 'best_model'),
         args=TrainingArguments(
             output_dir=opt.output_dir,
             evaluation_strategy="steps",
