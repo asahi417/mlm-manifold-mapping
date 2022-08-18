@@ -11,6 +11,7 @@ import logging
 import os
 import shutil
 import urllib.request
+import multiprocessing
 from os.path import join as pj
 
 import torch
@@ -133,7 +134,7 @@ def main():
             local_dir="ray_results",
             direction="maximize",
             backend="ray",
-            resources_per_trial={'cpu': 1, "gpu": torch.cuda.device_count()},
+            resources_per_trial={'cpu': multiprocessing.cpu_count(), "gpu": torch.cuda.device_count()},
             n_trials=opt.n_trials  # number of trials
         )
         # finetuning
