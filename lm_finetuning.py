@@ -10,6 +10,7 @@ import json
 import logging
 import os
 import shutil
+import urllib.request
 from os.path import join as pj
 
 import torch
@@ -20,6 +21,14 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trai
 from ray import tune
 
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
+
+
+def internet_connection(host='http://google.com'):
+    try:
+        urllib.request.urlopen(host)
+        return True
+    except:
+        return False
 
 
 def get_metrics():
@@ -86,15 +95,11 @@ def main():
                     'text': x['text'] if x['text'] not in v else v[x['text']][0][-1],
                     'label': x['label']
                 })
+    network = internet_connection()
     # setup model
-    try:
-        tokenizer = AutoTokenizer.from_pretrained(opt.model)
-        model = AutoModelForSequenceClassification.from_pretrained(
-            opt.model, num_labels=dataset['train'].features['label'].num_classes)
-    except Exception:
-        tokenizer = AutoTokenizer.from_pretrained(opt.model, local_files_only=True)
-        model = AutoModelForSequenceClassification.from_pretrained(
-            opt.model, num_labels=dataset['train'].features['label'].num_classes, local_files_only=True)
+    tokenizer = AutoTokenizer.from_pretrained(opt.model, local_files_only=not network)
+    model = AutoModelForSequenceClassification.from_pretrained(
+        opt.model, num_labels=dataset['train'].features['label'].num_classes, local_files_only=not network)
     tokenized_datasets = dataset.map(
         lambda x: tokenizer(x["text"], padding="max_length", truncation=True, max_length=opt.seq_length),
         batched=True)
@@ -139,9 +144,13 @@ def main():
         trainer.save_model(pj(opt.output_dir, 'best_model'))
 
     # evaluation
+    model = AutoModelForSequenceClassification.from_pretrained(
+        pj(opt.output_dir, 'best_model'),
+        num_labels=dataset['train'].features['label'].num_classes,
+        local_files_only=not network)
     trainer = Trainer(
-        # model=model,
-        model=pj(opt.output_dir, 'best_model'),
+        model=model,
+        # model=pj(opt.output_dir, 'best_model'),
         args=TrainingArguments(
             output_dir=opt.output_dir,
             evaluation_strategy="steps",
