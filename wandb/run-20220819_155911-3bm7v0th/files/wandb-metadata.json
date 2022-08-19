@@ -1,0 +1,34 @@
+{
+    "os": "Linux-5.8.0-36-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2022-08-19T14:59:11.982405",
+    "startedAt": "2022-08-19T14:59:11.576666",
+    "docker": null,
+    "gpu": "TITAN RTX",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [
+        "-m",
+        "m3/m3-experiment-albert-base-v2-citation-intent-vanilla",
+        "--dataset-name",
+        "citation_intent",
+        "-o",
+        "m3-experiment-albert-base-v2-citation-intent-vanilla",
+        "--skip-train",
+        "--summary-file",
+        "metric_summary.json"
+    ],
+    "state": "running",
+    "program": "lm_finetuning.py",
+    "codePath": "lm_finetuning.py",
+    "git": {
+        "remote": "https://github.com/asahi417/mlm-manifold-mapping",
+        "commit": "15ee33f6e8e14b34884c318ea44ba8f1c2ebedd4"
+    },
+    "email": "asahi1992ushio@gmail.com",
+    "root": "/home/asahiushio/Projects/mlm-manifold-mapping",
+    "host": "comsc-ISRMOT-220",
+    "username": "asahiushio",
+    "executable": "/home/asahiushio/.pyenv/m3/bin/python"
+}
