@@ -7,10 +7,10 @@ import pandas as pd
 
 MODEL = ['albert-base-v2']
 # DATA = ["chemprot", "citation_intent", "sciie", "amcd", "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]
-DATA = ["chemprot", "citation_intent", "sciie", "amcd", "tweet_eval_emotion"]
+DATA = ["chemprot", "citation_intent", "sciie", "amcd", "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]
 TMP_DIR = 'metric_files'
 EXPORT_DIR = 'output'
-ORG = 'asahi417'
+ORG = 'm3'
 METRICS = ["test/eval_loss", "test/eval_f1", "test/eval_f1_macro", "test/eval_accuracy"]
 os.makedirs(EXPORT_DIR, exist_ok=True)
 
@@ -45,7 +45,7 @@ def get_result(metric_file='metric_summary'):
                 format_metric(
                     download(
                         f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-vanilla/raw/main/{metric_file}.json",
-                        f"{m}-{d}.json"),
+                        f"{m}-{d}.{metric_file}.json"),
                     add={"model": m, "data": d, 'version': 'vanilla'}
                 )
             )
@@ -53,7 +53,7 @@ def get_result(metric_file='metric_summary'):
                 format_metric(
                     download(
                         f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add/raw/main/{metric_file}.json",
-                        f"{m}-{d}-add.json"
+                        f"{m}-{d}-add.{metric_file}.json"
                     ),
                     add={"model": m, "data": d, 'version': 'add'}
                 )
@@ -62,7 +62,7 @@ def get_result(metric_file='metric_summary'):
                 format_metric(
                     download(
                         f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v2/raw/main/{metric_file}.json",
-                        f"{m}-{d}-add-v2.json"
+                        f"{m}-{d}-add-v2.{metric_file}.json"
                     ),
                     add={"model": m, "data": d, 'version': 'add-v2'}
                 )
@@ -71,7 +71,7 @@ def get_result(metric_file='metric_summary'):
                 format_metric(
                     download(
                         f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace/raw/main/{metric_file}.json",
-                        f"{m}-{d}-replace.json"
+                        f"{m}-{d}-replace.{metric_file}.json"
                     ),
                     add={"model": m, "data": d, 'version': 'replace'}
                 )
@@ -79,8 +79,8 @@ def get_result(metric_file='metric_summary'):
             output.append(
                 format_metric(
                     download(
-                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace-v2/raw/main/metric_summary.json",
-                        f"{m}-{d}-replace-v2.json"
+                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace-v2/raw/main/{metric_file}.json",
+                        f"{m}-{d}-replace-v2.{metric_file}.json"
                     ),
                     add={"model": m, "data": d, 'version': 'replace-v2'}
                 )
@@ -91,4 +91,6 @@ def get_result(metric_file='metric_summary'):
 
 if __name__ == '__main__':
     full_output = get_result()
-    full_output.to_csv('summary.csv')
+    full_output.to_csv(f'{EXPORT_DIR}/summary.csv')
+    full_output = get_result('metric_summary.edit')
+    full_output.to_csv(f'{EXPORT_DIR}/summary.edit.csv')
