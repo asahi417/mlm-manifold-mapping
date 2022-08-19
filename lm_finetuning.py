@@ -57,7 +57,7 @@ def get_metrics():
 def main():
     parser = argparse.ArgumentParser(description='Fine-tuning language model.')
     parser.add_argument('-m', '--model', help='transformer LM', default='albert-base-v2', type=str)
-    parser.add_argument('-d', '--dataset', help='', default='asahi417/multi_domain_document_classification', type=str)
+    parser.add_argument('-d', '--dataset', help='', default='m3/multi_domain_document_classification', type=str)
     parser.add_argument('--dataset-name', help='huggingface dataset name', default='citation_intent', type=str)
     parser.add_argument('-l', '--seq-length', help='', default=128, type=int)
     parser.add_argument('--random-seed', help='', default=42, type=int)
@@ -70,6 +70,7 @@ def main():
     parser.add_argument('-a', '--model-alias', help='', default=None, type=str)
     parser.add_argument('--summary-file', default='metric_summary.json', type=str)
     parser.add_argument('--rewrite-dictionary-dir', default=None, type=str)
+    parser.add_argument('--rewrite-dictionary-method', default='best', type=str)
     parser.add_argument('--rewrite-dictionary-split', default=['train'], nargs='+', type=str)
     parser.add_argument('--add-rewrite-text', action='store_true')
     parser.add_argument('--skip-train', action='store_true')
@@ -85,17 +86,24 @@ def main():
             assert os.path.exists(rewrite_file), f'file not found: {rewrite_file}'
             with open(rewrite_file) as f:
                 v = json.load(f)
+            if opt.rewrite_dictionary_method == 'best':
+                v = {_k: _v[0][-1] for _k, _v in v.items()}
+            elif opt.rewrite_dictionary_method == 'largest_diff':
+                v = {_k: _v[0][np.diff(_v[1]).argmin() + 1] for _k, _v in v.items()}
+            else:
+                raise ValueError(f'unknown method: {opt.rewrite_dictionary_method}')
+
             logging.info(f'Rewriting {len(v)}/{len(dataset[k])} texts')
             if opt.add_rewrite_text:
                 logging.info(f"adding rewritten data ({k}): {len(dataset[k])}")
                 tmp_data = dataset[k]
                 for i in tmp_data:
                     if i['text'] in v:
-                        dataset[k] = dataset[k].add_item({'text': v[i['text']][0][-1], 'label': i['label']})
+                        dataset[k] = dataset[k].add_item({'text': v[i['text']], 'label': i['label']})
                 logging.info(f"final training data: {len(dataset[k])}")
             else:
                 dataset[k] = dataset[k].map(lambda x: {
-                    'text': x['text'] if x['text'] not in v else v[x['text']][0][-1],
+                    'text': x['text'] if x['text'] not in v else v[x['text']],
                     'label': x['label']
                 })
     network = internet_connection()
@@ -109,7 +117,6 @@ def main():
     # setup metrics
     compute_metric_search, compute_metric_all = get_metrics()
 
-    result = {}
     if not opt.skip_train:
         # setup trainer
         trainer = Trainer(
@@ -150,13 +157,17 @@ def main():
         # finetuning
         for n, v in best_run.hyperparameters.items():
             setattr(trainer.args, n, v)
-        trainer_output = trainer.train()
-        result.update(trainer_output.metrics)
+        trainer.train()
+        # trainer_output =
+        # result.update(trainer_output.metrics)
         trainer.save_model(pj(opt.output_dir, 'best_model'))
+        best_model_path = pj(opt.output_dir, 'best_model')
+    else:
+        best_model_path = opt.output_dir
 
     # evaluation
     model = AutoModelForSequenceClassification.from_pretrained(
-        pj(opt.output_dir, 'best_model'),
+        best_model_path,
         num_labels=dataset['train'].features['label'].num_classes,
         local_files_only=not network)
     trainer = Trainer(
@@ -176,7 +187,7 @@ def main():
     )
     summary_file = pj(opt.output_dir, opt.summary_file)
     if not opt.skip_eval:
-        result.update({f'test/{k}': v for k, v in trainer.evaluate().items()})
+        result = {f'test/{k}': v for k, v in trainer.evaluate().items()}
         logging.info(json.dumps(result, indent=4))
         with open(summary_file, 'w') as f:
             json.dump(result, f)
