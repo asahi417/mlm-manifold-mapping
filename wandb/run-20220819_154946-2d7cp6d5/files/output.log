@@ -1,0 +1,9 @@
+2022-08-19 15:49:46 INFO     {
+    "test/eval_loss": 0.7957883477210999,
+    "test/eval_f1": 0.7665033150763909,
+    "test/eval_f1_macro": 0.488380592239384,
+    "test/eval_accuracy": 0.7665033150763909,
+    "test/eval_runtime": 10.9674,
+    "test/eval_samples_per_second": 316.301,
+    "test/eval_steps_per_second": 39.572
+}

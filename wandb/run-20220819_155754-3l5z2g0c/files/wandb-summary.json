@@ -1,0 +1,1 @@
+{"eval/loss": 0.8304768800735474, "eval/f1": 0.756413952147593, "eval/f1_macro": 0.49291338682574065, "eval/accuracy": 0.756413952147593, "eval/runtime": 12.2676, "eval/samples_per_second": 282.777, "eval/steps_per_second": 35.378, "train/global_step": 0, "_timestamp": 1660921075.3451958, "_runtime": 0.5411996841430664, "_step": 0, "_wandb": {"runtime": 0}}
