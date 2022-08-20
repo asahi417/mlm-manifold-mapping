@@ -175,8 +175,8 @@ def main():
         # model=pj(opt.output_dir, 'best_model'),
         args=TrainingArguments(
             output_dir=opt.output_dir,
-            evaluation_strategy="steps",
-            eval_steps=opt.eval_step,
+            # evaluation_strategy="steps",
+            # eval_steps=opt.eval_step,
             seed=opt.random_seed
         ),
         train_dataset=tokenized_datasets["train"],

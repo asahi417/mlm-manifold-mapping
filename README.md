@@ -18,7 +18,7 @@ BATCH=128
 CHUNK=250
 
 MODEL='roberta-base'
-BATCH=32
+BATCH=64
 CHUNK=250
 ```
 
@@ -110,13 +110,25 @@ python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-add-v3" --dat
 # MISC
 
 ```shell
+roberta: only v2
+citation_intent: running on hawk
+
+TODO:
+- RoBERTa: v2
+- AlBERT, RoBERTa: v3
+- M3: Roberta: yelp
+
+ 
+```
+
+```shell
 for DATA in "chemprot" "citation_intent" "sciie" "amcd" "tweet_eval_emotion" "tweet_eval_irony" "tweet_eval_hate"
 do
   for TYPE in "vanilla" "add" "replace"
   do
     git clone "https://huggingface.co/m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}"
-#    python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --summary-file 'metric_summary.json'
-    python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --summary-file 'metric_summary.edit.json' --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test'
+    python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --summary-file 'metric_summary.json'
+#    python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --summary-file 'metric_summary.edit.json' --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test'
     cd "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}"
     rm -rf runs
     git lfs install && git add . && git commit -m 'model update' && git push && cd ../ 
@@ -165,10 +177,10 @@ do
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace" --skip-train        
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add" --skip-train --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test' --summary-file 'metric_summary.edit.json'
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace" --skip-train --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test' --summary-file 'metric_summary.edit.json'
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2" --skip-train
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2/best_model" --skip-train
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2" --skip-train
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2" --skip-train --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test' --summary-file 'metric_summary.edit.json'
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2" --skip-train --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test' --summary-file 'metric_summary.edit.json'        
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2/best_model" --skip-train --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test' --summary-file 'metric_summary.edit.json'
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2/best_model" --skip-train --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test' --summary-file 'metric_summary.edit.json'        
     done
 done
 
@@ -186,10 +198,11 @@ do
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace"
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add" --summary-file 'metric_summary.edit.json'
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace" --summary-file 'metric_summary.edit.json'
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add-v2"
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace-v2"
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add-v2" --summary-file 'metric_summary.edit.json'
-        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace-v2" --summary-file 'metric_summary.edit.json'
+        
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2/best_model" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add-v2"
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2/best_model" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace-v2"
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v2/best_model" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add-v2" --summary-file 'metric_summary.edit.json'
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace-v2/best_model" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace-v2" --summary-file 'metric_summary.edit.json'
     done
 done 
 ```
