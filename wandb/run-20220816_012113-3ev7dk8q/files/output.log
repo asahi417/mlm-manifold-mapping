@@ -1,0 +1,30 @@
+2022-08-16 01:21:14 INFO     {
+    "test/eval_loss": 0.9434748291969299,
+    "test/eval_f1": 0.6690647482014388,
+    "test/eval_f1_macro": 0.33360954847686547,
+    "test/eval_accuracy": 0.6690647482014388,
+    "test/eval_runtime": 1.4448,
+    "test/eval_samples_per_second": 96.204,
+    "test/eval_steps_per_second": 12.458
+}
+/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/huggingface_hub/hf_api.py:91: FutureWarning: `name` and `organization` input arguments are deprecated and will be removed in v0.10. Pass `repo_id` instead.
+  warnings.warn(
+Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace into local empty directory.
+2022-08-16 01:21:15 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace into local empty directory.
+Download file pytorch_model.bin:   0%|                                      | 1.59k/44.6M [00:00<?, ?B/s]
+Download file spiece.model:   0%|▏                                           | 2.83k/742k [00:00<?, ?B/s]
+Clean file spiece.model:   0%|                                               | 1.00k/742k [00:00<?, ?B/s]
+Clean file pytorch_model.bin: 100%|█████████████████████████████████| 44.6M/44.6M [00:01<00:00, 46.5MB/s]
+Clean file spiece.model: 100%|█████████████████████████████████████████| 742k/742k [00:03<00:00, 252kB/s]
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace1<00:00, 46.6MB/s]
+   4c8a257..0f1ca55  main -> main
+2022-08-16 01:21:27 WARNING  To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   4c8a257..0f1ca55  main -> main
+/home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 01:21:27 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+tokenizer config file saved in m3-experiment-albert-base-v2-citation-intent-replace/tokenizer_config.json
+Special tokens file saved in m3-experiment-albert-base-v2-citation-intent-replace/special_tokens_map.json
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   0f1ca55..a491c0d  main -> main
+2022-08-16 01:21:32 WARNING  To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   0f1ca55..a491c0d  main -> main

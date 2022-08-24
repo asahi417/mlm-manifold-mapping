@@ -1,0 +1,171 @@
+
+  1%|▋                                                                  | 49/4500 [00:03<05:09, 14.40it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 65%|████████████████████████████████████████████                        | 81/125 [00:02<00:01, 39.72it/s]
+
+  2%|█▍                                                                 | 99/4500 [00:10<05:06, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 43%|█████████████████████████████▍                                      | 54/125 [00:01<00:01, 39.94it/s]
+
+  3%|██▏                                                               | 149/4500 [00:16<05:02, 14.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 88%|██████████████████████████████████████████████████████████▉        | 110/125 [00:02<00:00, 39.82it/s]
+
+  4%|██▉                                                               | 199/4500 [00:23<04:59, 14.38it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 69%|██████████████████████████████████████████████▊                     | 86/125 [00:02<00:00, 39.79it/s]
+
+  6%|███▋                                                              | 249/4500 [00:30<04:56, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 50%|██████████████████████████████████▎                                 | 63/125 [00:01<00:01, 39.93it/s]
+
+  7%|████▍                                                             | 299/4500 [00:36<04:52, 14.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 96%|████████████████████████████████████████████████████████████████▎  | 120/125 [00:02<00:00, 39.85it/s]
+
+  8%|█████                                                             | 349/4500 [00:43<04:49, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 75%|███████████████████████████████████████████████████▏                | 94/125 [00:02<00:00, 39.78it/s]
+
+  9%|█████▊                                                            | 399/4500 [00:49<04:45, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 55%|█████████████████████████████████████▌                              | 69/125 [00:01<00:01, 39.79it/s]
+
+ 10%|██████▌                                                           | 449/4500 [00:56<04:42, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 36%|████████████████████████▍                                           | 45/125 [00:01<00:02, 39.94it/s]
+
+ 11%|███████▎                                                          | 500/4500 [01:03<04:39, 14.33it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+ 16%|██████████▉                                                         | 20/125 [00:00<00:02, 40.91it/s]
+
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-500/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-500/pytorch_model.bin
+ 11%|███████▌                                                          | 517/4500 [01:07<06:30, 10.19it/s]
+
+ 12%|████████                                                          | 549/4500 [01:09<04:35, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 55%|█████████████████████████████████████▌                              | 69/125 [00:01<00:01, 39.85it/s]
+
+ 13%|████████▊                                                         | 599/4500 [01:16<04:31, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 36%|████████████████████████▍                                           | 45/125 [00:01<00:02, 39.92it/s]
+
+ 14%|█████████▌                                                        | 649/4500 [01:23<04:27, 14.38it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 82%|███████████████████████████████████████████████████████▏           | 103/125 [00:02<00:00, 39.87it/s]
+
+ 16%|██████████▎                                                       | 699/4500 [01:29<04:24, 14.38it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 62%|█████████████████████████████████████████▉                          | 77/125 [00:01<00:01, 39.78it/s]
+
+ 17%|██████████▉                                                       | 749/4500 [01:36<04:21, 14.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 41%|███████████████████████████▋                                        | 51/125 [00:01<00:01, 39.95it/s]
+
+ 18%|███████████▋                                                      | 799/4500 [01:43<04:17, 14.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 86%|█████████████████████████████████████████████████████████▉         | 108/125 [00:02<00:00, 39.86it/s]
+ 19%|████████████▍                                                     | 849/4500 [01:49<04:13, 14.38it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 66%|█████████████████████████████████████████████▏                      | 83/125 [00:02<00:01, 39.85it/s]
+
+ 20%|█████████████▏                                                    | 899/4500 [01:56<04:10, 14.38it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 49%|█████████████████████████████████▏                                  | 61/125 [00:01<00:01, 39.98it/s]
+
+ 21%|█████████████▉                                                    | 949/4500 [02:02<04:06, 14.39it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 95%|███████████████████████████████████████████████████████████████▊   | 119/125 [00:02<00:00, 39.75it/s]
+
+ 22%|██████████████▍                                                  | 1000/4500 [02:09<04:03, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+  9%|█████▉                                                              | 11/125 [00:00<00:02, 43.31it/s]
+
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1000/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1000/pytorch_model.bin
+Traceback (most recent call last):
+  File "/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/torch/serialization.py", line 379, in save
+    _save(obj, opened_zipfile, pickle_module, pickle_protocol)
+  File "/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/torch/serialization.py", line 604, in _save
+    zip_file.write_record(name, storage.data_ptr(), num_bytes)
+OSError: [Errno 28] No space left on device
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "lm_finetuning.py", line 168, in <module>
+    main()
+  File "lm_finetuning.py", line 137, in main
+    trainer_output = trainer.train()
+  File "/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/transformers/trainer.py", line 1498, in train
+    return inner_training_loop(
+  File "/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/transformers/trainer.py", line 1817, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/transformers/trainer.py", line 2042, in _maybe_log_save_evaluate
+    self._save_checkpoint(model, trial, metrics=metrics)
+  File "/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/transformers/trainer.py", line 2148, in _save_checkpoint
+    torch.save(self.optimizer.state_dict(), os.path.join(output_dir, OPTIMIZER_NAME))
+{'eval_loss': 0.5755934715270996, 'eval_f1': 0.714, 'eval_runtime': 3.1415, 'eval_samples_per_second': 318.32, 'eval_steps_per_second': 39.79, 'epoch': 0.89}

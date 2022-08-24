@@ -1,0 +1,843 @@
+
+
+
+
+  1%|▋                                                                  | 50/4500 [00:08<11:58,  6.19it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+
+ 92%|█████████████████████████████████████████████████████████████▋     | 115/125 [00:06<00:00, 16.17it/s]
+
+
+
+  2%|█▍                                                                | 100/4500 [00:24<11:51,  6.18it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+
+ 98%|█████████████████████████████████████████████████████████████████▉ | 123/125 [00:07<00:00, 16.21it/s]
+
+
+
+  3%|██▏                                                               | 150/4500 [00:39<11:36,  6.25it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 50%|█████████████████████████████████▋                                  | 62/125 [00:03<00:03, 16.24it/s]
+
+
+  4%|██▉                                                               | 199/4500 [00:49<05:16, 13.60it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 79%|█████████████████████████████████████████████████████▊              | 99/125 [00:02<00:00, 37.28it/s]
+
+
+
+  6%|███▋                                                              | 249/4500 [00:57<05:00, 14.15it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+ 54%|████████████████████████████████████▍                               | 67/125 [00:01<00:01, 38.63it/s]
+
+
+  7%|████▍                                                             | 299/4500 [01:04<05:01, 13.92it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 92%|█████████████████████████████████████████████████████████████▋     | 115/125 [00:02<00:00, 38.58it/s]
+
+
+  8%|█████▏                                                            | 350/4500 [01:13<11:04,  6.24it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 93%|██████████████████████████████████████████████████████████████▏    | 116/125 [00:06<00:00, 16.62it/s]
+
+
+
+
+  9%|█████▊                                                            | 400/4500 [01:28<10:36,  6.44it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 96%|████████████████████████████████████████████████████████████████▎  | 120/125 [00:07<00:00, 16.23it/s]
+
+
+
+
+ 10%|██████▌                                                           | 450/4500 [01:44<10:53,  6.19it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 83%|███████████████████████████████████████████████████████▋           | 104/125 [00:03<00:00, 39.41it/s]
+
+
+ 11%|███████▎                                                          | 497/4500 [01:51<04:45, 14.04it/s]
+ 11%|███████▎                                                          | 500/4500 [01:52<04:43, 14.09it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 75%|███████████████████████████████████████████████████▏                | 94/125 [00:03<00:01, 16.28it/s]
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-500/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-500/pytorch_model.bin
+
+ 12%|████████                                                          | 549/4500 [02:00<04:54, 13.44it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 37%|█████████████████████████                                           | 46/125 [00:01<00:01, 39.51it/s]
+
+ 13%|████████▊                                                         | 599/4500 [02:07<04:35, 14.16it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 74%|██████████████████████████████████████████████████▌                 | 93/125 [00:02<00:00, 39.24it/s]
+
+
+
+
+ 14%|█████████▌                                                        | 650/4500 [02:18<09:45,  6.58it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 73%|█████████████████████████████████████████████████▌                  | 91/125 [00:05<00:02, 16.23it/s]
+
+
+
+
+ 16%|██████████▎                                                       | 700/4500 [02:34<10:15,  6.18it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 77%|████████████████████████████████████████████████████▏               | 96/125 [00:05<00:01, 16.21it/s]
+
+
+ 17%|██████████▉                                                       | 749/4500 [02:44<04:25, 14.14it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+ 52%|███████████████████████████████████▎                                | 65/125 [00:01<00:01, 39.05it/s]
+
+
+ 18%|███████████▋                                                      | 799/4500 [02:51<04:24, 14.00it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 70%|███████████████████████████████████████████████▎                    | 87/125 [00:02<00:00, 38.75it/s]
+
+
+ 19%|████████████▍                                                     | 849/4500 [02:58<04:17, 14.16it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+ 46%|███████████████████████████████                                     | 57/125 [00:01<00:01, 39.32it/s]
+
+
+
+ 20%|█████████████▏                                                    | 900/4500 [03:09<09:42,  6.18it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+ 82%|███████████████████████████████████████████████████████▏           | 103/125 [00:04<00:00, 38.63it/s]
+
+
+ 21%|█████████████▉                                                    | 949/4500 [03:18<04:19, 13.66it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+ 55%|█████████████████████████████████████▌                              | 69/125 [00:01<00:01, 38.23it/s]
+
+
+
+
+ 22%|██████████████▋                                                   | 999/4500 [03:28<09:36,  6.08it/s]
+ 22%|██████████████▍                                                  | 1000/4500 [03:28<15:03,  3.87it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 98%|█████████████████████████████████████████████████████████████████▍ | 122/125 [00:07<00:00, 15.80it/s]
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1000/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1000/pytorch_model.bin
+
+
+
+ 23%|███████████████▏                                                 | 1050/4500 [03:44<09:17,  6.19it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 99%|██████████████████████████████████████████████████████████████████▍| 124/125 [00:07<00:00, 16.37it/s]
+
+
+
+
+ 24%|███████████████▉                                                 | 1100/4500 [04:00<09:10,  6.18it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 78%|████████████████████████████████████████████████████▊               | 97/125 [00:05<00:01, 16.82it/s]
+
+
+
+ 26%|████████████████▌                                                | 1150/4500 [04:15<09:00,  6.20it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+
+
+
+ 82%|██████████████████████████████████████████████████████▋            | 102/125 [00:06<00:01, 16.23it/s]
+
+
+
+
+ 27%|█████████████████▎                                               | 1200/4500 [04:31<08:55,  6.17it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 1000
+  Batch size = 8
+ 34%|██████████████████████▊                                             | 42/125 [00:02<00:05, 16.22it/s]
+ 61%|█████████████████████████████████████████▎                          | 76/125 [00:04<00:03, 16.28it/s]
+ 86%|█████████████████████████████████████████████████████████▉         | 108/125 [00:06<00:01, 16.84it/s]
+ 86%|█████████████████████████████████████████████████████████▉         | 108/125 [00:06<00:01, 16.84it/s]
+
+
+
+
+ 28%|██████████████████                                               | 1250/4500 [04:47<08:29,  6.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 13%|████████▋                                                           | 16/125 [00:00<00:06, 16.54it/s]
+  Num examples = 1000
+  Batch size = 8
+ 13%|████████▋                                                           | 16/125 [00:00<00:06, 16.54it/s]
+ 13%|████████▋                                                           | 16/125 [00:00<00:06, 16.54it/s]
+ 13%|████████▋                                                           | 16/125 [00:00<00:06, 16.54it/s]
+ 38%|██████████████████████████                                          | 48/125 [00:02<00:04, 16.50it/s]
+ 95%|███████████████████████████████████████████████████████████████▊   | 119/125 [00:04<00:00, 39.45it/s]
+ 95%|███████████████████████████████████████████████████████████████▊   | 119/125 [00:04<00:00, 39.45it/s]
+
+ 29%|██████████████████▊                                              | 1299/4500 [04:55<03:46, 14.16it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 12%|████████▏                                                           | 15/125 [00:00<00:02, 41.46it/s]
+  Num examples = 1000
+  Batch size = 8
+ 12%|████████▏                                                           | 15/125 [00:00<00:02, 41.46it/s]
+ 12%|████████▏                                                           | 15/125 [00:00<00:02, 41.46it/s]
+ 12%|████████▏                                                           | 15/125 [00:00<00:02, 41.46it/s]
+ 12%|████████▏                                                           | 15/125 [00:00<00:02, 41.46it/s]
+ 12%|████████▏                                                           | 15/125 [00:00<00:02, 41.46it/s]
+ 72%|████████████████████████████████████████████████▉                   | 90/125 [00:02<00:00, 39.38it/s]
+ 72%|████████████████████████████████████████████████▉                   | 90/125 [00:02<00:00, 39.38it/s]
+
+
+
+ 30%|███████████████████▌                                             | 1350/4500 [05:05<08:21,  6.28it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+  Num examples = 1000
+  Batch size = 8
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+  6%|████▍                                                                | 8/125 [00:00<00:06, 17.77it/s]
+ 46%|███████████████████████████████                                     | 57/125 [00:02<00:03, 19.01it/s]
+ 72%|████████████████████████████████████████████████▉                   | 90/125 [00:04<00:02, 16.49it/s]
+ 72%|████████████████████████████████████████████████▉                   | 90/125 [00:04<00:02, 16.49it/s]
+
+
+
+ 31%|████████████████████▏                                            | 1400/4500 [05:18<08:18,  6.22it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  Num examples = 1000
+  Batch size = 8
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.28it/s]
+ 35%|███████████████████████▉                                            | 44/125 [00:02<00:04, 17.15it/s]
+ 67%|█████████████████████████████████████████████▋                      | 84/125 [00:04<00:01, 29.93it/s]
+ 67%|█████████████████████████████████████████████▋                      | 84/125 [00:04<00:01, 29.93it/s]
+
+
+
+ 32%|████████████████████▉                                            | 1450/4500 [05:30<08:08,  6.24it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  Num examples = 1000
+  Batch size = 8
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+  2%|█▋                                                                   | 3/125 [00:00<00:05, 24.22it/s]
+ 37%|█████████████████████████                                           | 46/125 [00:02<00:04, 17.50it/s]
+ 66%|█████████████████████████████████████████████▏                      | 83/125 [00:04<00:01, 24.99it/s]
+ 97%|████████████████████████████████████████████████████████████████▊  | 121/125 [00:06<00:00, 16.44it/s]
+ 97%|████████████████████████████████████████████████████████████████▊  | 121/125 [00:06<00:00, 16.44it/s]
+
+
+
+ 33%|█████████████████████▋                                           | 1498/4500 [05:42<08:01,  6.24it/s]
+ 33%|█████████████████████▋                                           | 1500/4500 [05:42<07:24,  6.75it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+  Num examples = 1000
+  Batch size = 8
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 29%|███████████████████▌                                                | 36/125 [00:01<00:05, 16.95it/s]
+ 62%|██████████████████████████████████████████▍                         | 78/125 [00:03<00:01, 32.15it/s]
+ 88%|██████████████████████████████████████████████████████████▉        | 110/125 [00:05<00:00, 16.39it/s]
+ 88%|██████████████████████████████████████████████████████████▉        | 110/125 [00:05<00:00, 16.39it/s]
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+Configuration saved in m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5835340023040771, 'eval_f1': 0.744, 'eval_runtime': 6.734, 'eval_samples_per_second': 148.501, 'eval_steps_per_second': 18.563, 'epoch': 1.38}
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5747016668319702, 'eval_f1': 0.743, 'eval_runtime': 6.5258, 'eval_samples_per_second': 153.237, 'eval_steps_per_second': 19.155, 'epoch': 1.42}
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Num examples = 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5556547045707703, 'eval_f1': 0.756, 'eval_runtime': 3.6879, 'eval_samples_per_second': 271.157, 'eval_steps_per_second': 33.895, 'epoch': 1.47}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5794225931167603, 'eval_f1': 0.7299999999999999, 'eval_runtime': 6.7327, 'eval_samples_per_second': 148.529, 'eval_steps_per_second': 18.566, 'epoch': 1.51}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5314049124717712, 'eval_f1': 0.7579999999999999, 'eval_runtime': 3.1813, 'eval_samples_per_second': 314.334, 'eval_steps_per_second': 39.292, 'epoch': 1.56}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5242461562156677, 'eval_f1': 0.756, 'eval_runtime': 5.4557, 'eval_samples_per_second': 183.294, 'eval_steps_per_second': 22.912, 'epoch': 1.6}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5492730736732483, 'eval_f1': 0.7579999999999999, 'eval_runtime': 3.1529, 'eval_samples_per_second': 317.172, 'eval_steps_per_second': 39.646, 'epoch': 1.64}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5264579057693481, 'eval_f1': 0.762, 'eval_runtime': 3.2902, 'eval_samples_per_second': 303.93, 'eval_steps_per_second': 37.991, 'epoch': 1.69}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'eval_loss': 0.5277747511863708, 'eval_f1': 0.767, 'eval_runtime': 3.153, 'eval_samples_per_second': 317.159, 'eval_steps_per_second': 39.645, 'epoch': 1.73}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+{'loss': 0.3916, 'learning_rate': 6.226447895478109e-06, 'epoch': 1.78}
+  Batch size = 8 1000n m3_output/ckpt/albert-base-v2.tweet_eval_hate.vanilla/checkpoint-1500/config.json
+ 45%|████████████████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+ 45%|████████████████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.6034592390060425, 'eval_f1': 0.748, 'eval_runtime': 3.1592, 'eval_samples_per_second': 316.54, 'eval_steps_per_second': 39.568, 'epoch': 1.82}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.5849367380142212, 'eval_f1': 0.7410000000000001, 'eval_runtime': 3.2958, 'eval_samples_per_second': 303.421, 'eval_steps_per_second': 37.928, 'epoch': 1.87}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.5468339323997498, 'eval_f1': 0.756, 'eval_runtime': 3.1807, 'eval_samples_per_second': 314.394, 'eval_steps_per_second': 39.299, 'epoch': 1.91}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.5653313398361206, 'eval_f1': 0.757, 'eval_runtime': 3.2362, 'eval_samples_per_second': 309.004, 'eval_steps_per_second': 38.625, 'epoch': 1.96}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.5640563368797302, 'eval_f1': 0.745, 'eval_runtime': 3.3337, 'eval_samples_per_second': 299.968, 'eval_steps_per_second': 37.496, 'epoch': 2.0}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.6325376033782959, 'eval_f1': 0.739, 'eval_runtime': 3.2077, 'eval_samples_per_second': 311.754, 'eval_steps_per_second': 38.969, 'epoch': 2.04}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.677055835723877, 'eval_f1': 0.743, 'eval_runtime': 3.1644, 'eval_samples_per_second': 316.017, 'eval_steps_per_second': 39.502, 'epoch': 2.09}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.6369122266769409, 'eval_f1': 0.761, 'eval_runtime': 7.6443, 'eval_samples_per_second': 130.816, 'eval_steps_per_second': 16.352, 'epoch': 2.13}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'eval_loss': 0.6567701101303101, 'eval_f1': 0.762, 'eval_runtime': 7.6295, 'eval_samples_per_second': 131.071, 'eval_steps_per_second': 16.384, 'epoch': 2.18}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+{'loss': 0.336, 'learning_rate': 4.981158316382486e-06, 'epoch': 2.22}
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+  Batch size = 8█████████████████▉                                    | 2007/4500 [07:28<09:57,  4.17it/s]
+ 56%|████████████████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+ 56%|████████████████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+ 56%|████████████████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+ 56%|████████████████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.7366297841072083, 'eval_f1': 0.755, 'eval_runtime': 7.6413, 'eval_samples_per_second': 130.868, 'eval_steps_per_second': 16.359, 'epoch': 2.27}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.6526905298233032, 'eval_f1': 0.749, 'eval_runtime': 7.6624, 'eval_samples_per_second': 130.508, 'eval_steps_per_second': 16.314, 'epoch': 2.31}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.7481917142868042, 'eval_f1': 0.754, 'eval_runtime': 7.6523, 'eval_samples_per_second': 130.68, 'eval_steps_per_second': 16.335, 'epoch': 2.36}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.8587465882301331, 'eval_f1': 0.734, 'eval_runtime': 7.6393, 'eval_samples_per_second': 130.902, 'eval_steps_per_second': 16.363, 'epoch': 2.4}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.7825232148170471, 'eval_f1': 0.751, 'eval_runtime': 7.81, 'eval_samples_per_second': 128.041, 'eval_steps_per_second': 16.005, 'epoch': 2.44}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.7880279421806335, 'eval_f1': 0.733, 'eval_runtime': 7.6761, 'eval_samples_per_second': 130.275, 'eval_steps_per_second': 16.284, 'epoch': 2.49}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.8043789267539978, 'eval_f1': 0.74, 'eval_runtime': 7.8219, 'eval_samples_per_second': 127.846, 'eval_steps_per_second': 15.981, 'epoch': 2.53}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.7834998965263367, 'eval_f1': 0.7579999999999999, 'eval_runtime': 7.6553, 'eval_samples_per_second': 130.629, 'eval_steps_per_second': 16.329, 'epoch': 2.58}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'eval_loss': 0.8152145147323608, 'eval_f1': 0.754, 'eval_runtime': 7.6681, 'eval_samples_per_second': 130.41, 'eval_steps_per_second': 16.301, 'epoch': 2.62}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+{'loss': 0.3051, 'learning_rate': 3.7358687372868647e-06, 'epoch': 2.67}
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+  Batch size = 8█████████████████████████▎                            | 2511/4500 [09:02<07:36,  4.36it/s]
+ 67%|███████████████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+ 67%|███████████████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+ 67%|███████████████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+ 67%|███████████████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.8122904300689697, 'eval_f1': 0.75, 'eval_runtime': 7.6632, 'eval_samples_per_second': 130.494, 'eval_steps_per_second': 16.312, 'epoch': 2.71}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.7429111003875732, 'eval_f1': 0.754, 'eval_runtime': 7.6368, 'eval_samples_per_second': 130.945, 'eval_steps_per_second': 16.368, 'epoch': 2.76}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.7326335906982422, 'eval_f1': 0.764, 'eval_runtime': 7.853, 'eval_samples_per_second': 127.341, 'eval_steps_per_second': 15.918, 'epoch': 2.8}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.716399073600769, 'eval_f1': 0.765, 'eval_runtime': 7.658, 'eval_samples_per_second': 130.583, 'eval_steps_per_second': 16.323, 'epoch': 2.84}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.7870274186134338, 'eval_f1': 0.748, 'eval_runtime': 7.7388, 'eval_samples_per_second': 129.22, 'eval_steps_per_second': 16.152, 'epoch': 2.89}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.8104526996612549, 'eval_f1': 0.752, 'eval_runtime': 7.6673, 'eval_samples_per_second': 130.424, 'eval_steps_per_second': 16.303, 'epoch': 2.93}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.7275388240814209, 'eval_f1': 0.771, 'eval_runtime': 7.738, 'eval_samples_per_second': 129.232, 'eval_steps_per_second': 16.154, 'epoch': 2.98}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.7595609426498413, 'eval_f1': 0.774, 'eval_runtime': 7.6563, 'eval_samples_per_second': 130.611, 'eval_steps_per_second': 16.326, 'epoch': 3.02}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'eval_loss': 0.8305538296699524, 'eval_f1': 0.768, 'eval_runtime': 7.7645, 'eval_samples_per_second': 128.792, 'eval_steps_per_second': 16.099, 'epoch': 3.07}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+{'loss': 0.2958, 'learning_rate': 2.490579158191243e-06, 'epoch': 3.11}
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+  Batch size = 8████████████████████████████████▎                     | 3002/4500 [11:38<46:01,  1.84s/it]
+ 78%|██████████████████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+ 78%|██████████████████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+ 78%|██████████████████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+ 78%|██████████████████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9128955006599426, 'eval_f1': 0.769, 'eval_runtime': 7.6394, 'eval_samples_per_second': 130.9, 'eval_steps_per_second': 16.363, 'epoch': 3.16}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9448533654212952, 'eval_f1': 0.766, 'eval_runtime': 7.6449, 'eval_samples_per_second': 130.807, 'eval_steps_per_second': 16.351, 'epoch': 3.2}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 1.0127404928207397, 'eval_f1': 0.765, 'eval_runtime': 7.7636, 'eval_samples_per_second': 128.807, 'eval_steps_per_second': 16.101, 'epoch': 3.24}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9159162640571594, 'eval_f1': 0.771, 'eval_runtime': 7.7576, 'eval_samples_per_second': 128.906, 'eval_steps_per_second': 16.113, 'epoch': 3.29}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9767168760299683, 'eval_f1': 0.7590000000000001, 'eval_runtime': 7.6566, 'eval_samples_per_second': 130.606, 'eval_steps_per_second': 16.326, 'epoch': 3.33}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9635105133056641, 'eval_f1': 0.766, 'eval_runtime': 7.6364, 'eval_samples_per_second': 130.951, 'eval_steps_per_second': 16.369, 'epoch': 3.38}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.939786970615387, 'eval_f1': 0.7699999999999999, 'eval_runtime': 7.7046, 'eval_samples_per_second': 129.793, 'eval_steps_per_second': 16.224, 'epoch': 3.42}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9739173650741577, 'eval_f1': 0.763, 'eval_runtime': 7.7551, 'eval_samples_per_second': 128.947, 'eval_steps_per_second': 16.118, 'epoch': 3.47}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'eval_loss': 0.9985246658325195, 'eval_f1': 0.76, 'eval_runtime': 7.6333, 'eval_samples_per_second': 131.004, 'eval_steps_per_second': 16.376, 'epoch': 3.51}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+{'loss': 0.2281, 'learning_rate': 1.2452895790956215e-06, 'epoch': 3.56}
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+  Batch size = 8███████████████████████████████████████▌              | 3501/4500 [14:16<43:20,  2.60s/it]
+ 89%|█████████████████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+ 89%|█████████████████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+ 89%|█████████████████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+ 89%|█████████████████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 0.9659007787704468, 'eval_f1': 0.764, 'eval_runtime': 7.8144, 'eval_samples_per_second': 127.969, 'eval_steps_per_second': 15.996, 'epoch': 3.6}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 0.971458375453949, 'eval_f1': 0.771, 'eval_runtime': 7.6411, 'eval_samples_per_second': 130.871, 'eval_steps_per_second': 16.359, 'epoch': 3.64}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0197409391403198, 'eval_f1': 0.764, 'eval_runtime': 7.7603, 'eval_samples_per_second': 128.861, 'eval_steps_per_second': 16.108, 'epoch': 3.69}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0066479444503784, 'eval_f1': 0.774, 'eval_runtime': 7.6677, 'eval_samples_per_second': 130.418, 'eval_steps_per_second': 16.302, 'epoch': 3.73}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0320000648498535, 'eval_f1': 0.767, 'eval_runtime': 7.6375, 'eval_samples_per_second': 130.933, 'eval_steps_per_second': 16.367, 'epoch': 3.78}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0301069021224976, 'eval_f1': 0.764, 'eval_runtime': 7.6607, 'eval_samples_per_second': 130.536, 'eval_steps_per_second': 16.317, 'epoch': 3.82}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0233125686645508, 'eval_f1': 0.771, 'eval_runtime': 7.6893, 'eval_samples_per_second': 130.05, 'eval_steps_per_second': 16.256, 'epoch': 3.87}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0342400074005127, 'eval_f1': 0.768, 'eval_runtime': 7.6639, 'eval_samples_per_second': 130.481, 'eval_steps_per_second': 16.31, 'epoch': 3.91}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0365180969238281, 'eval_f1': 0.768, 'eval_runtime': 7.6985, 'eval_samples_per_second': 129.895, 'eval_steps_per_second': 16.237, 'epoch': 3.96}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'loss': 0.2049, 'learning_rate': 0.0, 'epoch': 4.0}
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Batch size = 8██████████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+{'eval_loss': 1.0360757112503052, 'eval_f1': 0.769, 'eval_runtime': 7.6634, 'eval_samples_per_second': 130.49, 'eval_steps_per_second': 16.311, 'epoch': 4.0}
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+  Num examples = 2970█████████████████████████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+}   "test/eval_runtime": 22.7666,9643555,█████████████████████▊       | 4005/4500 [16:55<06:08,  1.34it/s]
+2022-08-16 19:26:39 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-tweet-eval-hate-vanilla into local empty directory.
+2022-08-16 19:26:39 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-tweet-eval-hate-vanilla into local empty directory.
+2022-08-16 19:26:39 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-tweet-eval-hate-vanilla into local empty directory.
+2022-08-16 19:26:39 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-tweet-eval-hate-vanilla into local empty directory.
+2022-08-16 19:26:52 WARNING  remote: Scanning LFS files for validity, may be slow...        se-v2-tweet-eval-hate-vanilla into local empty directory.
+tokenizer config file saved in m3-experiment-albert-base-v2-tweet-eval-hate-vanilla/tokenizer_config.jsonval-hate-vanilla into local empty directory.
+tokenizer config file saved in m3-experiment-albert-base-v2-tweet-eval-hate-vanilla/tokenizer_config.jsonval-hate-vanilla into local empty directory.
+Upload file spiece.model: 100%|█████████████████████████████████████████| 742k/742k [00:03<00:00, 242kB/s]al-hate-vanilla into local empty directory.
+Upload file spiece.model: 100%|█████████████████████████████████████████| 742k/742k [00:03<00:00, 242kB/s]al-hate-vanilla into local empty directory.

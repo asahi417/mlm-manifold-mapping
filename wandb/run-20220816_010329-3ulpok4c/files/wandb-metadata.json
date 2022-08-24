@@ -1,0 +1,38 @@
+{
+    "os": "Linux-5.4.0-124-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2022-08-16T01:03:30.239720",
+    "startedAt": "2022-08-16T01:03:29.755250",
+    "docker": null,
+    "gpu": "Quadro RTX 8000",
+    "gpu_count": 2,
+    "cpu_count": 20,
+    "cuda": null,
+    "args": [
+        "-m",
+        "albert-base-v2",
+        "--dataset-name",
+        "amcd",
+        "-o",
+        "m3_output/ckpt/albert-base-v2.amcd",
+        "--push-to-hub",
+        "--hf-organization",
+        "asahi417",
+        "-a",
+        "m3-experiment-albert-base-v2-amcd-vanilla",
+        "--summary-file",
+        "metric_summary.json"
+    ],
+    "state": "running",
+    "program": "lm_finetuning.py",
+    "codePath": "lm_finetuning.py",
+    "git": {
+        "remote": "https://github.com/asahi417/mlm-manifold-mapping",
+        "commit": "1cd96601a1177d297061eb8e74689cdb80a704a0"
+    },
+    "email": "asahi1992ushio@gmail.com",
+    "root": "/home/asahi/mlm-manifold-mapping",
+    "host": "comsc-nls",
+    "username": "asahi",
+    "executable": "/mnt/storage_asahi/pyenv/m3/bin/python"
+}

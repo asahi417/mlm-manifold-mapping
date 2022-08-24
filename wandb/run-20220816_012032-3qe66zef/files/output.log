@@ -1,0 +1,30 @@
+2022-08-16 01:20:33 INFO     {
+    "test/eval_loss": 0.9434748291969299,
+    "test/eval_f1": 0.6690647482014388,
+    "test/eval_f1_macro": 0.33360954847686547,
+    "test/eval_accuracy": 0.6690647482014388,
+    "test/eval_runtime": 0.5765,
+    "test/eval_samples_per_second": 241.095,
+    "test/eval_steps_per_second": 31.221
+}
+/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/huggingface_hub/hf_api.py:91: FutureWarning: `name` and `organization` input arguments are deprecated and will be removed in v0.10. Pass `repo_id` instead.
+  warnings.warn(
+Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla into local empty directory.
+2022-08-16 01:20:35 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla into local empty directory.
+Download file pytorch_model.bin:   0%|                              | 20.8k/44.6M [00:01<40:03, 19.5kB/s]
+Download file spiece.model:   2%|▉                                           | 16.6k/742k [00:00<?, ?B/s]
+Clean file spiece.model: 100%|█████████████████████████████████████████| 742k/742k [00:02<00:00, 378kB/s]
+Clean file pytorch_model.bin: 100%|█████████████████████████████████| 44.6M/44.6M [00:01<00:00, 46.6MB/s]
+Clean file spiece.model: 100%|█████████████████████████████████████████| 742k/742k [00:02<00:00, 378kB/s]
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla1<00:00, 46.6MB/s]
+   efa384c..1f21e12  main -> main
+2022-08-16 01:20:46 WARNING  To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla
+   efa384c..1f21e12  main -> main
+/home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-vanilla is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 01:20:46 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-vanilla is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla. Make sure you pull the latest changes with `repo.git_pull()`.
+tokenizer config file saved in m3-experiment-albert-base-v2-citation-intent-vanilla/tokenizer_config.json
+Special tokens file saved in m3-experiment-albert-base-v2-citation-intent-vanilla/special_tokens_map.json
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla
+   1f21e12..33705a8  main -> main
+2022-08-16 01:20:51 WARNING  To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-vanilla
+   1f21e12..33705a8  main -> main

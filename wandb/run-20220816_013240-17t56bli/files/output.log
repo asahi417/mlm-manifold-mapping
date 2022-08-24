@@ -1,0 +1,30 @@
+2022-08-16 01:32:41 INFO     {
+    "test/eval_loss": 1.336120367050171,
+    "test/eval_f1": 0.7553956834532374,
+    "test/eval_f1_macro": 0.7124521072796934,
+    "test/eval_accuracy": 0.7553956834532374,
+    "test/eval_runtime": 1.3789,
+    "test/eval_samples_per_second": 100.808,
+    "test/eval_steps_per_second": 13.054
+}
+/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/huggingface_hub/hf_api.py:91: FutureWarning: `name` and `organization` input arguments are deprecated and will be removed in v0.10. Pass `repo_id` instead.
+  warnings.warn(
+Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add into local empty directory.
+2022-08-16 01:32:42 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add into local empty directory.
+Download file pytorch_model.bin:   0%|                               | 56.2k/44.6M [00:01<13:55, 55.9kB/s]
+Download file spiece.model:   1%|▍                                            | 8.08k/742k [00:00<?, ?B/s]
+Clean file spiece.model: 100%|██████████████████████████████████████████| 742k/742k [00:02<00:00, 378kB/s]
+Clean file pytorch_model.bin: 100%|██████████████████████████████████| 44.6M/44.6M [00:01<00:00, 46.6MB/s]
+Clean file spiece.model: 100%|██████████████████████████████████████████| 742k/742k [00:02<00:00, 378kB/s]
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add[00:01<00:00, 46.6MB/s]
+   af6a97e..e78c0dd  main -> main
+2022-08-16 01:32:53 WARNING  To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add
+   af6a97e..e78c0dd  main -> main
+/home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-add is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 01:32:53 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-add is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add. Make sure you pull the latest changes with `repo.git_pull()`.
+tokenizer config file saved in m3-experiment-albert-base-v2-citation-intent-add/tokenizer_config.json
+Special tokens file saved in m3-experiment-albert-base-v2-citation-intent-add/special_tokens_map.json
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add
+   e78c0dd..134bd84  main -> main
+2022-08-16 01:32:58 WARNING  To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-add
+   e78c0dd..134bd84  main -> main

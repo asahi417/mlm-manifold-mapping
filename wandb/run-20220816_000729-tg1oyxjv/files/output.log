@@ -1,0 +1,154 @@
+
+
+  6%|██▍                                       | 49/844 [00:03<00:55, 14.20it/s]
+  6%|██▍                                       | 49/844 [00:03<00:55, 14.20it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+ 12%|████▉                                     | 99/844 [00:07<00:52, 14.22it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+  0%|                                                    | 0/15 [00:00<?, ?it/s]
+
+ 18%|███████▏                                 | 149/844 [00:11<00:49, 14.15it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+ 33%|██████████████▋                             | 5/15 [00:00<00:00, 49.60it/s]
+
+ 24%|█████████▋                               | 199/844 [00:15<00:45, 14.20it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+ 67%|████████████████████████████▋              | 10/15 [00:00<00:00, 43.03it/s]
+
+ 30%|████████████                             | 249/844 [00:19<00:41, 14.19it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+ 30%|████████████▏                            | 250/844 [00:19<00:41, 14.19it/s]
+
+ 33%|█████████████▍                           | 277/844 [00:21<00:40, 14.06it/s]
+ 35%|██████████████▌                          | 299/844 [00:23<00:38, 14.16it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 39%|███████████████▉                         | 329/844 [00:25<00:36, 14.08it/s]
+ 41%|████████████████▉                        | 349/844 [00:27<00:34, 14.15it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 45%|██████████████████▌                      | 381/844 [00:29<00:32, 14.14it/s]
+ 47%|███████████████████▍                     | 399/844 [00:30<00:31, 14.17it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 51%|█████████████████████                    | 433/844 [00:33<00:29, 14.14it/s]
+ 53%|█████████████████████▊                   | 449/844 [00:34<00:27, 14.18it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 57%|███████████████████████▌                 | 485/844 [00:37<00:25, 14.14it/s]
+{'loss': 1.0428, 'learning_rate': 4.568029072132754e-06, 'epoch': 2.37}
+ 59%|████████████████████████▎                | 500/844 [00:38<00:24, 14.19it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+ 59%|████████████████████████▎                | 500/844 [00:39<00:24, 14.19it/s]Saving model checkpoint to m3_output/ckpt/albert-base-v2.citation_intent/checkpoint-500
+Configuration saved in m3_output/ckpt/albert-base-v2.citation_intent/checkpoint-500/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.citation_intent/checkpoint-500/pytorch_model.bin
+
+ 63%|█████████████████████████▉               | 533/844 [00:41<00:22, 14.10it/s]
+ 65%|██████████████████████████▋              | 549/844 [00:42<00:20, 14.14it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 69%|████████████████████████████▍            | 585/844 [00:45<00:18, 14.13it/s]
+ 71%|█████████████████████████████            | 599/844 [00:46<00:17, 14.11it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 75%|██████████████████████████████▉          | 637/844 [00:49<00:14, 14.12it/s]
+ 77%|███████████████████████████████▌         | 649/844 [00:50<00:13, 14.12it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 82%|█████████████████████████████████▍       | 689/844 [00:53<00:10, 14.14it/s]
+ 83%|█████████████████████████████████▉       | 699/844 [00:54<00:10, 14.11it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 88%|███████████████████████████████████▉     | 739/844 [00:57<00:07, 14.14it/s]
+ 89%|████████████████████████████████████▍    | 749/844 [00:58<00:06, 14.09it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+ 94%|██████████████████████████████████████▍  | 791/844 [01:01<00:03, 14.13it/s]
+ 95%|██████████████████████████████████████▊  | 799/844 [01:02<00:03, 14.13it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 114
+  Batch size = 8
+
+100%|████████████████████████████████████████▉| 843/844 [01:05<00:00, 14.12it/s]
+{'train_runtime': 67.0517, 'train_samples_per_second': 100.698, 'train_steps_per_second': 12.587, 'train_loss': 0.8786550585127555, 'epoch': 4.0}
+Training completed. Do not forget to share your model on huggingface.co/models =)
+100%|█████████████████████████████████████████| 844/844 [01:05<00:00, 12.82it/s]
+The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 139
+  Batch size = 8
+100%|███████████████████████████████████████████| 18/18 [00:00<00:00, 42.26it/s]
+2022-08-16 00:08:36 INFO     {
+    "train_runtime": 67.0517,
+    "train_samples_per_second": 100.698,
+    "train_steps_per_second": 12.587,
+    "train_loss": 0.8786550585127555,
+    "epoch": 4.0,
+    "test/eval_loss": 0.9787507653236389,
+    "test/eval_f1": 0.6690647482014388,
+    "test/eval_f1_macro": 0.32954319819661987,
+    "test/eval_accuracy": 0.6690647482014388,
+    "test/eval_runtime": 0.4502,
+    "test/eval_samples_per_second": 308.736,
+    "test/eval_steps_per_second": 39.98,
+    "test/epoch": 4.0
+}
+/mnt/storage_asahi/pyenv/m3/lib/python3.8/site-packages/huggingface_hub/hf_api.py:91: FutureWarning: `name` and `organization` input arguments are deprecated and will be removed in v0.10. Pass `repo_id` instead.
+  warnings.warn(
+Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace into local empty directory.
+2022-08-16 00:08:38 WARNING  Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace into local empty directory.
+Configuration saved in m3-experiment-albert-base-v2-citation-intent-replace/config.json
+Model weights saved in m3-experiment-albert-base-v2-citation-intent-replace/pytorch_model.bin
+
+Upload file pytorch_model.bin:  30%|██     | 13.2M/44.6M [00:01<00:02, 13.8MB/s]remote: Scanning LFS files for validity, may be slow...
+remote: LFS file scan complete.
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   1603eb8..f2b8cf3  main -> main
+2022-08-16 00:08:49 WARNING  remote: Scanning LFS files for validity, may be slow...
+remote: LFS file scan complete.
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   1603eb8..f2b8cf3  main -> main
+Upload file pytorch_model.bin: 100%|███████| 44.6M/44.6M [00:03<00:00, 15.5MB/s]
+/home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 00:08:50 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-citation-intent-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+tokenizer config file saved in m3-experiment-albert-base-v2-citation-intent-replace/tokenizer_config.json
+Special tokens file saved in m3-experiment-albert-base-v2-citation-intent-replace/special_tokens_map.json
+Upload file spiece.model:  73%|██████████▉    | 544k/742k [00:01<00:00, 524kB/s]remote: Scanning LFS files for validity, may be slow...
+remote: LFS file scan complete.
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   f2b8cf3..bbe655a  main -> main
+2022-08-16 00:08:58 WARNING  remote: Scanning LFS files for validity, may be slow...
+remote: LFS file scan complete.
+To https://huggingface.co/asahi417/m3-experiment-albert-base-v2-citation-intent-replace
+   f2b8cf3..bbe655a  main -> main
+Upload file spiece.model: 100%|███████████████| 742k/742k [00:03<00:00, 242kB/s]

@@ -1,0 +1,343 @@
+
+  2%|▋                                        | 49/3000 [00:03<03:25, 14.38it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 94%|████████████████████████████████████████▍  | 79/84 [00:01<00:00, 39.87it/s]
+
+  3%|█▎                                       | 99/3000 [00:09<03:21, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+ 19%|████████▏                                  | 16/84 [00:00<00:01, 41.70it/s]
+
+  5%|█▉                                      | 149/3000 [00:14<03:18, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 37%|███████████████▊                           | 31/84 [00:00<00:01, 40.25it/s]
+
+
+  7%|██▋                                     | 199/3000 [00:20<03:15, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 60%|█████████████████████████▌                 | 50/84 [00:01<00:00, 39.95it/s]
+
+
+  8%|███▎                                    | 249/3000 [00:25<03:11, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 77%|█████████████████████████████████▎         | 65/84 [00:01<00:00, 39.85it/s]
+
+ 10%|███▉                                    | 299/3000 [00:31<03:08, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+  0%|                                                    | 0/84 [00:00<?, ?it/s]
+
+ 12%|████▋                                   | 349/3000 [00:37<03:04, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 25%|██████████▊                                | 21/84 [00:00<00:01, 41.02it/s]
+
+
+ 13%|█████▎                                  | 399/3000 [00:42<03:01, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 42%|█████████████████▉                         | 35/84 [00:00<00:01, 40.18it/s]
+
+
+ 15%|█████▉                                  | 449/3000 [00:48<02:57, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 64%|███████████████████████████▋               | 54/84 [00:01<00:00, 39.92it/s]
+
+
+ 17%|██████▋                                 | 497/3000 [00:53<02:54, 14.33it/s]
+ 17%|██████▋                                 | 500/3000 [00:53<02:54, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 82%|███████████████████████████████████▎       | 69/84 [00:01<00:00, 39.82it/s]
+Configuration saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-500/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-500/pytorch_model.bin
+ 18%|███████▎                                | 549/3000 [00:59<02:50, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+  0%|                                                    | 0/84 [00:00<?, ?it/s]
+{'eval_loss': 0.25321897864341736, 'eval_f1': 0.9459459459459459, 'eval_runtime': 2.0995, 'eval_samples_per_second': 317.223, 'eval_steps_per_second': 40.01, 'epoch': 0.55}
+ 20%|███████▉                                | 599/3000 [01:05<02:47, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+ 25%|██████████▊                                | 21/84 [00:00<00:01, 41.01it/s]
+
+ 22%|████████▋                               | 649/3000 [01:10<02:43, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 43%|██████████████████▍                        | 36/84 [00:00<00:01, 40.12it/s]
+
+
+ 23%|█████████▎                              | 699/3000 [01:16<02:40, 14.33it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 63%|███████████████████████████▏               | 53/84 [00:01<00:00, 39.88it/s]
+
+
+ 25%|█████████▉                              | 749/3000 [01:21<02:37, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 85%|████████████████████████████████████▎      | 71/84 [00:01<00:00, 39.84it/s]
+
+ 27%|██████████▋                             | 799/3000 [01:27<02:33, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+  7%|███▏                                        | 6/84 [00:00<00:01, 48.13it/s]
+
+ 28%|███████████▎                            | 849/3000 [01:33<02:30, 14.33it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+ 25%|██████████▊                                | 21/84 [00:00<00:01, 40.99it/s]
+
+ 30%|███████████▉                            | 899/3000 [01:38<02:26, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 42%|█████████████████▉                         | 35/84 [00:00<00:01, 40.11it/s]
+
+
+ 32%|████████████▋                           | 949/3000 [01:44<02:22, 14.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 62%|██████████████████████████▌                | 52/84 [00:01<00:00, 39.81it/s]
+
+
+ 33%|█████████████▎                          | 997/3000 [01:49<02:19, 14.35it/s]
+ 33%|█████████████                          | 1000/3000 [01:50<02:19, 14.37it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 82%|███████████████████████████████████▎       | 69/84 [00:01<00:00, 39.80it/s]
+Configuration saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1000/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1000/pytorch_model.bin
+ 35%|█████████████▋                         | 1049/3000 [01:55<02:15, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+ 98%|█████████████████████████████████████████▉ | 82/84 [00:02<00:00, 39.74it/s]
+
+ 37%|██████████████▎                        | 1099/3000 [02:01<02:12, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+
+ 19%|████████▏                                  | 16/84 [00:00<00:01, 41.75it/s]
+
+ 38%|██████████████▉                        | 1149/3000 [02:06<02:08, 14.36it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 43%|██████████████████▍                        | 36/84 [00:00<00:01, 40.05it/s]
+
+
+ 40%|███████████████▌                       | 1199/3000 [02:12<02:05, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+***** Running Evaluation *****
+  Num examples = 666
+  Batch size = 8
+ 64%|███████████████████████████▋               | 54/84 [00:01<00:00, 39.85it/s]
+
+
+ 42%|████████████████▏                      | 1249/3000 [02:18<02:02, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 82%|███████████████████████████████████▎       | 69/84 [00:01<00:00, 39.79it/s]
+  Num examples = 666
+  Batch size = 8
+ 82%|███████████████████████████████████▎       | 69/84 [00:01<00:00, 39.79it/s]
+
+ 43%|████████████████▉                      | 1299/3000 [02:23<01:58, 14.35it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+  7%|███▏                                        | 6/84 [00:00<00:01, 48.10it/s]
+  Num examples = 666
+  Batch size = 8
+
+  7%|███▏                                        | 6/84 [00:00<00:01, 48.10it/s]
+
+ 45%|█████████████████▌                     | 1349/3000 [02:29<01:55, 14.33it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 24%|██████████▏                                | 20/84 [00:00<00:01, 41.01it/s]
+  Num examples = 666
+  Batch size = 8
+
+ 24%|██████████▏                                | 20/84 [00:00<00:01, 41.01it/s]
+
+ 47%|██████████████████▏                    | 1399/3000 [02:34<01:51, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 43%|██████████████████▍                        | 36/84 [00:00<00:01, 40.04it/s]
+  Num examples = 666
+  Batch size = 8
+ 43%|██████████████████▍                        | 36/84 [00:00<00:01, 40.04it/s]
+
+
+ 48%|██████████████████▊                    | 1449/3000 [02:40<01:48, 14.33it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 68%|█████████████████████████████▏             | 57/84 [00:01<00:00, 39.83it/s]
+  Num examples = 666
+  Batch size = 8
+ 68%|█████████████████████████████▏             | 57/84 [00:01<00:00, 39.83it/s]
+
+
+ 50%|███████████████████▍                   | 1497/3000 [02:45<01:44, 14.33it/s]
+ 50%|███████████████████▌                   | 1500/3000 [02:46<01:44, 14.34it/s]The following columns in the evaluation set don't have a corresponding argument in `AlbertForSequenceClassification.forward` and have been ignored: text. If text are not expected by `AlbertForSequenceClassification.forward`,  you can safely ignore this message.
+ 87%|█████████████████████████████████████▎     | 73/84 [00:01<00:00, 39.76it/s]
+  Num examples = 666
+  Batch size = 8
+ 87%|█████████████████████████████████████▎     | 73/84 [00:01<00:00, 39.76it/s]
+Configuration saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/pytorch_model.bin
+ 51%|███████████████████▊                   | 1521/3000 [02:49<01:57, 12.57it/s]
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Batch size = 8
+  0%|                                                    | 0/84 [00:00<?, ?it/s]
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.2267325073480606, 'eval_f1': 0.954954954954955, 'eval_runtime': 2.1011, 'eval_samples_per_second': 316.971, 'eval_steps_per_second': 39.978, 'epoch': 1.55}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.2532074749469757, 'eval_f1': 0.9534534534534534, 'eval_runtime': 2.1479, 'eval_samples_per_second': 310.075, 'eval_steps_per_second': 39.109, 'epoch': 1.6}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.2358531802892685, 'eval_f1': 0.954954954954955, 'eval_runtime': 2.137, 'eval_samples_per_second': 311.659, 'eval_steps_per_second': 39.308, 'epoch': 1.65}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.24611996114253998, 'eval_f1': 0.9519519519519519, 'eval_runtime': 2.1102, 'eval_samples_per_second': 315.604, 'eval_steps_per_second': 39.806, 'epoch': 1.7}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.2525535821914673, 'eval_f1': 0.9504504504504504, 'eval_runtime': 2.1092, 'eval_samples_per_second': 315.753, 'eval_steps_per_second': 39.825, 'epoch': 1.75}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.24746227264404297, 'eval_f1': 0.9564564564564565, 'eval_runtime': 2.1197, 'eval_samples_per_second': 314.199, 'eval_steps_per_second': 39.629, 'epoch': 1.8}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.2456476241350174, 'eval_f1': 0.954954954954955, 'eval_runtime': 2.1126, 'eval_samples_per_second': 315.247, 'eval_steps_per_second': 39.761, 'epoch': 1.85}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.24692510068416595, 'eval_f1': 0.954954954954955, 'eval_runtime': 2.1813, 'eval_samples_per_second': 305.322, 'eval_steps_per_second': 38.509, 'epoch': 1.9}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'eval_loss': 0.2501581907272339, 'eval_f1': 0.9519519519519519, 'eval_runtime': 2.1455, 'eval_samples_per_second': 310.414, 'eval_steps_per_second': 39.151, 'epoch': 1.95}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+{'loss': 0.1891, 'learning_rate': 6.837034729478007e-07, 'epoch': 2.0}
+  Num examples = 666in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-1500/config.json
+Model weights saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+Model weights saved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.2544322609901428, 'eval_f1': 0.9534534534534534, 'eval_runtime': 2.1125, 'eval_samples_per_second': 315.261, 'eval_steps_per_second': 39.763, 'epoch': 2.05}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.24666084349155426, 'eval_f1': 0.954954954954955, 'eval_runtime': 2.1098, 'eval_samples_per_second': 315.662, 'eval_steps_per_second': 39.813, 'epoch': 2.1}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.2468157708644867, 'eval_f1': 0.9564564564564565, 'eval_runtime': 2.103, 'eval_samples_per_second': 316.696, 'eval_steps_per_second': 39.944, 'epoch': 2.15}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.2440372258424759, 'eval_f1': 0.9579579579579579, 'eval_runtime': 2.1307, 'eval_samples_per_second': 312.575, 'eval_steps_per_second': 39.424, 'epoch': 2.2}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.24360954761505127, 'eval_f1': 0.9579579579579579, 'eval_runtime': 2.1002, 'eval_samples_per_second': 317.107, 'eval_steps_per_second': 39.995, 'epoch': 2.25}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.24452456831932068, 'eval_f1': 0.954954954954955, 'eval_runtime': 2.1198, 'eval_samples_per_second': 314.183, 'eval_steps_per_second': 39.627, 'epoch': 2.3}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.24397392570972443, 'eval_f1': 0.9594594594594594, 'eval_runtime': 2.1177, 'eval_samples_per_second': 314.492, 'eval_steps_per_second': 39.666, 'epoch': 2.35}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.2536199390888214, 'eval_f1': 0.9534534534534534, 'eval_runtime': 2.0997, 'eval_samples_per_second': 317.191, 'eval_steps_per_second': 40.006, 'epoch': 2.4}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'eval_loss': 0.2523948550224304, 'eval_f1': 0.9564564564564565, 'eval_runtime': 2.1064, 'eval_samples_per_second': 316.178, 'eval_steps_per_second': 39.878, 'epoch': 2.45}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+{'loss': 0.1761, 'learning_rate': 3.4185173647390033e-07, 'epoch': 2.5}
+  Batch size = 8ved in m3_output/ckpt/albert-base-v2.amcd.replace/checkpoint-2000/pytorch_model.bin
+ 84%|████████████████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+ 84%|████████████████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.24957257509231567, 'eval_f1': 0.9519519519519519, 'eval_runtime': 2.0984, 'eval_samples_per_second': 317.386, 'eval_steps_per_second': 40.031, 'epoch': 2.55}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.25392451882362366, 'eval_f1': 0.9519519519519519, 'eval_runtime': 2.1147, 'eval_samples_per_second': 314.935, 'eval_steps_per_second': 39.721, 'epoch': 2.6}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.2530774772167206, 'eval_f1': 0.9519519519519519, 'eval_runtime': 2.0956, 'eval_samples_per_second': 317.81, 'eval_steps_per_second': 40.084, 'epoch': 2.65}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.2520175576210022, 'eval_f1': 0.9519519519519519, 'eval_runtime': 2.1026, 'eval_samples_per_second': 316.753, 'eval_steps_per_second': 39.951, 'epoch': 2.7}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.2506304383277893, 'eval_f1': 0.9534534534534534, 'eval_runtime': 2.0949, 'eval_samples_per_second': 317.919, 'eval_steps_per_second': 40.098, 'epoch': 2.75}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.2498762309551239, 'eval_f1': 0.9579579579579579, 'eval_runtime': 2.0961, 'eval_samples_per_second': 317.729, 'eval_steps_per_second': 40.074, 'epoch': 2.8}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.24943546950817108, 'eval_f1': 0.9594594594594594, 'eval_runtime': 2.0949, 'eval_samples_per_second': 317.914, 'eval_steps_per_second': 40.097, 'epoch': 2.85}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.2497265338897705, 'eval_f1': 0.9594594594594594, 'eval_runtime': 2.0961, 'eval_samples_per_second': 317.727, 'eval_steps_per_second': 40.074, 'epoch': 2.9}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.24978744983673096, 'eval_f1': 0.9594594594594594, 'eval_runtime': 2.1257, 'eval_samples_per_second': 313.315, 'eval_steps_per_second': 39.517, 'epoch': 2.95}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'loss': 0.1727, 'learning_rate': 0.0, 'epoch': 3.0}
+  Batch size = 8█████████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+{'eval_loss': 0.24980725347995758, 'eval_f1': 0.9594594594594594, 'eval_runtime': 2.101, 'eval_samples_per_second': 316.99, 'eval_steps_per_second': 39.981, 'epoch': 3.0}
+  Num examples = 1334████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+  Num examples = 1334████████████████▋      | 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+    "test/epoch": 3.0cy": 0.967016491754123,| 2515/3000 [04:42<00:47, 10.27it/s]0/pytorch_model.bin
+Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace into local empty directory.
+Cloning https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace into local empty directory.
+Upload file pytorch_model.bin:   0%|               | 32.0k/44.6M [00:00<?, ?B/s]e into local empty directory.
+Upload file pytorch_model.bin:  99%|██████▉| 44.3M/44.6M [00:02<00:00, 25.2MB/s]e into local empty directory.
+2022-08-16 02:28:09 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-amcd-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 02:28:09 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-amcd-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 02:28:09 WARNING  /home/asahi/mlm-manifold-mapping/m3-experiment-albert-base-v2-amcd-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 02:28:17 WARNING  remote: Scanning LFS files for validity, may be slow...        mcd-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 02:28:17 WARNING  remote: Scanning LFS files for validity, may be slow...        mcd-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace. Make sure you pull the latest changes with `repo.git_pull()`.
+2022-08-16 02:28:17 WARNING  remote: Scanning LFS files for validity, may be slow...        mcd-replace is already a clone of https://huggingface.co/asahi417/m3-experiment-albert-base-v2-amcd-replace. Make sure you pull the latest changes with `repo.git_pull()`.

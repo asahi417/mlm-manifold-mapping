@@ -1,0 +1,180 @@
+2022-08-16 01:21:13,834 INFO    StreamThr :94067 [internal.py:wandb_internal():90] W&B internal server running at pid: 94067, started at: 2022-08-16 01:21:13.834406
+2022-08-16 01:21:13,835 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: status
+2022-08-16 01:21:13,836 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: status
+2022-08-16 01:21:13,837 DEBUG   SenderThread:94067 [sender.py:send():302] send: header
+2022-08-16 01:21:13,837 INFO    WriterThread:94067 [datastore.py:open_for_write():75] open: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/run-3ev7dk8q.wandb
+2022-08-16 01:21:13,865 DEBUG   SenderThread:94067 [sender.py:send():302] send: run
+2022-08-16 01:21:14,163 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: check_version
+2022-08-16 01:21:14,163 INFO    SenderThread:94067 [dir_watcher.py:__init__():216] watching files in: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files
+2022-08-16 01:21:14,163 INFO    SenderThread:94067 [sender.py:_start_run_threads():913] run started: 3ev7dk8q with start time 1660612873.832198
+2022-08-16 01:21:14,163 DEBUG   SenderThread:94067 [sender.py:send():302] send: summary
+2022-08-16 01:21:14,163 INFO    SenderThread:94067 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-08-16 01:21:14,163 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: check_version
+2022-08-16 01:21:14,198 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: run_start
+2022-08-16 01:21:14,200 DEBUG   HandlerThread:94067 [meta.py:__init__():35] meta init
+2022-08-16 01:21:14,200 DEBUG   HandlerThread:94067 [meta.py:__init__():50] meta init done
+2022-08-16 01:21:14,200 DEBUG   HandlerThread:94067 [meta.py:probe():216] probe
+2022-08-16 01:21:14,205 DEBUG   HandlerThread:94067 [meta.py:_setup_git():206] setup git
+2022-08-16 01:21:14,211 DEBUG   HandlerThread:94067 [meta.py:_setup_git():213] setup git done
+2022-08-16 01:21:14,211 DEBUG   HandlerThread:94067 [meta.py:_save_pip():54] save pip
+2022-08-16 01:21:14,211 DEBUG   HandlerThread:94067 [meta.py:_save_pip():68] save pip done
+2022-08-16 01:21:14,211 DEBUG   HandlerThread:94067 [meta.py:probe():254] probe done
+2022-08-16 01:21:14,213 DEBUG   SenderThread:94067 [sender.py:send():302] send: files
+2022-08-16 01:21:14,213 INFO    SenderThread:94067 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-08-16 01:21:14,216 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: stop_status
+2022-08-16 01:21:14,217 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: stop_status
+2022-08-16 01:21:14,270 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: partial_history
+2022-08-16 01:21:14,356 DEBUG   SenderThread:94067 [sender.py:send():302] send: telemetry
+2022-08-16 01:21:14,356 DEBUG   SenderThread:94067 [sender.py:send():302] send: config
+2022-08-16 01:21:14,356 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,356 DEBUG   SenderThread:94067 [sender.py:send():302] send: telemetry
+2022-08-16 01:21:14,356 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,356 WARNING SenderThread:94067 [sender.py:send_metric():1112] Seen metric with glob (shouldn't happen)
+2022-08-16 01:21:14,356 DEBUG   SenderThread:94067 [sender.py:send():302] send: telemetry
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: metric
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: history
+2022-08-16 01:21:14,357 DEBUG   SenderThread:94067 [sender.py:send():302] send: summary
+2022-08-16 01:21:14,357 INFO    SenderThread:94067 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-08-16 01:21:14,719 INFO    Thread-16 :94067 [upload_job.py:push():138] Uploaded file /tmp/tmpekysjz8ewandb/t71pyyqm-wandb-metadata.json
+2022-08-16 01:21:15,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_created():275] file/dir created: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:15,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_created():275] file/dir created: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/wandb-summary.json
+2022-08-16 01:21:15,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_created():275] file/dir created: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/requirements.txt
+2022-08-16 01:21:15,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_created():275] file/dir created: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/wandb-metadata.json
+2022-08-16 01:21:17,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:19,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:21,164 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:23,165 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:29,166 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:29,359 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: stop_status
+2022-08-16 01:21:29,359 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: stop_status
+2022-08-16 01:21:31,167 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:35,167 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:35,544 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:35,545 DEBUG   SenderThread:94067 [sender.py:send():302] send: exit
+2022-08-16 01:21:35,545 INFO    SenderThread:94067 [sender.py:send_exit():438] handling exit code: 0
+2022-08-16 01:21:35,545 INFO    SenderThread:94067 [sender.py:send_exit():440] handling runtime: 21
+2022-08-16 01:21:35,545 INFO    SenderThread:94067 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-08-16 01:21:35,545 INFO    SenderThread:94067 [sender.py:send_exit():446] send defer
+2022-08-16 01:21:35,545 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:35,545 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,546 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 0
+2022-08-16 01:21:35,546 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,546 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 0
+2022-08-16 01:21:35,546 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 1
+2022-08-16 01:21:35,546 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,546 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 1
+2022-08-16 01:21:35,635 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,636 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 1
+2022-08-16 01:21:35,636 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 2
+2022-08-16 01:21:35,636 DEBUG   SenderThread:94067 [sender.py:send():302] send: stats
+2022-08-16 01:21:35,636 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,636 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 2
+2022-08-16 01:21:35,636 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,636 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 2
+2022-08-16 01:21:35,636 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 3
+2022-08-16 01:21:35,637 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,637 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 3
+2022-08-16 01:21:35,637 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,637 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 3
+2022-08-16 01:21:35,637 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 4
+2022-08-16 01:21:35,637 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,637 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 4
+2022-08-16 01:21:35,637 DEBUG   SenderThread:94067 [sender.py:send():302] send: summary
+2022-08-16 01:21:35,637 INFO    SenderThread:94067 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-08-16 01:21:35,638 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,638 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 4
+2022-08-16 01:21:35,638 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 5
+2022-08-16 01:21:35,638 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,638 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 5
+2022-08-16 01:21:35,638 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,638 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 5
+2022-08-16 01:21:35,646 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:35,837 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 6
+2022-08-16 01:21:35,837 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:35,837 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:35,837 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 6
+2022-08-16 01:21:35,838 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:35,838 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 6
+2022-08-16 01:21:35,938 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:36,168 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/wandb-summary.json
+2022-08-16 01:21:36,168 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/config.yaml
+2022-08-16 01:21:36,385 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 7
+2022-08-16 01:21:36,385 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:36,385 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:36,386 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 7
+2022-08-16 01:21:36,386 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:36,386 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 7
+2022-08-16 01:21:36,386 INFO    SenderThread:94067 [dir_watcher.py:finish():362] shutting down directory watcher
+2022-08-16 01:21:36,486 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,168 INFO    Thread-12 :94067 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:37,168 INFO    SenderThread:94067 [dir_watcher.py:finish():392] scan: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files
+2022-08-16 01:21:37,168 INFO    SenderThread:94067 [dir_watcher.py:finish():406] scan save: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/requirements.txt requirements.txt
+2022-08-16 01:21:37,168 INFO    SenderThread:94067 [dir_watcher.py:finish():406] scan save: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log output.log
+2022-08-16 01:21:37,169 INFO    SenderThread:94067 [dir_watcher.py:finish():406] scan save: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/wandb-metadata.json wandb-metadata.json
+2022-08-16 01:21:37,169 INFO    SenderThread:94067 [dir_watcher.py:finish():406] scan save: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/wandb-summary.json wandb-summary.json
+2022-08-16 01:21:37,169 INFO    SenderThread:94067 [dir_watcher.py:finish():406] scan save: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/config.yaml config.yaml
+2022-08-16 01:21:37,169 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 8
+2022-08-16 01:21:37,169 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,175 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:37,175 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 8
+2022-08-16 01:21:37,175 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:37,176 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 8
+2022-08-16 01:21:37,176 INFO    SenderThread:94067 [file_pusher.py:finish():171] shutting down file pusher
+2022-08-16 01:21:37,277 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,277 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,377 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,378 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,478 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,479 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,579 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,579 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,652 INFO    Thread-20 :94067 [upload_job.py:push():138] Uploaded file /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/config.yaml
+2022-08-16 01:21:37,655 INFO    Thread-17 :94067 [upload_job.py:push():138] Uploaded file /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/requirements.txt
+2022-08-16 01:21:37,671 INFO    Thread-18 :94067 [upload_job.py:push():138] Uploaded file /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/output.log
+2022-08-16 01:21:37,680 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,680 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,706 INFO    Thread-19 :94067 [upload_job.py:push():138] Uploaded file /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/files/wandb-summary.json
+2022-08-16 01:21:37,781 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,781 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,882 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:37,882 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:37,906 INFO    Thread-11 :94067 [sender.py:transition_state():459] send defer: 9
+2022-08-16 01:21:37,907 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:37,907 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 9
+2022-08-16 01:21:37,907 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:37,907 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 9
+2022-08-16 01:21:37,983 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:38,035 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 10
+2022-08-16 01:21:38,035 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:38,035 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:38,035 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 10
+2022-08-16 01:21:38,035 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:38,035 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 10
+2022-08-16 01:21:38,035 INFO    SenderThread:94067 [sender.py:transition_state():459] send defer: 11
+2022-08-16 01:21:38,036 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: defer
+2022-08-16 01:21:38,036 INFO    HandlerThread:94067 [handler.py:handle_request_defer():164] handle defer: 11
+2022-08-16 01:21:38,036 DEBUG   SenderThread:94067 [sender.py:send():302] send: final
+2022-08-16 01:21:38,036 DEBUG   SenderThread:94067 [sender.py:send():302] send: footer
+2022-08-16 01:21:38,036 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: defer
+2022-08-16 01:21:38,036 INFO    SenderThread:94067 [sender.py:send_request_defer():455] handle sender defer: 11
+2022-08-16 01:21:38,136 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: poll_exit
+2022-08-16 01:21:38,136 DEBUG   SenderThread:94067 [sender.py:send_request():316] send_request: poll_exit
+2022-08-16 01:21:38,136 INFO    SenderThread:94067 [file_pusher.py:join():176] waiting for file pusher
+2022-08-16 01:21:38,496 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: sampled_history
+2022-08-16 01:21:38,497 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: get_summary
+2022-08-16 01:21:38,497 INFO    MainThread:94067 [wandb_run.py:_footer_history_summary_info():3305] rendering history
+2022-08-16 01:21:38,497 INFO    MainThread:94067 [wandb_run.py:_footer_history_summary_info():3337] rendering summary
+2022-08-16 01:21:38,497 INFO    MainThread:94067 [wandb_run.py:_footer_sync_info():3261] logging synced files
+2022-08-16 01:21:38,498 DEBUG   HandlerThread:94067 [handler.py:handle_request():141] handle_request: shutdown
+2022-08-16 01:21:38,498 INFO    HandlerThread:94067 [handler.py:finish():810] shutting down handler
+2022-08-16 01:21:39,036 INFO    WriterThread:94067 [datastore.py:close():279] close: /home/asahi/mlm-manifold-mapping/wandb/run-20220816_012113-3ev7dk8q/run-3ev7dk8q.wandb
+2022-08-16 01:21:39,395 INFO    SenderThread:94067 [sender.py:finish():1312] shutting down sender
+2022-08-16 01:21:39,395 INFO    SenderThread:94067 [file_pusher.py:finish():171] shutting down file pusher
+2022-08-16 01:21:39,395 INFO    SenderThread:94067 [file_pusher.py:join():176] waiting for file pusher
+2022-08-16 01:21:39,500 INFO    MainThread:94067 [internal.py:handle_exit():80] Internal process exited
