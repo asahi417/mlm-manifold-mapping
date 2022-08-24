@@ -1,0 +1,54 @@
+Metadata-Version: 2.1
+Name: m3
+Version: 0.0.0
+Summary: Iterative text revision based on the mapping onto manifold of masked language model's low-perplexity space.
+Home-page: https://github.com/asahi417/mlm-manifold-mapping
+Author: Asahi Ushio
+Author-email: asahi1992ushio@gmail.com
+License: MIT
+Download-URL: https://github.com/asahi417/bertprompt/archive/v0.0.0.tar.gz
+Description: # M3: Masked Language Model Manifold Mapping
+        
+        
+        ```shell
+        m3-rewriter -i "AHH i'm so HAPPY." "I just found my ipod. God is sooo good to me" -n 3 -k 2 
+        ```
+        
+        ```shell
+        m3-rewriter -f "tests/sample_sentence.txt" -n 3 -k 2 
+        ```
+        
+        ```shell
+        export DATA='citation_intent'
+        export MODEL='albert-base-v2'
+        export SPLIT='train'
+        m3-rewrite -m ${MODEL} -n 5 -k 5 -l 64 -b 64 -d asahi417/multi_domain_document_classification \
+         --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5.64"
+        export SPLIT='validation'
+        m3-rewrite -m ${MODEL} -n 5 -k 5 -l 128 -b 512 -d asahi417/multi_domain_document_classification \
+         --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5"
+        export SPLIT='test'
+        m3-rewrite -m ${MODEL} -n 5 -k 5 -l 64 -b 512 -d asahi417/multi_domain_document_classification \
+         --dataset-name ${DATA} -s ${SPLIT} --dataset-column text -e "result_m3/${DATA}/${SPLIT}.5.5" 
+        ```
+        
+        ```shell
+        #DATA="rct-sample"
+        DATA="citation_intent"
+        DATA="sciie"
+        DATA="hyperpartisan_news"
+        mkdir "${DATA}"
+        curl -Lo "${DATA}/train.jsonl" "https://allennlp.s3-us-west-2.amazonaws.com/dont_stop_pretraining/data/${DATA}/train.jsonl"
+        curl -Lo "${DATA}/dev.jsonl" "https://allennlp.s3-us-west-2.amazonaws.com/dont_stop_pretraining/data/${DATA}/dev.jsonl"
+        curl -Lo "${DATA}/test.jsonl" "https://allennlp.s3-us-west-2.amazonaws.com/dont_stop_pretraining/data/${DATA}/test.jsonl"
+        ```
+Keywords: language-model,nlp,bert,text-generation
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
