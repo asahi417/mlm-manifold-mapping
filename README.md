@@ -66,7 +66,7 @@ wandb offline
 export WANDB_DISABLED='true'
 ```
 
-- experiment v1
+- experiment v1: (ALBERT)
 ```shell
 # fine-tuning on vanilla dataset
 python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.vanilla" --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-vanilla" --summary-file 'metric_summary.json'  
@@ -83,7 +83,7 @@ python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-replace" --da
 python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-add" --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add/best_model" --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add" --summary-file 'metric_summary.edit.json' --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test'
 ```
 
-- experiment v2: no edit on validation
+- experiment v2: no edit on validation (ALBERT & RoBERTa)
 
 ```shell
 # fine-tuning on m3 dataset
@@ -124,18 +124,22 @@ TODO:
 
 ```shell
 for DATA in "chemprot" "citation_intent" "sciie" "amcd" "tweet_eval_emotion" "tweet_eval_irony" "tweet_eval_hate"
+for DATA in "chemprot" "citation_intent" "sciie" "amcd" "tweet_eval_emotion" "tweet_eval_irony" "tweet_eval_hate"
+for DATA in "tweet_eval_emotion" "tweet_eval_irony" "tweet_eval_hate"
 do
-  for TYPE in "vanilla" "add" "replace"
+  for TYPE in "vanilla" "add-v2" "replace-v2"
   do
     git clone "https://huggingface.co/m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}"
     python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --summary-file 'metric_summary.json'
-#    python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --summary-file 'metric_summary.edit.json' --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test'
+    python lm_finetuning.py -m "m3/m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --dataset-name "${DATA}" -o "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}" --summary-file 'metric_summary.edit.json' --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top10.iteration10" --rewrite-dictionary-split 'test'
     cd "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}"
     rm -rf runs
+    rm -rf wandb
     git lfs install && git add . && git commit -m 'model update' && git push && cd ../ 
     rm -rf "m3-experiment-${MODEL}-${DATA//_/-}-${TYPE}"
   done
 done
+
 ```
 
 ```shell
@@ -185,11 +189,13 @@ done
 
 for MODEL in 'albert-base-v2' 'roberta-base'
 do
-    for DATA in "chemprot" "citation_intent" "sciie" "amcd" "tweet_eval_irony" "tweet_eval_hate" "tweet_eval_emotion"
+    for DATA in "chemprot" "citation_intent" "sciie" "amcd" "tweet_eval_emotion" "yelp_review" "tweet_eval_irony" "tweet_eval_hate" 
 #    for DATA in "chemprot" "tweet_eval_emotion"
-    for DATA in "citation_intent" "sciie" "amcd" 
+    for DATA in "amcd" "chemprot" "citation_intent" "sciie"
+    for DATA in "yelp_review" "tweet_eval_irony" "tweet_eval_hate"  
     do 
-#        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.vanilla" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-vanilla"
+        python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.vanilla/best_model" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-vanilla"
+    done        
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add"
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.replace" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-replace"
         python lm_finetuning.py -m ${MODEL} --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add" --skip-eval --skip-train --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add" --summary-file 'metric_summary.edit.json'

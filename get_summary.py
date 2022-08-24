@@ -5,9 +5,9 @@ import requests
 import pandas as pd
 
 
-MODEL = ['albert-base-v2']
-# DATA = ["chemprot", "citation_intent", "sciie", "amcd", "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]
-DATA = ["chemprot", "citation_intent", "sciie", "amcd", "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]
+MODEL = ['roberta-base', 'albert-base-v2']
+DATA = ["yelp_review", "chemprot", "citation_intent", "sciie", "amcd", "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]
+DATA = ["chemprot", "citation_intent", "amcd", "tweet_eval_emotion", "tweet_eval_irony", "tweet_eval_hate"]
 TMP_DIR = 'metric_files'
 EXPORT_DIR = 'output'
 ORG = 'm3'
@@ -49,15 +49,26 @@ def get_result(metric_file='metric_summary'):
                     add={"model": m, "data": d, 'version': 'vanilla'}
                 )
             )
-            output.append(
-                format_metric(
-                    download(
-                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add/raw/main/{metric_file}.json",
-                        f"{m}-{d}-add.{metric_file}.json"
-                    ),
-                    add={"model": m, "data": d, 'version': 'add'}
+            if m == 'albert-base-v2':
+                output.append(
+                    format_metric(
+                        download(
+                            f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add/raw/main/{metric_file}.json",
+                            f"{m}-{d}-add.{metric_file}.json"
+                        ),
+                        add={"model": m, "data": d, 'version': 'add'}
+                    )
                 )
-            )
+                output.append(
+                    format_metric(
+                        download(
+                            f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace/raw/main/{metric_file}.json",
+                            f"{m}-{d}-replace.{metric_file}.json"
+                        ),
+                        add={"model": m, "data": d, 'version': 'replace'}
+                    )
+                )
+
             output.append(
                 format_metric(
                     download(
@@ -70,10 +81,10 @@ def get_result(metric_file='metric_summary'):
             output.append(
                 format_metric(
                     download(
-                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace/raw/main/{metric_file}.json",
-                        f"{m}-{d}-replace.{metric_file}.json"
+                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v3/raw/main/{metric_file}.json",
+                        f"{m}-{d}-add-v3.{metric_file}.json"
                     ),
-                    add={"model": m, "data": d, 'version': 'replace'}
+                    add={"model": m, "data": d, 'version': 'add-v3'}
                 )
             )
             output.append(
@@ -85,7 +96,6 @@ def get_result(metric_file='metric_summary'):
                     add={"model": m, "data": d, 'version': 'replace-v2'}
                 )
             )
-            # output.append(metrics)
     return pd.DataFrame(output)
 
 
