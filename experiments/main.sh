@@ -39,10 +39,10 @@ main () {
 }
 
 
-for D in "yelp_review" "chemprot" "citation_intent" "rct_sample" "sciie" "amcd" "tweet_eval_irony" "tweet_eval_hate" "tweet_eval_emotion"
+for DATA in "yelp_review" "chemprot" "citation_intent" "rct_sample" "sciie" "amcd" "tweet_eval_irony" "tweet_eval_hate" "tweet_eval_emotion"
 do
-  for M in "albert-base-v2" "roberta-base"
+  for MODEL in "albert-base-v2" "roberta-base"
   do
-    main ${D} ${M}
+    main ${DATA} ${MODEL}
   done
 done

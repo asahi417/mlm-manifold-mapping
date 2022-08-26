@@ -44,7 +44,7 @@ setup(
     entry_points={
         'console_scripts': [
             'm3-rewrite = m3.m3_cl.rewrite_text:main',
-            'm3-rewrite-basic-augmenter = m3.m3_cl.rewrite_text_basic_augmenter.py:main'
+            'm3-rewrite-basic-augmenter = m3.m3_cl.rewrite_text_basic_augmenter:main'
         ]
     }
 )
