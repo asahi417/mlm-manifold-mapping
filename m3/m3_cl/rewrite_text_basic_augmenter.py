@@ -3,7 +3,6 @@ import argparse
 import json
 import os
 import logging
-from tqdm import tqdm
 from datasets import load_dataset
 from m3 import text_augmenter
 
@@ -44,16 +43,14 @@ def main():
     logging.info(f'total: {len(input_sentences)} sentences')
     input_sentences = [i for i in input_sentences if len(i.split(' ')) < opt.max_token_size]
     logging.info(f'filtered: {len(input_sentences)}')
-    output = {}
-    for i in tqdm(input_sentences):
-        _out = text_augmenter(
-            i, augment_type=opt.augment_type, transformations_per_example=opt.transformations_per_example
-        )
-        output[i] = [_out, list(range(len(_out)))]
+
+    output = text_augmenter(
+        input_sentences, augment_type=opt.augment_type, transformations_per_example=opt.transformations_per_example
+    )
     if os.path.dirname(opt.export_file_path) != '':
         os.makedirs(os.path.dirname(opt.export_file_path), exist_ok=True)
     with open(opt.export_file_path, 'w') as f:
-        json.dump(output, f)
+        json.dump({i: [o, list(range(len(o)))] for o, i in zip(output, input_sentences)}, f)
 
 
 if __name__ == '__main__':

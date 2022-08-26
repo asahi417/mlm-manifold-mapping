@@ -69,7 +69,7 @@ def main():
     parser.add_argument('-a', '--model-alias', help='', default=None, type=str)
     parser.add_argument('--summary-file', default='metric_summary.json', type=str)
     parser.add_argument('--rewrite-dictionary-dir', default=None, type=str)
-    parser.add_argument('--rewrite-dictionary-method', default='best', type=str)
+    parser.add_argument('--rewrite-dictionary-method', default='largest_diff', type=str)
     parser.add_argument('--rewrite-dictionary-split', default=['train'], nargs='+', type=str)
     parser.add_argument('--add-rewrite-text', action='store_true')
     parser.add_argument('--skip-train', action='store_true')
@@ -89,6 +89,8 @@ def main():
                 v = {_k: _v[0][-1] for _k, _v in v.items()}
             elif opt.rewrite_dictionary_method == 'largest_diff':
                 v = {_k: _v[0][np.diff(_v[1]).argmin() + 1] if len(_v[1]) > 1 else _v[0][0] for _k, _v in v.items()}
+            elif opt.rewrite_dictionary_method.isdigit():
+                v = {_k: _v[0][int(opt.rewrite_dictionary_method)] for _k, _v in v.items()}
             else:
                 raise ValueError(f'unknown method: {opt.rewrite_dictionary_method}')
 
@@ -157,8 +159,6 @@ def main():
         for n, v in best_run.hyperparameters.items():
             setattr(trainer.args, n, v)
         trainer.train()
-        # trainer_output =
-        # result.update(trainer_output.metrics)
         trainer.save_model(pj(opt.output_dir, 'best_model'))
         best_model_path = pj(opt.output_dir, 'best_model')
     else:
@@ -171,11 +171,9 @@ def main():
         local_files_only=not network)
     trainer = Trainer(
         model=model,
-        # model=pj(opt.output_dir, 'best_model'),
         args=TrainingArguments(
             output_dir=opt.output_dir,
-            # evaluation_strategy="steps",
-            # eval_steps=opt.eval_step,
+            evaluation_strategy="no",
             seed=opt.random_seed
         ),
         train_dataset=tokenized_datasets["train"],

@@ -184,7 +184,7 @@ class Rewriter:
                  seed_sentences: List = None,
                  vocab_to_keep: List = None,
                  vocab_to_keep_unique: bool = False,
-                 max_n_iteration: int = 100,
+                 max_n_iteration: int = 10,
                  topk: int = 10,
                  topk_buffer: int = 100,
                  batch_size: int = 4):
