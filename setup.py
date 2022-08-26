@@ -37,13 +37,14 @@ setup(
         "datasets",
         "sklearn",
         "wandb",
-        "ray[tune]"
-
+        "ray[tune]",
+        "textattack"
     ],
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
             'm3-rewrite = m3.m3_cl.rewrite_text:main'
+            'm3-rewrite-basic-augmenter = m3.m3_cl.rewrite_text_basic_augmenter.py:main'
         ]
     }
 )
