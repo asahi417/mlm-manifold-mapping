@@ -2,6 +2,8 @@
 from typing import List
 from tqdm import tqdm
 
+import torch
+import nlpaug.augmenter.word as naw
 from textattack import augmentation
 
 
@@ -26,8 +28,10 @@ def text_augmenter(samples: List or str,
     assert type(samples) is str or list, f'invalid input type: {samples} ({type(samples)})'
     samples = [samples] if type(samples) is str else samples
     if augment_type == 'back_translation':
-        aug = augmentation.BackTranslationAugmenter(transformations_per_example=transformations_per_example)
-    elif augment_type == 'eda':
+        # aug = augmentation.BackTranslationAugmenter(transformations_per_example=transformations_per_example)
+        aug = naw.BackTranslationAug(device='cuda' if torch.cuda.device_count() > 0 else 'cpu')
+        return [[i] for i in aug.augment(samples)]
+    if augment_type == 'eda':
         aug = augmentation.EasyDataAugmenter(transformations_per_example=transformations_per_example)
     elif augment_type == 'word_swapping_synonym':
         aug = augmentation.WordNetAugmenter(transformations_per_example=transformations_per_example)
@@ -41,4 +45,3 @@ def text_augmenter(samples: List or str,
     for i in tqdm(samples):
         output.append(aug.augment(i))
     return output
-
