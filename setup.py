@@ -38,7 +38,8 @@ setup(
         "sklearn",
         "wandb",
         "ray[tune]",
-        "textattack"
+        "textattack",
+        "nlpaug"
     ],
     python_requires='>=3.6',
     entry_points={
