@@ -17,6 +17,7 @@ def main():
     parser.add_argument('-m', '--model', help='transformer LM', default='albert-base-v2', type=str)
     parser.add_argument('-n', '--max-n-iteration', help='', default=5, type=int)
     parser.add_argument('-k', '--topk', help='', default=5, type=int)
+    parser.add_argument('--topk-buffer', help='', default=100, type=int)
     parser.add_argument('-l', '--length', help='max sequence length of language model', default=128, type=int)
     parser.add_argument('-b', '--batch-size', help='Batch size', default=512, type=int)
     parser.add_argument('-c', '--chunk-size', help='Chunk size', default=1000, type=int)
@@ -57,6 +58,7 @@ def main():
             input_sentences_filtered[opt.chunk_size * chunk_id:end],
             max_n_iteration=opt.max_n_iteration,
             topk=opt.topk,
+            topk_buffer=opt.topk_buffer,
             batch_size=opt.batch_size
         )
         chunk_id += 1
