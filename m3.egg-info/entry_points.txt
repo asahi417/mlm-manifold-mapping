@@ -1,3 +1,0 @@
-[console_scripts]
-m3-rewrite = m3.m3_cl.rewrite_text:main
-
