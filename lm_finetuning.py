@@ -23,6 +23,7 @@ from ray import tune
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
 PARALLEL = bool(int(os.getenv("PARALLEL", 1)))
+RAY_RESULTS = os.getenv("RAY_RESULTS", "ray_results")
 
 
 def internet_connection(host='http://google.com'):
@@ -142,7 +143,7 @@ def main():
                     "num_train_epochs": tune.choice(list(range(1, 6))),
                     "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
                 },
-                local_dir="ray_results", direction="maximize", backend="ray", n_trials=opt.n_trials,
+                local_dir=RAY_RESULTS, direction="maximize", backend="ray", n_trials=opt.n_trials,
                 resources_per_trial={'cpu': multiprocessing.cpu_count(), "gpu": torch.cuda.device_count()},
 
             )
@@ -153,7 +154,7 @@ def main():
                     "num_train_epochs": tune.choice(list(range(1, 6))),
                     "per_device_train_batch_size": tune.choice([4, 8, 16, 32, 64]),
                 },
-                local_dir="ray_results", direction="maximize", backend="ray", n_trials=opt.n_trials
+                local_dir=RAY_RESULTS, direction="maximize", backend="ray", n_trials=opt.n_trials
             )
         # finetuning
         for n, v in best_run.hyperparameters.items():

@@ -72,19 +72,16 @@ main () {
 #  python lm_finetuning.py -m "${MODEL}" --dataset-name "${DATA}" -o "m3_output/ckpt/${MODEL}.${DATA}.add-v3-greedy" --summary-file 'metric_summary.json' --rewrite-dictionary-dir "m3_output/m3_edit_inputs/${MODEL}/${DATA}/length${MAX_LENGTH}.top1.iteration1" --rewrite-dictionary-split 'train' --add-rewrite-text --push-to-hub --hf-organization m3 -a "m3-experiment-${MODEL}-${DATA//_/-}-add-v3-greedy" --rewrite-dictionary-method 'largest_diff'
 }
 
+# rct_sample must be missed!!!!!
 MODEL="albert-base-v2"
+main ${DATA} ${MODEL}
+MODEL="roberta-base"
+main ${DATA} ${MODEL}
 for DATA in "amcd" "chemprot" "citation_intent" "rct_sample" "sciie" "tweet_eval_irony" "tweet_eval_hate" "tweet_eval_emotion"
 do
   main ${DATA} ${MODEL}
 done
 
 
-for DATA in "amcd" "chemprot" "citation_intent" "rct_sample" "sciie" "tweet_eval_irony" "tweet_eval_hate" "tweet_eval_emotion"
-do
-  for MODEL in "albert-base-v2" "roberta-base"
-  do
-    main ${DATA} ${MODEL}
-  done
-done
 
 
