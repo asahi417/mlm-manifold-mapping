@@ -91,7 +91,8 @@ def main():
             elif opt.rewrite_dictionary_method == 'largest_diff':
                 v = {_k: _v[0][np.diff(_v[1]).argmin() + 1] if len(_v[1]) > 1 else _v[0][0] for _k, _v in v.items()}
             elif opt.rewrite_dictionary_method.isdigit():
-                v = {_k: _v[0][int(opt.rewrite_dictionary_method)] for _k, _v in v.items()}
+                _i = int(opt.rewrite_dictionary_method)
+                v = {_k: _v[0][_i] if len(v[0]) < _i else v[0][_i % len(v[0])] for _k, _v in v.items()}
             else:
                 raise ValueError(f'unknown method: {opt.rewrite_dictionary_method}')
 
