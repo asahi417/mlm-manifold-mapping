@@ -87,12 +87,15 @@ def main():
             with open(rewrite_file) as f:
                 v = json.load(f)
             if opt.rewrite_dictionary_method == 'best':
-                v = {_k: _v[0][-1] for _k, _v in v.items()}
+                v = {_k: [_v[0][-1]] for _k, _v in v.items()}
             elif opt.rewrite_dictionary_method == 'largest_diff':
-                v = {_k: _v[0][np.diff(_v[1]).argmin() + 1] if len(_v[1]) > 1 else _v[0][0] for _k, _v in v.items()}
+                v = {_k: [_v[0][np.diff(_v[1]).argmin() + 1] if len(_v[1]) > 1 else _v[0][0]] for _k, _v in v.items()}
+            elif opt.rewrite_dictionary_method == 'all':
+                assert opt.add_rewrite_text
+                v = {_k: _v[0] for _k, _v in v.items()}
             elif opt.rewrite_dictionary_method.isdigit():
                 _i = int(opt.rewrite_dictionary_method)
-                v = {_k: _v[0][_i] if len(_v[0]) > _i else _v[0][_i % len(_v[0])] for _k, _v in v.items()}
+                v = {_k: [_v[0][_i] if len(_v[0]) > _i else _v[0][_i % len(_v[0])]] for _k, _v in v.items()}
             else:
                 raise ValueError(f'unknown method: {opt.rewrite_dictionary_method}')
 
@@ -102,11 +105,12 @@ def main():
                 tmp_data = dataset[k]
                 for i in tmp_data:
                     if i['text'] in v:
-                        dataset[k] = dataset[k].add_item({'text': v[i['text']], 'label': i['label']})
+                        for augmented_texts in v[i['text']]:
+                            dataset[k] = dataset[k].add_item({'text': augmented_texts, 'label': i['label']})
                 logging.info(f"final training data: {len(dataset[k])}")
             else:
                 dataset[k] = dataset[k].map(lambda x: {
-                    'text': x['text'] if x['text'] not in v else v[x['text']],
+                    'text': x['text'] if x['text'] not in v else v[x['text']][0],
                     'label': x['label']
                 })
     network = internet_connection()

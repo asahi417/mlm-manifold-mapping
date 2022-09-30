@@ -1,5 +1,10 @@
 # M3: Masked Language Model Manifold Mapping
-TODO: correct prediction and see the correlation between PPL and TRUE/FALSE.
+TODO: 
+- correct prediction and see the correlation between PPL and TRUE/FALSE.
+- To generate edit on rct_sample (test/valid) for roberta and albert.
+- vanilla model trained on stone
+- basic augmentation is running on stone (greedy is done)
+
 ## Sample
 ```shell
 m3-rewriter -i "AHH i'm so HAPPY." "I just found my ipod. God is sooo good to me" -n 3 -k 2 

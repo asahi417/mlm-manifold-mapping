@@ -1,13 +1,14 @@
 import json
 import os
 import requests
-
+from statistics import mean
 import pandas as pd
 
 
 MODEL = ['roberta-base', 'albert-base-v2']
-DATA = ["yelp_review", "chemprot", "citation_intent", "rct_sample", "sciie", "amcd", "tweet_eval_irony",
-        "tweet_eval_hate", "tweet_eval_emotion"]
+# DATA = ["chemprot", "citation_intent", "rct_sample", "sciie", "amcd",
+#         "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]
+DATA = ["citation_intent", "rct_sample", "tweet_eval_irony", "tweet_eval_hate", "tweet_eval_emotion"]  # "amcd"
 TMP_DIR = 'metric_files'
 EXPORT_DIR = 'output'
 ORG = 'm3'
@@ -49,26 +50,6 @@ def get_result(metric_file='metric_summary'):
                     add={"model": m, "data": d, 'version': 'vanilla'}
                 )
             )
-            if m == 'albert-base-v2' and d != 'rct-sample':
-                output.append(
-                    format_metric(
-                        download(
-                            f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add/raw/main/{metric_file}.json",
-                            f"{m}-{d}-add.{metric_file}.json"
-                        ),
-                        add={"model": m, "data": d, 'version': 'add'}
-                    )
-                )
-                output.append(
-                    format_metric(
-                        download(
-                            f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace/raw/main/{metric_file}.json",
-                            f"{m}-{d}-replace.{metric_file}.json"
-                        ),
-                        add={"model": m, "data": d, 'version': 'replace'}
-                    )
-                )
-
             output.append(
                 format_metric(
                     download(
@@ -87,38 +68,71 @@ def get_result(metric_file='metric_summary'):
                     add={"model": m, "data": d, 'version': 'add-v3'}
                 )
             )
-            if d != 'rct-sample':
-                output.append(
-                    format_metric(
-                        download(
-                            f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-replace-v2/raw/main/{metric_file}.json",
-                            f"{m}-{d}-replace-v2.{metric_file}.json"
-                        ),
-                        add={"model": m, "data": d, 'version': 'replace-v2'}
-                    )
+
+            output.append(
+                format_metric(
+                    download(
+                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v3-greedy/raw/main/{metric_file}.json",
+                        f"{m}-{d}-add-v3-greedy.{metric_file}.json"),
+                    add={"model": m, "data": d, 'version': 'add-v3-greedy'}
                 )
+            )
+
+            output.append(
+                format_metric(
+                    download(
+                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-back-translation/raw/main/{metric_file}.json",
+                        f"{m}-{d}-back-translation.{metric_file}.json"),
+                    add={"model": m, "data": d, 'version': 'back-translation'}
+                )
+            )
+            for augmenter in ["eda", "word_swapping_embedding", "word_swapping_random", "word_swapping_synonym"]:
+                augmenter_output = []
+                for seed in ["0", "1", "2", "3", "4"]:
+                    augmenter_output.append(
+                        format_metric(
+                            download(
+                                f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-{augmenter.replace('_', '-')}-{seed}/raw/main/{metric_file}.json",
+                                f"{m}-{d}-{augmenter.replace('_', '-')}-{seed}.{metric_file}.json"),
+                            add={"model": m, "data": d, 'version': augmenter}
+                        )
+                    )
+                # print(augmenter_output)
+                metrics = [os.path.basename(i) for i in METRICS]
+                aggregated_mean = {m: mean([i[m] for i in augmenter_output]) for m in metrics}
+                aggregated_mean.update({"model": m, "data": d, 'version': f"{augmenter}"})
+                output.append(aggregated_mean)
+
+                aggregated_max = {m: max([i[m] for i in augmenter_output]) for m in metrics}
+                aggregated_max.update({"model": m, "data": d, 'version': f"{augmenter}/max"})
+                output.append(aggregated_max)
+
+                aggregated_min = {m: min([i[m] for i in augmenter_output]) for m in metrics}
+                aggregated_min.update({"model": m, "data": d, 'version': f"{augmenter}/min"})
+                output.append(aggregated_min)
+
     df = pd.DataFrame(output)
     df[['eval_f1', 'eval_f1_macro', 'eval_accuracy']] = df[['eval_f1', 'eval_f1_macro', 'eval_accuracy']] * 100
+
     tmp = []
     for (m, d), g in df.groupby(by=['model', 'data']):
-        entry = {'model': m, 'data': d}
-        entry.update({k: v for v, k in zip(
-            g[g.version == 'vanilla'][['eval_f1_macro', 'eval_accuracy']].values[0].tolist(),
-            ['Macro F1 (vanilla)', 'Accuracy (vanilla)'])})
-        entry.update({k: v for v, k in zip(
-            g[g.version == 'add-v2'][['eval_f1_macro', 'eval_accuracy']].values[0].tolist(),
-            ['Macro F1 (add v2)', 'Accuracy (add v2)'])})
-        entry.update({k: v for v, k in zip(
-            g[g.version == 'add-v3'][['eval_f1_macro', 'eval_accuracy']].values[0].tolist(),
-            ['Macro F1 (add v3)', 'Accuracy (add v3)'])})
-        gain_v2 = - g[g.version == 'vanilla'][['eval_f1_macro', 'eval_accuracy']].values \
-            + g[g.version == 'add-v2'][['eval_f1_macro', 'eval_accuracy']].values
-        entry.update({k: i for i, k in zip(gain_v2[0].tolist(), ['Macro F1 Gain (v2)', 'Accuracy Gain (v2)'])})
-        gain_v3 = - g[g.version == 'vanilla'][['eval_f1_macro', 'eval_accuracy']].values \
-            + g[g.version == 'add-v3'][['eval_f1_macro', 'eval_accuracy']].values
-        entry.update({k: i for i, k in zip(gain_v3[0], ['Macro F1 Gain (v3)', 'Accuracy Gain (v3)'])})
+        # entry = {'column', 'model': m, 'data': d}
+        entry = {'column': f"{m}/{d}"}
+        for v in ['vanilla', 'add-v2', 'add-v3', 'add-v3-greedy', 'back-translation', "eda", "word_swapping_embedding",
+                  "word_swapping_random", "word_swapping_synonym"]:
+            entry.update({k: v for v, k in zip(
+                g[g.version == v][['eval_f1_macro', 'eval_f1', 'eval_accuracy']].values[0].tolist(),
+                [f'Macro F1 ({v})', f'Micro F1 ({v})',  f'Accuracy ({v})'])})
+        for v in ['add-v2', 'add-v3', 'add-v3-greedy', 'back-translation', "eda", "word_swapping_embedding",
+                  "word_swapping_random", "word_swapping_synonym"]:
+            _gain = - g[g.version == 'vanilla'][['eval_f1_macro', 'eval_f1', 'eval_accuracy']].values \
+                   + g[g.version == v][['eval_f1_macro', 'eval_f1', 'eval_accuracy']].values
+            entry.update({k: i for i, k in zip(_gain[0].tolist(), [f'Macro F1 Gain ({v})', f'Micro F1 Gain ({v})', f'Accuracy Gain ({v})'])})
         tmp.append(entry)
+
     df_gain = pd.DataFrame(tmp)
+    df_gain.index = df_gain.pop("column")
+    df_gain = df_gain.T
     return df, df_gain
 
 
@@ -126,7 +140,3 @@ if __name__ == '__main__':
     full_output, gain = get_result()
     full_output.to_csv(f'{EXPORT_DIR}/summary.csv')
     gain.to_csv(f'{EXPORT_DIR}/summary.gain.csv')
-
-    # full_output, gain = get_result('metric_summary.edit')
-    # full_output.to_csv(f'{EXPORT_DIR}/summary.edit.csv')
-    # gain.to_csv(f'{EXPORT_DIR}/summary.gain.edit.csv')
