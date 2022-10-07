@@ -72,6 +72,16 @@ def get_result(metric_file='metric_summary'):
             output.append(
                 format_metric(
                     download(
+                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v3/raw/main/{metric_file}.json",
+                        f"{m}-{d}-add-v3.{metric_file}.json"
+                    ),
+                    add={"model": m, "data": d, 'version': 'add-v4'}
+                )
+            )
+
+            output.append(
+                format_metric(
+                    download(
                         f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v3-greedy/raw/main/{metric_file}.json",
                         f"{m}-{d}-add-v3-greedy.{metric_file}.json"),
                     add={"model": m, "data": d, 'version': 'add-v3-greedy'}
@@ -118,12 +128,12 @@ def get_result(metric_file='metric_summary'):
     for (m, d), g in df.groupby(by=['model', 'data']):
         # entry = {'column', 'model': m, 'data': d}
         entry = {'column': f"{m}/{d}"}
-        for v in ['vanilla', 'add-v2', 'add-v3', 'add-v3-greedy', 'back-translation', "eda", "word_swapping_embedding",
+        for v in ['vanilla', 'add-v2', 'add-v3', 'add-v4', 'add-v3-greedy', 'back-translation', "eda", "word_swapping_embedding",
                   "word_swapping_random", "word_swapping_synonym"]:
             entry.update({k: v for v, k in zip(
                 g[g.version == v][['eval_f1_macro', 'eval_f1', 'eval_accuracy']].values[0].tolist(),
                 [f'Macro F1 ({v})', f'Micro F1 ({v})',  f'Accuracy ({v})'])})
-        for v in ['add-v2', 'add-v3', 'add-v3-greedy', 'back-translation', "eda", "word_swapping_embedding",
+        for v in ['add-v2', 'add-v3', 'add-v4', 'add-v3-greedy', 'back-translation', "eda", "word_swapping_embedding",
                   "word_swapping_random", "word_swapping_synonym"]:
             _gain = - g[g.version == 'vanilla'][['eval_f1_macro', 'eval_f1', 'eval_accuracy']].values \
                    + g[g.version == v][['eval_f1_macro', 'eval_f1', 'eval_accuracy']].values
