@@ -72,8 +72,8 @@ def get_result(metric_file='metric_summary'):
             output.append(
                 format_metric(
                     download(
-                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v3/raw/main/{metric_file}.json",
-                        f"{m}-{d}-add-v3.{metric_file}.json"
+                        f"https://huggingface.co/{ORG}/m3-experiment-{m}-{d}-add-v4/raw/main/{metric_file}.json",
+                        f"{m}-{d}-add-v4.{metric_file}.json"
                     ),
                     add={"model": m, "data": d, 'version': 'add-v4'}
                 )

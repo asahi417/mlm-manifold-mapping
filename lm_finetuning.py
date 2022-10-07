@@ -106,7 +106,6 @@ def main():
                 for i in tmp_data:
                     if i['text'] in v:
                         for augmented_texts in v[i['text']]:
-                            print(augmented_texts)
                             dataset[k] = dataset[k].add_item({'text': augmented_texts, 'label': i['label']})
                 logging.info(f"final training data: {len(dataset[k])}")
             else:
